@@ -15,6 +15,9 @@
 		493F78772BA7707000E3A04A /* Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78762BA7707000E3A04A /* Sizes.swift */; };
 		493F78792BA7712A00E3A04A /* CellIdentificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78782BA7712A00E3A04A /* CellIdentificators.swift */; };
 		493F787C2BA789A000E3A04A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F787B2BA789A000E3A04A /* NetworkManager.swift */; };
+		493F787E2BA78A8500E3A04A /* ApiURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F787D2BA78A8500E3A04A /* ApiURL.swift */; };
+		493F78802BA78B0700E3A04A /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F787F2BA78B0700E3A04A /* ApiKeys.swift */; };
+		493F78832BA78C6500E3A04A /* String+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78822BA78C6500E3A04A /* String+Ex.swift */; };
 		494132AA2BA6FD9000CA97FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132A92BA6FD9000CA97FD /* AppDelegate.swift */; };
 		494132AC2BA6FD9000CA97FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */; };
 		494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AD2BA6FD9000CA97FD /* ImagesGalleryViewController.swift */; };
@@ -34,6 +37,9 @@
 		493F78762BA7707000E3A04A /* Sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sizes.swift; sourceTree = "<group>"; };
 		493F78782BA7712A00E3A04A /* CellIdentificators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentificators.swift; sourceTree = "<group>"; };
 		493F787B2BA789A000E3A04A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		493F787D2BA78A8500E3A04A /* ApiURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiURL.swift; sourceTree = "<group>"; };
+		493F787F2BA78B0700E3A04A /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
+		493F78822BA78C6500E3A04A /* String+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ex.swift"; sourceTree = "<group>"; };
 		494132A62BA6FD9000CA97FD /* ImagesGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagesGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		494132A92BA6FD9000CA97FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +79,8 @@
 				493F78702BA7649700E3A04A /* FontSettings.swift */,
 				493F78762BA7707000E3A04A /* Sizes.swift */,
 				493F78782BA7712A00E3A04A /* CellIdentificators.swift */,
+				493F787D2BA78A8500E3A04A /* ApiURL.swift */,
+				493F787F2BA78B0700E3A04A /* ApiKeys.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -83,6 +91,14 @@
 				493F787B2BA789A000E3A04A /* NetworkManager.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		493F78812BA78C5700E3A04A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				493F78822BA78C6500E3A04A /* String+Ex.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		4941329D2BA6FD9000CA97FD = {
@@ -106,9 +122,10 @@
 		494132A82BA6FD9000CA97FD /* ImagesGallery */ = {
 			isa = PBXGroup;
 			children = (
-				493F787A2BA7899000E3A04A /* Common */,
 				494132BD2BA6FDF600CA97FD /* App */,
+				493F78812BA78C5700E3A04A /* Extensions */,
 				493F78692BA74DFD00E3A04A /* Constants */,
+				493F787A2BA7899000E3A04A /* Common */,
 				494132C12BA7034B00CA97FD /* ImagesGallery */,
 				494132C02BA701AC00CA97FD /* FavoriteImages */,
 				494132B22BA6FD9100CA97FD /* Assets.xcassets */,
@@ -313,14 +330,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493F78802BA78B0700E3A04A /* ApiKeys.swift in Sources */,
 				493F787C2BA789A000E3A04A /* NetworkManager.swift in Sources */,
 				493F786D2BA74E2A00E3A04A /* ImageNames.swift in Sources */,
 				493F786F2BA754F600E3A04A /* ColorsSet.swift in Sources */,
 				493F78752BA76D3600E3A04A /* ImagesGalleryCollectionViewCell.swift in Sources */,
 				494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */,
+				493F78832BA78C6500E3A04A /* String+Ex.swift in Sources */,
 				494132AA2BA6FD9000CA97FD /* AppDelegate.swift in Sources */,
 				493F78792BA7712A00E3A04A /* CellIdentificators.swift in Sources */,
 				494132BF2BA7016800CA97FD /* FavoriteImagesViewController.swift in Sources */,
+				493F787E2BA78A8500E3A04A /* ApiURL.swift in Sources */,
 				493F78772BA7707000E3A04A /* Sizes.swift in Sources */,
 				493F78712BA7649700E3A04A /* FontSettings.swift in Sources */,
 				494132AC2BA6FD9000CA97FD /* SceneDelegate.swift in Sources */,
