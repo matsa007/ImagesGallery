@@ -10,6 +10,13 @@ import SnapKit
 
 final class ImagesGalleryViewController: UIViewController {
     
+    // MARK: - GUI
+    
+    private lazy var imagesGalleryCollection: UICollectionView = {
+        let colView = UICollectionView()
+        return colView
+    }()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
