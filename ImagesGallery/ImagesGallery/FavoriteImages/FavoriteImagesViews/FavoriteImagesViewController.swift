@@ -15,6 +15,6 @@ final class FavoriteImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .green
+        self.view.backgroundColor = ColorsSet.favoritesBackgroundColor
     }
 }

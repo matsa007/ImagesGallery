@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		493F786B2BA74E1100E3A04A /* Titles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F786A2BA74E1100E3A04A /* Titles.swift */; };
+		493F786D2BA74E2A00E3A04A /* ImageNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F786C2BA74E2A00E3A04A /* ImageNames.swift */; };
+		493F786F2BA754F600E3A04A /* ColorsSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F786E2BA754F600E3A04A /* ColorsSet.swift */; };
+		493F78712BA7649700E3A04A /* FontSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78702BA7649700E3A04A /* FontSettings.swift */; };
 		494132AA2BA6FD9000CA97FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132A92BA6FD9000CA97FD /* AppDelegate.swift */; };
 		494132AC2BA6FD9000CA97FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */; };
 		494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AD2BA6FD9000CA97FD /* ImagesGalleryViewController.swift */; };
@@ -18,6 +22,10 @@
 /* Begin PBXFileReference section */
 		190827CED6E3A97A6114728E /* Pods-ImagesGallery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImagesGallery.debug.xcconfig"; path = "Target Support Files/Pods-ImagesGallery/Pods-ImagesGallery.debug.xcconfig"; sourceTree = "<group>"; };
 		3A373C3878839DA9A37686A6 /* Pods_ImagesGallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImagesGallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		493F786A2BA74E1100E3A04A /* Titles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Titles.swift; sourceTree = "<group>"; };
+		493F786C2BA74E2A00E3A04A /* ImageNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNames.swift; sourceTree = "<group>"; };
+		493F786E2BA754F600E3A04A /* ColorsSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsSet.swift; sourceTree = "<group>"; };
+		493F78702BA7649700E3A04A /* FontSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSettings.swift; sourceTree = "<group>"; };
 		494132A62BA6FD9000CA97FD /* ImagesGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagesGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		494132A92BA6FD9000CA97FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +56,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		493F78692BA74DFD00E3A04A /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				493F786A2BA74E1100E3A04A /* Titles.swift */,
+				493F786C2BA74E2A00E3A04A /* ImageNames.swift */,
+				493F786E2BA754F600E3A04A /* ColorsSet.swift */,
+				493F78702BA7649700E3A04A /* FontSettings.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		4941329D2BA6FD9000CA97FD = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				494132BD2BA6FDF600CA97FD /* App */,
+				493F78692BA74DFD00E3A04A /* Constants */,
 				494132C12BA7034B00CA97FD /* ImagesGallery */,
 				494132C02BA701AC00CA97FD /* FavoriteImages */,
 				494132B22BA6FD9100CA97FD /* Assets.xcassets */,
@@ -273,10 +293,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493F786D2BA74E2A00E3A04A /* ImageNames.swift in Sources */,
+				493F786F2BA754F600E3A04A /* ColorsSet.swift in Sources */,
 				494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */,
 				494132AA2BA6FD9000CA97FD /* AppDelegate.swift in Sources */,
 				494132BF2BA7016800CA97FD /* FavoriteImagesViewController.swift in Sources */,
+				493F78712BA7649700E3A04A /* FontSettings.swift in Sources */,
 				494132AC2BA6FD9000CA97FD /* SceneDelegate.swift in Sources */,
+				493F786B2BA74E1100E3A04A /* Titles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
