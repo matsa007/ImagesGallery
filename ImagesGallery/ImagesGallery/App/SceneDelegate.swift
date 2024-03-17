@@ -22,7 +22,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private let imagesGalleryVC = UINavigationController(
         rootViewController: ImagesGalleryViewController(
-            viewModel: ImagesGalleryViewModel()
+            viewModel: ImagesGalleryViewModel(
+                startPage: .fromZero
+            )
         )
     )
     private let favoriteImagesVC = UINavigationController(
