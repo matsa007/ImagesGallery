@@ -93,7 +93,6 @@
 				494132C72BA703D500CA97FD /* FavoriteImagesViewModels */,
 				494132C62BA703C300CA97FD /* FavoriteImagesViews */,
 				494132C52BA703B300CA97FD /* FavoriteImagesModels */,
-				494132BE2BA7016800CA97FD /* FavoriteImagesViewController.swift */,
 			);
 			path = FavoriteImages;
 			sourceTree = "<group>";
@@ -140,6 +139,7 @@
 		494132C62BA703C300CA97FD /* FavoriteImagesViews */ = {
 			isa = PBXGroup;
 			children = (
+				494132BE2BA7016800CA97FD /* FavoriteImagesViewController.swift */,
 			);
 			path = FavoriteImagesViews;
 			sourceTree = "<group>";
