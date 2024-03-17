@@ -10,13 +10,18 @@ import Foundation
 final class NetworkManager {
     static var shared = NetworkManager()
     
-    func requestData<T: Codable>(toEndPoint: String, httpMethod: HttpMethod) async throws -> T {
+    func requestData<T: Codable>(toEndPoint: String, apiKey: ApiKeys, httpMethod: HttpMethod) async throws -> T {
         guard let requestUrl = URL(string: toEndPoint) else {
             throw NetworkError.invalidURL
         }
         
         var urlRequest = URLRequest(url: requestUrl)
         urlRequest.httpMethod = httpMethod.rawValue
+        
+        urlRequest.setValue(
+            (apiKey.rawValue).getClientID(),
+            forHTTPHeaderField: HttpHeaders.authorization.rawValue
+        )
         
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         
@@ -36,6 +41,10 @@ final class NetworkManager {
 
 enum HttpMethod: String {
     case get = "GET"
+}
+
+enum HttpHeaders: String {
+    case authorization = "Authorization"
 }
 
 enum NetworkError: Error {
