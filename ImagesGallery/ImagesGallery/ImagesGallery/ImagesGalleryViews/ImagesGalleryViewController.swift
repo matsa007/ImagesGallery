@@ -10,6 +10,10 @@ import SnapKit
 
 final class ImagesGalleryViewController: UIViewController {
     
+    // MARK: - Parameters
+    
+    private let viewModel: ImagesGalleryViewModelProtocol
+    
     // MARK: - GUI
     
     private lazy var imagesGalleryCollection: UICollectionView = {
@@ -20,6 +24,18 @@ final class ImagesGalleryViewController: UIViewController {
         colView.backgroundColor = .yellow
         return colView
     }()
+    
+    // MARK: - Initialization
+    
+    init(viewModel: ImagesGalleryViewModelProtocol) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
 
