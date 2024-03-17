@@ -43,6 +43,7 @@ final class ImagesGalleryViewController: UIViewController {
         super.viewDidLoad()
         
         self.setupLayout()
+        self.viewModel.readyForDisplay()
     }
 }
 

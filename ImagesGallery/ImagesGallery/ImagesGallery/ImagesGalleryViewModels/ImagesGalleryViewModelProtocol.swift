@@ -8,5 +8,9 @@
 import Foundation
 
 protocol ImagesGalleryViewModelProtocol {
+    var currentPage: Int { get set }
     
+    init(startPage: StartPageIndex)
+    
+    func readyForDisplay()
 }
