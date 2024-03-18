@@ -16,6 +16,8 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
         
         Task {
             do {
+                var initialImagesData = [InitialImagesGalleryDataModel]()
+                
                 let responseData: [PhotosModel] = try await NetworkManager.shared.requestData(
                     toEndPoint: helper.createPhotosApiURLForPage(
                         for: .imagesApiURL,
@@ -25,7 +27,17 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                     apiKey: .unsplashApiKey,
                     httpMethod: .get
                 )
-                dump(responseData)
+                
+                responseData.forEach {
+                    let imageURLs = $0.urls
+                    
+                    initialImagesData.append(
+                        InitialImagesGalleryDataModel(
+                            id: $0.id,
+                            thumbImgURL: imageURLs.thumb
+                        )
+                    )
+                }
             }
             
             catch let error {
