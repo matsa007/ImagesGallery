@@ -9,4 +9,5 @@ import Foundation
 
 protocol ImagesGalleryLoadable {
     func requestImagesURLs(page: Int, pageQuantity: Int)
+    func requestImagesData(for initialImagesData: [InitialImagesGalleryDataModel]) async
 }

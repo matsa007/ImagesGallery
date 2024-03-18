@@ -37,6 +37,27 @@ final class NetworkManager {
         let resultData = try decoder.decode(T.self, from: data)
         return resultData
     }
+    
+    func requestImageData(from urlString: String, httpMethod: HttpMethod) async throws -> Data {
+        guard let requestUrl = URL(string: urlString) else {
+            throw NetworkError.invalidURL
+        }
+        
+        var urlRequest = URLRequest(url: requestUrl)
+        urlRequest.httpMethod = httpMethod.rawValue
+        
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+        
+        guard httpResponse.statusCode == 200 else {
+            throw NetworkError.statusCode(httpResponse.statusCode)
+        }
+        
+        return data
+    }
 }
 
 enum HttpMethod: String {
