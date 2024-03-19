@@ -23,7 +23,6 @@ final class ImagesGalleryViewController: UIViewController {
         let colView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         colView.delegate = self
         colView.dataSource = self
-        colView.backgroundColor = .yellow
         return colView
     }()
     
@@ -64,7 +63,7 @@ private extension ImagesGalleryViewController {
     }
     
     func setView() {
-        self.view.backgroundColor = ColorsSet.favoritesBackgroundColor
+        self.view.backgroundColor = ColorsSet.galleryBackgroundColor
     }
     
     func setSubViews() {
@@ -87,9 +86,15 @@ private extension ImagesGalleryViewController {
 private extension ImagesGalleryViewController {
     func setNavBar() {
         self.navigationItem.title = Titles.imagesGaleryBarTitle.rawValue
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
+        ]
     }
     
     func setImagesGalleryCollection() {
+        self.imagesGalleryCollection.backgroundColor = ColorsSet.galleryBackgroundColor
+        
         self.imagesGalleryCollection.register(
             ImagesGalleryCollectionViewCell.self,
             forCellWithReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator
