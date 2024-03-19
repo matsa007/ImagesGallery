@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import Combine
 
 protocol ImagesGalleryViewModelProtocol {
     var currentPage: Int { get set }
+    var imagesGalleryDisplayData: [ImagesGalleryDisplayModel] { get set }
+    var anyImagesGalleryDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> { get }
     
     init(startPage: StartPageIndex)
     

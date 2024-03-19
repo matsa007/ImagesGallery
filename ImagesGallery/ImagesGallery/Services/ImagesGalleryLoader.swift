@@ -6,8 +6,24 @@
 //
 
 import Foundation
+import Combine
 
 final class ImagesGalleryLoader: ImagesGalleryLoadable {
+    
+    // MARK: - Parameters
+    
+    private var cancellables: Set<AnyCancellable> = []
+    
+    private let displayDataIsReadyForViewPublisher = PassthroughSubject<[ImagesGalleryDisplayModel], Never>()
+    var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<[ImagesGalleryDisplayModel], Never> {
+        self.displayDataIsReadyForViewPublisher.eraseToAnyPublisher()
+    }
+    
+    // MARK: - Initialization
+    
+    deinit {
+        self.cancellables.forEach { $0.cancel() }
+    }
     
     // MARK: - Request data
     
@@ -99,6 +115,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
             
             for await data in taskGroup {
                 imagesGalleryDisplayData.append(data)
+                self.displayDataIsReadyForViewPublisher.send(imagesGalleryDisplayData)
             }
         }
     }
