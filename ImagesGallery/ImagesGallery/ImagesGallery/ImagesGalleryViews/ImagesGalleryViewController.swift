@@ -86,6 +86,7 @@ private extension ImagesGalleryViewController {
 private extension ImagesGalleryViewController {
     func setNavBar() {
         self.navigationItem.title = Titles.imagesGaleryBarTitle.rawValue
+        self.navigationController?.navigationBar.barTintColor = ColorsSet.galleryBackgroundColor
         
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor

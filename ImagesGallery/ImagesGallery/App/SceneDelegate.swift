@@ -16,6 +16,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = ColorsSet.tabBarBackgroundColor
         tabBarController.tabBar.tintColor = ColorsSet.tabBarTintColor
+        tabBarController.tabBar.barTintColor = ColorsSet.tabBarBackgroundColor
+        tabBarController.tabBar.unselectedItemTintColor = ColorsSet.tabBarUnselectedItemTintColor
         tabBarController.tabBar.isTranslucent = false
         return tabBarController
     }()
