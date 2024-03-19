@@ -56,3 +56,15 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
         }
     }
 }
+
+// MARK: - Set cell display data
+
+extension ImagesGalleryCollectionViewCell {
+    func setCellDisplayData(for imageInfo: ImagesGalleryDisplayModel) {
+        let image = UIImage(
+            data: imageInfo.imageData
+        )
+        
+        self.thumbImageView.image = image
+    }
+}
