@@ -7,12 +7,14 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 final class ImagesGalleryViewController: UIViewController {
     
     // MARK: - Parameters
     
     private let viewModel: ImagesGalleryViewModelProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - GUI
     
@@ -37,11 +39,16 @@ final class ImagesGalleryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        self.cancellables.forEach { $0.cancel() }
+    }
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.binding()
         self.setupLayout()
         self.viewModel.readyForDisplay()
     }
@@ -87,6 +94,25 @@ private extension ImagesGalleryViewController {
             ImagesGalleryCollectionViewCell.self,
             forCellWithReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator
         )
+    }
+}
+
+// MARK: - View Model binding
+
+extension ImagesGalleryViewController {
+    func binding() {
+        self.bindOutput()
+    }
+
+    func bindOutput() {
+        self.viewModel.anyImagesGalleryDisplayDataIsReadyForViewPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                self.imagesGalleryCollection.reloadData()
+                dump(self.viewModel.imagesGalleryDisplayData)
+            }
+            .store(in: &self.cancellables)
     }
 }
 
