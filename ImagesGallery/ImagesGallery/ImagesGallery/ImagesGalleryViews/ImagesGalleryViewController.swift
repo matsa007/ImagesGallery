@@ -109,10 +109,17 @@ extension ImagesGalleryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
-                self.imagesGalleryCollection.reloadData()
-                dump(self.viewModel.imagesGalleryDisplayData)
+                self.imagesGalleryDisplayDataIsReadyHandler()
             }
             .store(in: &self.cancellables)
+    }
+}
+
+// MARK: - Actions and handlers
+
+extension ImagesGalleryViewController {
+    func imagesGalleryDisplayDataIsReadyHandler() {
+        self.imagesGalleryCollection.reloadData()
     }
 }
 
