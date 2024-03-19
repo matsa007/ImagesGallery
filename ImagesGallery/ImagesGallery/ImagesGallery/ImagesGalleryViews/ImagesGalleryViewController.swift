@@ -127,7 +127,7 @@ extension ImagesGalleryViewController {
 
 extension ImagesGalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        0
+        self.viewModel.imagesGalleryDisplayData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -135,6 +135,12 @@ extension ImagesGalleryViewController: UICollectionViewDataSource {
             withReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator,
             for: indexPath
         ) as? ImagesGalleryCollectionViewCell else { return UICollectionViewCell() }
+        
+        let imageInfo = self.viewModel.imagesGalleryDisplayData[indexPath.row]
+        
+        cell.setCellDisplayData(
+            for: imageInfo
+        )
         
         return cell
     }
