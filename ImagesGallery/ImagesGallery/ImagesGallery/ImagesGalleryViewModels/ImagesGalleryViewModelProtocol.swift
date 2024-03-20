@@ -12,6 +12,7 @@ protocol ImagesGalleryViewModelProtocol {
     var currentPage: Int { get set }
     var imagesGalleryDisplayData: [ImagesGalleryDisplayModel] { get set }
     var anyImagesGalleryDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> { get }
+    var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> { get }
     
     init(startPage: StartPageIndex)
     

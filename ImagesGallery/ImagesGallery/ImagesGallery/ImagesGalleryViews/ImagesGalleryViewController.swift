@@ -147,6 +147,14 @@ extension ImagesGalleryViewController {
                 self.imagesGalleryDisplayDataIsReadyHandler()
             }
             .store(in: &self.cancellables)
+        
+        self.viewModel.anyNetworkErrorAlertPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let self else { return }
+                self.handleShowErrorWithAlert(for: error)
+            }
+            .store(in: &self.cancellables)
     }
 }
 
@@ -155,6 +163,14 @@ extension ImagesGalleryViewController {
 extension ImagesGalleryViewController {
     func imagesGalleryDisplayDataIsReadyHandler() {
         self.imagesGalleryCollection.reloadData()
+    }
+    
+    func handleShowErrorWithAlert(for error: Error) {
+        self.alertForError(
+            for: error,
+            with: .alertTitle,
+            with: .alertButtonTitle
+        )
     }
 }
 

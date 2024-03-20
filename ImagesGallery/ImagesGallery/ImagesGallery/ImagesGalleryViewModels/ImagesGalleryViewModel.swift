@@ -21,6 +21,11 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     var anyImagesGalleryDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> {
         self.imagesGalleryDisplayDataIsReadyForViewPublisher.eraseToAnyPublisher()
     }
+    
+    private let networkErrorAlertPublisher = PassthroughSubject<Error, Never>()
+    var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> {
+        self.networkErrorAlertPublisher.eraseToAnyPublisher()
+    }
 
     // MARK: - Initialization
     
@@ -55,6 +60,13 @@ private extension ImagesGalleryViewModel {
             }
             .store(in: &self.cancellables)
         
+        loader.anyNetworkErrorMessagePublisher
+            .sink { [weak self] error in
+                guard let self else { return }
+                self.handleAlertForNetworkError(for: error)
+            }
+            .store(in: &self.cancellables)
+        
         loader.requestImagesURLs(
             page: page,
             pageQuantity: resultsPerPage.rawValue
@@ -68,5 +80,9 @@ extension ImagesGalleryViewModel {
     func handleDisplayData(for data: [ImagesGalleryDisplayModel]) {
         self.imagesGalleryDisplayData = data
         self.imagesGalleryDisplayDataIsReadyForViewPublisher.send()
+    }
+    
+    func handleAlertForNetworkError(for error: Error) {
+        self.networkErrorAlertPublisher.send(error)
     }
 }
