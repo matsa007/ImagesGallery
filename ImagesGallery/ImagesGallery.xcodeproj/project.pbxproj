@@ -31,6 +31,7 @@
 		493F78A32BAB583900E3A04A /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78A22BAB583800E3A04A /* CacheService.swift */; };
 		493F78A52BAB5AE500E3A04A /* CacheLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78A42BAB5AE500E3A04A /* CacheLimits.swift */; };
 		493F78A72BAB68A700E3A04A /* CacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78A62BAB68A700E3A04A /* CacheServiceProtocol.swift */; };
+		493F78AD2BAB90E800E3A04A /* DetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78AC2BAB90E800E3A04A /* DetailImageViewController.swift */; };
 		494132AA2BA6FD9000CA97FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132A92BA6FD9000CA97FD /* AppDelegate.swift */; };
 		494132AC2BA6FD9000CA97FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */; };
 		494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AD2BA6FD9000CA97FD /* ImagesGalleryViewController.swift */; };
@@ -66,6 +67,7 @@
 		493F78A22BAB583800E3A04A /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		493F78A42BAB5AE500E3A04A /* CacheLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheLimits.swift; sourceTree = "<group>"; };
 		493F78A62BAB68A700E3A04A /* CacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheServiceProtocol.swift; sourceTree = "<group>"; };
+		493F78AC2BAB90E800E3A04A /* DetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewController.swift; sourceTree = "<group>"; };
 		494132A62BA6FD9000CA97FD /* ImagesGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagesGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		494132A92BA6FD9000CA97FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +175,38 @@
 			path = CacheService;
 			sourceTree = "<group>";
 		};
+		493F78A82BAB907100E3A04A /* DetailImage */ = {
+			isa = PBXGroup;
+			children = (
+				493F78AB2BAB90BB00E3A04A /* DetailImageViewModels */,
+				493F78AA2BAB90AC00E3A04A /* DetailImageViews */,
+				493F78A92BAB909800E3A04A /* DetailImageModels */,
+			);
+			path = DetailImage;
+			sourceTree = "<group>";
+		};
+		493F78A92BAB909800E3A04A /* DetailImageModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DetailImageModels;
+			sourceTree = "<group>";
+		};
+		493F78AA2BAB90AC00E3A04A /* DetailImageViews */ = {
+			isa = PBXGroup;
+			children = (
+				493F78AC2BAB90E800E3A04A /* DetailImageViewController.swift */,
+			);
+			path = DetailImageViews;
+			sourceTree = "<group>";
+		};
+		493F78AB2BAB90BB00E3A04A /* DetailImageViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DetailImageViewModels;
+			sourceTree = "<group>";
+		};
 		4941329D2BA6FD9000CA97FD = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +236,7 @@
 				493F78902BA7A1AD00E3A04A /* Helpers */,
 				493F788B2BA7A03700E3A04A /* Services */,
 				494132C12BA7034B00CA97FD /* ImagesGallery */,
+				493F78A82BAB907100E3A04A /* DetailImage */,
 				494132C02BA701AC00CA97FD /* FavoriteImages */,
 				494132B22BA6FD9100CA97FD /* Assets.xcassets */,
 				494132B72BA6FD9100CA97FD /* Info.plist */,
@@ -428,6 +463,7 @@
 				493F78882BA795A000E3A04A /* ImagesGalleryViewModel.swift in Sources */,
 				493F78982BAB19D500E3A04A /* CollectionViewParameters.swift in Sources */,
 				493F78A52BAB5AE500E3A04A /* CacheLimits.swift in Sources */,
+				493F78AD2BAB90E800E3A04A /* DetailImageViewController.swift in Sources */,
 				494132BF2BA7016800CA97FD /* FavoriteImagesViewController.swift in Sources */,
 				493F78862BA7908400E3A04A /* PhotosModel.swift in Sources */,
 				493F787E2BA78A8500E3A04A /* ApiURL.swift in Sources */,
