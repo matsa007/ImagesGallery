@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailImageViewModelProtocol {
-    var currentImageIndex: Int { get set }
+    var detailImageInitialData: DetailImageInitialModel { get set }
     
-    init(selectedItemIndex: Int)
+    init(detailImageInitialData: DetailImageInitialModel)
 }

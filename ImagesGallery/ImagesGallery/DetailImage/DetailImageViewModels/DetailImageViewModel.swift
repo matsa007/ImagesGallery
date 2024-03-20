@@ -8,9 +8,14 @@
 import Foundation
 
 final class DetailImageViewModel: DetailImageViewModelProtocol {
-    var currentImageIndex: Int
     
-    init(selectedItemIndex: Int) {
-        self.currentImageIndex = selectedItemIndex
+    // MARK: - Parameters
+    
+    var detailImageInitialData: DetailImageInitialModel
+    
+    // MARK: - Initialization
+    
+    init(detailImageInitialData: DetailImageInitialModel) {
+        self.detailImageInitialData = detailImageInitialData
     }
 }

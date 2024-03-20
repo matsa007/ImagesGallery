@@ -12,9 +12,9 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     
     // MARK: - Parameters
     
-    let loader: ImagesGalleryLoadable
     var currentPage: Int
     var imagesGalleryDisplayData = [ImagesGalleryDisplayModel]()
+    private let loader: ImagesGalleryLoadable
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -28,8 +28,8 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
         self.networkErrorAlertPublisher.eraseToAnyPublisher()
     }
     
-    private let selectedItemDataIsReadyPublisher = PassthroughSubject<(ImagesGalleryDisplayModel, Int), Never>()
-    var anySelectedItemDataIsReadyPublisher: AnyPublisher<(ImagesGalleryDisplayModel, Int), Never> {
+    private let selectedItemDataIsReadyPublisher = PassthroughSubject<Int, Never>()
+    var anySelectedItemDataIsReadyPublisher: AnyPublisher<Int, Never> {
         self.selectedItemDataIsReadyPublisher.eraseToAnyPublisher()
     }
 
@@ -114,11 +114,6 @@ extension ImagesGalleryViewModel {
     }
     
     func handleCollectionViewItemSelected(for index: Int) {
-        self.selectedItemDataIsReadyPublisher.send(
-            (
-                self.imagesGalleryDisplayData[index],
-                index
-            )
-        )
+        self.selectedItemDataIsReadyPublisher.send(index)
     }
 }
