@@ -45,7 +45,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                         page: page,
                         pageQuantity: pageQuantity
                     ),
-                    apiKey: .unsplashApiKey,
+                    clientID: helper.getClientID(for: .unsplashApiKey),
                     httpMethod: .get
                 )
                 

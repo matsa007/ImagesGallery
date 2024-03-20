@@ -17,7 +17,6 @@
 		493F787C2BA789A000E3A04A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F787B2BA789A000E3A04A /* NetworkManager.swift */; };
 		493F787E2BA78A8500E3A04A /* ApiURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F787D2BA78A8500E3A04A /* ApiURL.swift */; };
 		493F78802BA78B0700E3A04A /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F787F2BA78B0700E3A04A /* ApiKeys.swift */; };
-		493F78832BA78C6500E3A04A /* String+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78822BA78C6500E3A04A /* String+Ex.swift */; };
 		493F78862BA7908400E3A04A /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78852BA7908400E3A04A /* PhotosModel.swift */; };
 		493F78882BA795A000E3A04A /* ImagesGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78872BA795A000E3A04A /* ImagesGalleryViewModel.swift */; };
 		493F788A2BA795CF00E3A04A /* ImagesGalleryViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78892BA795CF00E3A04A /* ImagesGalleryViewModelProtocol.swift */; };
@@ -50,7 +49,6 @@
 		493F787B2BA789A000E3A04A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		493F787D2BA78A8500E3A04A /* ApiURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiURL.swift; sourceTree = "<group>"; };
 		493F787F2BA78B0700E3A04A /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
-		493F78822BA78C6500E3A04A /* String+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ex.swift"; sourceTree = "<group>"; };
 		493F78852BA7908400E3A04A /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
 		493F78872BA795A000E3A04A /* ImagesGalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryViewModel.swift; sourceTree = "<group>"; };
 		493F78892BA795CF00E3A04A /* ImagesGalleryViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 		493F78812BA78C5700E3A04A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				493F78822BA78C6500E3A04A /* String+Ex.swift */,
 				493F78992BAB206600E3A04A /* UIViewController+Ex.swift */,
 			);
 			path = Extensions;
@@ -395,7 +392,6 @@
 				493F786F2BA754F600E3A04A /* ColorsSet.swift in Sources */,
 				493F78752BA76D3600E3A04A /* ImagesGalleryCollectionViewCell.swift in Sources */,
 				494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */,
-				493F78832BA78C6500E3A04A /* String+Ex.swift in Sources */,
 				494132AA2BA6FD9000CA97FD /* AppDelegate.swift in Sources */,
 				493F78922BA7A1CA00E3A04A /* ImagesGalleryHelper.swift in Sources */,
 				493F789A2BAB206600E3A04A /* UIViewController+Ex.swift in Sources */,

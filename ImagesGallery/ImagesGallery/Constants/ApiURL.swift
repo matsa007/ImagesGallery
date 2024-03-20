@@ -23,3 +23,7 @@ enum ResultsPerPage: Int {
 enum StartPageIndex: Int {
     case fromZero = 0
 }
+
+enum URLRequestValues {
+    static let clientID = "Client-ID "
+}
