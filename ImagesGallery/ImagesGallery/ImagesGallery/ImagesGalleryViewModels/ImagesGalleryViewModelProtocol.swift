@@ -13,6 +13,8 @@ protocol ImagesGalleryViewModelProtocol {
     var imagesGalleryDisplayData: [ImagesGalleryDisplayModel] { get set }
     var anyImagesGalleryDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> { get }
     var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> { get }
+    var anySelectedItemDataIsReadyPublisher: AnyPublisher<(ImagesGalleryDisplayModel, Int), Never> { get }
+
     
     init(
         loader: ImagesGalleryLoadable,
@@ -21,4 +23,5 @@ protocol ImagesGalleryViewModelProtocol {
     
     func readyForDisplay()
     func scrolledToItemWithItemIndex(_ index: Int)
+    func collectionViewItemSelected(with index: Int)
 }

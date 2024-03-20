@@ -136,7 +136,21 @@ private extension ImagesGalleryViewController {
 
 extension ImagesGalleryViewController {
     func binding() {
+        self.bindInput()
         self.bindOutput()
+    }
+    
+    func bindInput() {
+        self.viewModel.anySelectedItemDataIsReadyPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] selectedData, index in
+                guard let self else { return }
+                self.handleCollectionViewItemSelectedData(
+                    for: selectedData,
+                    index: index
+                )
+            }
+            .store(in: &self.cancellables)
     }
 
     func bindOutput() {
@@ -172,6 +186,12 @@ extension ImagesGalleryViewController {
             with: .alertButtonTitle
         )
     }
+    
+    func handleCollectionViewItemSelectedData(for selectedData: ImagesGalleryDisplayModel, index: Int) {
+        let vc = DetailImageViewController()
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -202,5 +222,9 @@ extension ImagesGalleryViewController: UICollectionViewDataSource {
 extension ImagesGalleryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         self.viewModel.scrolledToItemWithItemIndex(indexPath.item)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.viewModel.collectionViewItemSelected(with: indexPath.item)
     }
 }

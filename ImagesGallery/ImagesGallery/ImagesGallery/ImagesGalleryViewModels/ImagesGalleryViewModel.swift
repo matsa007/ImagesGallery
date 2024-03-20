@@ -27,6 +27,11 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> {
         self.networkErrorAlertPublisher.eraseToAnyPublisher()
     }
+    
+    private let selectedItemDataIsReadyPublisher = PassthroughSubject<(ImagesGalleryDisplayModel, Int), Never>()
+    var anySelectedItemDataIsReadyPublisher: AnyPublisher<(ImagesGalleryDisplayModel, Int), Never> {
+        self.selectedItemDataIsReadyPublisher.eraseToAnyPublisher()
+    }
 
     // MARK: - Initialization
     
@@ -52,6 +57,10 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     
     func scrolledToItemWithItemIndex(_ index: Int) {
         self.handleScrolledToItemWithItemIndex(index)
+    }
+    
+    func collectionViewItemSelected(with index: Int) {
+        self.handleCollectionViewItemSelected(for: index)
     }
 }
 
@@ -102,5 +111,14 @@ extension ImagesGalleryViewModel {
                 with: .maximum
             )
         }
+    }
+    
+    func handleCollectionViewItemSelected(for index: Int) {
+        self.selectedItemDataIsReadyPublisher.send(
+            (
+                self.imagesGalleryDisplayData[index],
+                index
+            )
+        )
     }
 }
