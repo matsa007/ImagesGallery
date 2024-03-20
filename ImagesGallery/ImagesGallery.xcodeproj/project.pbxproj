@@ -32,6 +32,8 @@
 		493F78A52BAB5AE500E3A04A /* CacheLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78A42BAB5AE500E3A04A /* CacheLimits.swift */; };
 		493F78A72BAB68A700E3A04A /* CacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78A62BAB68A700E3A04A /* CacheServiceProtocol.swift */; };
 		493F78AD2BAB90E800E3A04A /* DetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78AC2BAB90E800E3A04A /* DetailImageViewController.swift */; };
+		493F78B12BAB9AB900E3A04A /* DetailImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78B02BAB9AB900E3A04A /* DetailImageViewModel.swift */; };
+		493F78B32BAB9AC700E3A04A /* DetailImageViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F78B22BAB9AC700E3A04A /* DetailImageViewModelProtocol.swift */; };
 		494132AA2BA6FD9000CA97FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132A92BA6FD9000CA97FD /* AppDelegate.swift */; };
 		494132AC2BA6FD9000CA97FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */; };
 		494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AD2BA6FD9000CA97FD /* ImagesGalleryViewController.swift */; };
@@ -68,6 +70,8 @@
 		493F78A42BAB5AE500E3A04A /* CacheLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheLimits.swift; sourceTree = "<group>"; };
 		493F78A62BAB68A700E3A04A /* CacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheServiceProtocol.swift; sourceTree = "<group>"; };
 		493F78AC2BAB90E800E3A04A /* DetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewController.swift; sourceTree = "<group>"; };
+		493F78B02BAB9AB900E3A04A /* DetailImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewModel.swift; sourceTree = "<group>"; };
+		493F78B22BAB9AC700E3A04A /* DetailImageViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewModelProtocol.swift; sourceTree = "<group>"; };
 		494132A62BA6FD9000CA97FD /* ImagesGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagesGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		494132A92BA6FD9000CA97FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 		493F78AB2BAB90BB00E3A04A /* DetailImageViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				493F78B22BAB9AC700E3A04A /* DetailImageViewModelProtocol.swift */,
+				493F78B02BAB9AB900E3A04A /* DetailImageViewModel.swift */,
 			);
 			path = DetailImageViewModels;
 			sourceTree = "<group>";
@@ -453,6 +459,7 @@
 				493F786F2BA754F600E3A04A /* ColorsSet.swift in Sources */,
 				493F78752BA76D3600E3A04A /* ImagesGalleryCollectionViewCell.swift in Sources */,
 				494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */,
+				493F78B32BAB9AC700E3A04A /* DetailImageViewModelProtocol.swift in Sources */,
 				494132AA2BA6FD9000CA97FD /* AppDelegate.swift in Sources */,
 				493F78922BA7A1CA00E3A04A /* ImagesGalleryHelper.swift in Sources */,
 				493F789A2BAB206600E3A04A /* UIViewController+Ex.swift in Sources */,
@@ -465,6 +472,7 @@
 				493F78A52BAB5AE500E3A04A /* CacheLimits.swift in Sources */,
 				493F78AD2BAB90E800E3A04A /* DetailImageViewController.swift in Sources */,
 				494132BF2BA7016800CA97FD /* FavoriteImagesViewController.swift in Sources */,
+				493F78B12BAB9AB900E3A04A /* DetailImageViewModel.swift in Sources */,
 				493F78862BA7908400E3A04A /* PhotosModel.swift in Sources */,
 				493F787E2BA78A8500E3A04A /* ApiURL.swift in Sources */,
 				493F78772BA7707000E3A04A /* Sizes.swift in Sources */,

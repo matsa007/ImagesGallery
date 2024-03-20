@@ -188,7 +188,11 @@ extension ImagesGalleryViewController {
     }
     
     func handleCollectionViewItemSelectedData(for selectedData: ImagesGalleryDisplayModel, index: Int) {
-        let vc = DetailImageViewController()
+        let vc = DetailImageViewController(
+            viewModel: DetailImageViewModel(
+                selectedItemIndex: index
+            )
+        )
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
