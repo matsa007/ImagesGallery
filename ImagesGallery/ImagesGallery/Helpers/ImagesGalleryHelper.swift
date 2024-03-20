@@ -11,4 +11,8 @@ final class ImagesGalleryHelper {
     func createPhotosApiURLForPage(for url: ApiURL, page: Int, pageQuantity: Int) -> String {
         url.rawValue + ApiURLExtensions.page + String(page) + ApiURLExtensions.itemsPerPage + String(pageQuantity)
     }
+    
+    func getClientID(for apiKey: ApiKeys) -> String {
+        URLRequestValues.clientID + apiKey.rawValue
+    }
 }

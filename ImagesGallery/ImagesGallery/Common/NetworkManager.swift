@@ -10,7 +10,7 @@ import Foundation
 final class NetworkManager {
     static var shared = NetworkManager()
     
-    func requestData<T: Codable>(toEndPoint: String, apiKey: ApiKeys, httpMethod: HttpMethod) async throws -> T {
+    func requestData<T: Codable>(toEndPoint: String, clientID: String, httpMethod: HttpMethod) async throws -> T {
         guard let requestUrl = URL(string: toEndPoint) else {
             throw NetworkError.invalidURL
         }
@@ -19,7 +19,7 @@ final class NetworkManager {
         urlRequest.httpMethod = httpMethod.rawValue
         
         urlRequest.setValue(
-            (apiKey.rawValue).getClientID(),
+            clientID,
             forHTTPHeaderField: HttpHeaders.authorization.rawValue
         )
         
