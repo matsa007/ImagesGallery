@@ -95,16 +95,29 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                     
                     do {
                         
-                        let responseData = try await NetworkManager.shared.requestImageData(
-                            from: initialImageInfo.thumbImgURL, 
-                            for: initialImageInfo.id,
-                            httpMethod: .get
-                        )
-                        
-                        displayData = ImagesGalleryDisplayModel(
-                            id: initialImageInfo.id,
-                            imageData: responseData
-                        )
+                        if let cachedData = self.checkChache(
+                            for: initialImageInfo.id
+                        ) {
+                            displayData = ImagesGalleryDisplayModel(
+                                id: initialImageInfo.id,
+                                imageData: cachedData
+                            )
+                        } else {
+                            let responseData = try await NetworkManager.shared.requestImageData(
+                                from: initialImageInfo.thumbImgURL,
+                                httpMethod: .get
+                            )
+                            
+                            displayData = ImagesGalleryDisplayModel(
+                                id: initialImageInfo.id,
+                                imageData: responseData
+                            )
+                            
+                            self.saveCache(
+                                responseData,
+                                for: initialImageInfo.id
+                            )
+                        }
                     }
                     
                     catch let error {
@@ -129,5 +142,21 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
             
             self.displayDataIsReadyForViewPublisher.send(imagesGalleryDisplayData)
         }
+    }
+}
+
+// MARK: - Cache service checker
+
+private extension ImagesGalleryLoader {
+    func checkChache(for id: String) -> Data? {
+        if let data = CacheService.shared.readFromCache(forId: id) {
+            return data
+        } else {
+            return nil
+        }
+    }
+    
+    func saveCache(_ data: Data, for id: String) {
+        CacheService.shared.saveToCache(data, forId: id)
     }
 }

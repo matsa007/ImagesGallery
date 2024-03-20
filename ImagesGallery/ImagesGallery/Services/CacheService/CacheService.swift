@@ -10,6 +10,7 @@ import Foundation
 final class CacheService {
     
     // MARK: - Parameters
+    
     static var shared = CacheService(
         cacheCountLimit: .oneHundred
     )

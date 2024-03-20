@@ -141,8 +141,8 @@
 		493F788B2BA7A03700E3A04A /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				493F78A12BAB581E00E3A04A /* CacheService */,
 				493F789D2BAB53BC00E3A04A /* ImagesGalleryLoader */,
+				493F78A12BAB581E00E3A04A /* CacheService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
