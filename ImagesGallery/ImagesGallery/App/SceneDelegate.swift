@@ -25,6 +25,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private let imagesGalleryVC = UINavigationController(
         rootViewController: ImagesGalleryViewController(
             viewModel: ImagesGalleryViewModel(
+                loader: ImagesGalleryLoader(), 
                 startPage: .fromZero
             )
         )

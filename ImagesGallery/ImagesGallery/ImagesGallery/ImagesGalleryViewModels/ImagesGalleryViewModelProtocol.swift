@@ -14,7 +14,10 @@ protocol ImagesGalleryViewModelProtocol {
     var anyImagesGalleryDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> { get }
     var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> { get }
     
-    init(startPage: StartPageIndex)
+    init(
+        loader: ImagesGalleryLoadable,
+        startPage: StartPageIndex
+    )
     
     func readyForDisplay()
     func scrolledToItemWithItemIndex(_ index: Int)

@@ -12,6 +12,7 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     
     // MARK: - Parameters
     
+    let loader: ImagesGalleryLoadable
     var currentPage: Int
     var imagesGalleryDisplayData = [ImagesGalleryDisplayModel]()
     
@@ -29,7 +30,11 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
 
     // MARK: - Initialization
     
-    init(startPage: StartPageIndex) {
+    init(
+        loader: ImagesGalleryLoadable,
+        startPage: StartPageIndex
+    ) {
+        self.loader = loader
         self.currentPage = startPage.rawValue
     }
     
@@ -54,23 +59,21 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
 
 private extension ImagesGalleryViewModel {
     func fetchImagesData(with resultsPerPage: ResultsPerPage) {
-        let loader = ImagesGalleryLoader()
-        
-        loader.anyDisplayDataIsReadyForViewPublisher
+        self.loader.anyDisplayDataIsReadyForViewPublisher
             .sink { [weak self] data in
                 guard let self else { return }
                 self.handleDisplayData(for: data)
             }
             .store(in: &self.cancellables)
         
-        loader.anyNetworkErrorMessagePublisher
+        self.loader.anyNetworkErrorMessagePublisher
             .sink { [weak self] error in
                 guard let self else { return }
                 self.handleAlertForNetworkError(for: error)
             }
             .store(in: &self.cancellables)
         
-        loader.requestImagesURLs(
+        self.loader.requestImagesURLs(
             page: self.currentPage,
             pageQuantity: resultsPerPage.rawValue
         )
