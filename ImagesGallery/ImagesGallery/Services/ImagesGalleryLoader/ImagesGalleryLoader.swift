@@ -94,8 +94,10 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                     )
                     
                     do {
+                        
                         let responseData = try await NetworkManager.shared.requestImageData(
-                            from: initialImageInfo.thumbImgURL,
+                            from: initialImageInfo.thumbImgURL, 
+                            for: initialImageInfo.id,
                             httpMethod: .get
                         )
                         
@@ -123,7 +125,6 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
             
             for await data in taskGroup {
                 imagesGalleryDisplayData.append(data)
-//                self.displayDataIsReadyForViewPublisher.send(imagesGalleryDisplayData)
             }
             
             self.displayDataIsReadyForViewPublisher.send(imagesGalleryDisplayData)

@@ -38,25 +38,31 @@ final class NetworkManager {
         return resultData
     }
     
-    func requestImageData(from urlString: String, httpMethod: HttpMethod) async throws -> Data {
-        guard let requestUrl = URL(string: urlString) else {
-            throw NetworkError.invalidURL
+    func requestImageData(from urlString: String, for id: String, httpMethod: HttpMethod) async throws -> Data {
+        if let cachedImageData = CacheService.shared.readFromCache(forId: id) {
+            return cachedImageData
+        } else {
+            guard let requestUrl = URL(string: urlString) else {
+                throw NetworkError.invalidURL
+            }
+            
+            var urlRequest = URLRequest(url: requestUrl)
+            urlRequest.httpMethod = httpMethod.rawValue
+            
+            let (data, response) = try await URLSession.shared.data(for: urlRequest)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.invalidResponse
+            }
+            
+            guard httpResponse.statusCode == 200 else {
+                throw NetworkError.statusCode(httpResponse.statusCode)
+            }
+            
+            CacheService.shared.saveToCache(data, forId: id)
+            
+            return data
         }
-        
-        var urlRequest = URLRequest(url: requestUrl)
-        urlRequest.httpMethod = httpMethod.rawValue
-        
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.invalidResponse
-        }
-        
-        guard httpResponse.statusCode == 200 else {
-            throw NetworkError.statusCode(httpResponse.statusCode)
-        }
-        
-        return data
     }
 }
 
