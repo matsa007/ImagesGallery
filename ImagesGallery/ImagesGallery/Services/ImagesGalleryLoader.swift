@@ -49,6 +49,8 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                     httpMethod: .get
                 )
                 
+                guard !responseData.isEmpty else { return }
+                
                 responseData.forEach {
                     let imageURLs = $0.urls
                     
@@ -59,6 +61,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                         )
                     )
                 }
+                
                 await self.requestImagesData(
                     for: initialImagesData
                 )
@@ -120,8 +123,10 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
             
             for await data in taskGroup {
                 imagesGalleryDisplayData.append(data)
-                self.displayDataIsReadyForViewPublisher.send(imagesGalleryDisplayData)
+//                self.displayDataIsReadyForViewPublisher.send(imagesGalleryDisplayData)
             }
+            
+            self.displayDataIsReadyForViewPublisher.send(imagesGalleryDisplayData)
         }
     }
 }

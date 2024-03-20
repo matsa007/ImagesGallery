@@ -17,4 +17,5 @@ protocol ImagesGalleryViewModelProtocol {
     init(startPage: StartPageIndex)
     
     func readyForDisplay()
+    func scrolledToItemWithItemIndex(_ index: Int)
 }

@@ -187,7 +187,7 @@ extension ImagesGalleryViewController: UICollectionViewDataSource {
             for: indexPath
         ) as? ImagesGalleryCollectionViewCell else { return UICollectionViewCell() }
         
-        let imageInfo = self.viewModel.imagesGalleryDisplayData[indexPath.row]
+        let imageInfo = self.viewModel.imagesGalleryDisplayData[indexPath.item]
         
         cell.setCellDisplayData(
             for: imageInfo
@@ -197,6 +197,10 @@ extension ImagesGalleryViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
+ // MARK: - UICollectionViewDelegate
 
-extension ImagesGalleryViewController: UICollectionViewDelegate {}
+extension ImagesGalleryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        self.viewModel.scrolledToItemWithItemIndex(indexPath.item)
+    }
+}
