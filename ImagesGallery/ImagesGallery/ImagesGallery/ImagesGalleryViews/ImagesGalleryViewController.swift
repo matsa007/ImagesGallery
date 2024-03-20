@@ -51,6 +51,16 @@ final class ImagesGalleryViewController: UIViewController {
         self.setupLayout()
         self.viewModel.readyForDisplay()
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.setItemSizeParameters(
+            itemsSpacing: .standartItemsSpacing,
+            rowSpacing: .standartRowsSpacing,
+            columnsQuantity: .standartColumnsQuantity
+        )
+    }
 }
 
 // MARK: - Layout
@@ -100,6 +110,25 @@ private extension ImagesGalleryViewController {
             ImagesGalleryCollectionViewCell.self,
             forCellWithReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator
         )
+    }
+    
+    func setItemSizeParameters(
+        itemsSpacing: CollectionViewItemsSpacing,
+        rowSpacing: CollectionViewRowsSpacing,
+        columnsQuantity: CollectionViewQuantity
+    ) {
+        if let layout = self.imagesGalleryCollection.collectionViewLayout as? UICollectionViewFlowLayout {
+            let minimumInteritemSpacing = itemsSpacing.rawValue
+            layout.minimumInteritemSpacing = minimumInteritemSpacing
+            
+            let minimumLineSpacing = rowSpacing.rawValue
+            layout.minimumLineSpacing = minimumLineSpacing
+            
+            let collectionWidth = self.imagesGalleryCollection.frame.width
+            let totalSpacingWidth = CGFloat(columnsQuantity.rawValue - 1) * minimumInteritemSpacing
+            let itemWidth = (collectionWidth - totalSpacingWidth) / 3
+            layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        }
     }
 }
 
