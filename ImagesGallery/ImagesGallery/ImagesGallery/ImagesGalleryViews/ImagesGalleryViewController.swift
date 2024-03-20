@@ -143,10 +143,9 @@ extension ImagesGalleryViewController {
     func bindInput() {
         self.viewModel.anySelectedItemDataIsReadyPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] selectedData, index in
+            .sink { [weak self] index in
                 guard let self else { return }
-                self.handleCollectionViewItemSelectedData(
-                    for: selectedData,
+                self.handleCollectionViewItemSelectedIndex(
                     index: index
                 )
             }
@@ -187,10 +186,13 @@ extension ImagesGalleryViewController {
         )
     }
     
-    func handleCollectionViewItemSelectedData(for selectedData: ImagesGalleryDisplayModel, index: Int) {
+    func handleCollectionViewItemSelectedIndex(index: Int) {
         let vc = DetailImageViewController(
             viewModel: DetailImageViewModel(
-                selectedItemIndex: index
+                detailImageInitialData: DetailImageInitialModel(
+                    imagesGalleryDisplayData: self.viewModel.imagesGalleryDisplayData,
+                    selectedImageIndex: index
+                )
             )
         )
         

@@ -13,7 +13,7 @@ protocol ImagesGalleryViewModelProtocol {
     var imagesGalleryDisplayData: [ImagesGalleryDisplayModel] { get set }
     var anyImagesGalleryDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> { get }
     var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> { get }
-    var anySelectedItemDataIsReadyPublisher: AnyPublisher<(ImagesGalleryDisplayModel, Int), Never> { get }
+    var anySelectedItemDataIsReadyPublisher: AnyPublisher<Int, Never> { get }
 
     
     init(
