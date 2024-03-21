@@ -13,6 +13,35 @@ final class DetailImageViewController: UIViewController {
     
     private let viewModel: DetailImageViewModelProtocol
     
+    // MARK: - GUI
+    
+    private lazy var detailImageStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.backgroundColor = .yellow
+        return stackView
+    }()
+    
+    private lazy var detailImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    
+    private lazy var addToFavoritesButton: UIButton = {
+        let button = UIButton(type: .system)
+        return button
+    }()
+    
+    private lazy var imageTitleLabel: UILabel = {
+       let label = UILabel()
+        return label
+    }()
+    
+    private lazy var imageDescriptionLabel: UILabel = {
+       let label = UILabel()
+        return label
+    }()
+    
     // MARK: - Initialization
     
     init(viewModel: DetailImageViewModelProtocol) {
@@ -31,6 +60,6 @@ final class DetailImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .yellow
+        self.view.backgroundColor = ColorsSet.detailBackgroundColor
     }
 }
