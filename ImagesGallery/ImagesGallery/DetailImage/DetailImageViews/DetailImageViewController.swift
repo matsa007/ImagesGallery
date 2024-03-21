@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class DetailImageViewController: UIViewController {
     
@@ -15,15 +16,9 @@ final class DetailImageViewController: UIViewController {
     
     // MARK: - GUI
     
-    private lazy var detailImageStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.backgroundColor = .yellow
-        return stackView
-    }()
-    
     private lazy var detailImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.backgroundColor = .green
         return imageView
     }()
     
@@ -33,12 +28,14 @@ final class DetailImageViewController: UIViewController {
     }()
     
     private lazy var imageTitleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
+        label.backgroundColor = .red
         return label
     }()
     
     private lazy var imageDescriptionLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
+        label.backgroundColor = .orange
         return label
     }()
     
@@ -60,6 +57,75 @@ final class DetailImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = ColorsSet.detailBackgroundColor
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.setupLayout()
     }
 }
+
+// MARK: - Layout
+
+private extension DetailImageViewController {
+    func setupLayout() {
+        self.setView()
+        self.setSubViews()
+        self.setConstraints()
+    }
+    
+    func setView() {
+        self.view.backgroundColor = ColorsSet.detailBackgroundColor
+    }
+    
+    func setSubViews() {
+        self.setNavBar()
+        self.addSubViews()
+    }
+    
+    func setConstraints() {
+        self.detailImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(
+                self.navigationController?.navigationBar.snp.bottom
+                ?? self.view.safeAreaLayoutGuide.snp.bottom
+            ).offset(Spacing.regulardSpacing)
+        }
+        
+        self.imageTitleLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.detailImageView.snp.bottom)
+                .offset(Spacing.regulardSpacing)
+        }
+        
+        self.imageDescriptionLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.imageTitleLabel.snp.bottom)
+                .offset(Spacing.regulardSpacing)
+        }
+    }
+}
+
+// MARK: - Add subviews
+
+private extension DetailImageViewController {
+    func addSubViews() {
+        self.view.addSubview(self.detailImageView)
+        self.view.addSubview(self.imageTitleLabel)
+        self.view.addSubview(self.imageDescriptionLabel)
+    }
+}
+
+// MARK: - Setters
+
+private extension DetailImageViewController {
+    func setNavBar() {
+        self.navigationItem.title = Titles.detailImageTitle.rawValue
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
+        ]
+    }
+}
+
