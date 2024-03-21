@@ -11,12 +11,11 @@ import Foundation
 
 struct PhotosModel: Codable {
     let id: String
-    let width, height: Int
-    let urls: Urls
+    let urls: URLs
 }
 
-// MARK: - Urls
+// MARK: - URL's
 
-struct Urls: Codable {
-    let full, regular, small, thumb: String
+struct URLs: Codable {
+    let thumb: String
 }
