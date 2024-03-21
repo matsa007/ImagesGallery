@@ -12,7 +12,7 @@ final class CacheService {
     // MARK: - Parameters
     
     static var shared = CacheService(
-        cacheCountLimit: .oneHundred
+        cacheCountLimit: .twoHundred
     )
     
     private let cache = NSCache<NSString, NSData>()

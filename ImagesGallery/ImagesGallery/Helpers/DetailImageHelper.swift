@@ -11,4 +11,8 @@ final class DetailImageHelper {
     func createDetailImageApiURL(for url: ApiURL, with id: String) -> String {
         url.rawValue + id
     }
+    
+    func createDetailCacheId(for id: String, with prefix: CacheIdPrefix) -> String {
+        prefix.rawValue + id
+    }
 }
