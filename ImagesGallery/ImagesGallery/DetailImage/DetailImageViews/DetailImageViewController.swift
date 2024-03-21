@@ -44,7 +44,6 @@ final class DetailImageViewController: UIViewController {
     init(viewModel: DetailImageViewModelProtocol) {
         self.viewModel = viewModel
         
-        dump(self.viewModel.detailImageInitialData)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,6 +56,7 @@ final class DetailImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.viewModel.readyForDisplay()
     }
     
     override func viewDidLayoutSubviews() {
