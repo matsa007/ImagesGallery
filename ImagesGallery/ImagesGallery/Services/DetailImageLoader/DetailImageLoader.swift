@@ -19,6 +19,12 @@ final class DetailImageLoader: DetailImageLoadable {
         self.displayDataIsReadyForViewPublisher.eraseToAnyPublisher()
     }
     
+    // MARK: - Initialization
+    
+    deinit {
+        self.cancellables.forEach { $0.cancel() }
+    }
+    
     // MARK: - Request data
 
     func requestDetailImageURLs(for currentImageId: String) {
@@ -75,9 +81,7 @@ final class DetailImageLoader: DetailImageLoadable {
                     currentImageTitle: initialData.currentImageTitle,
                     currentImageDescription: initialData.currentImageDescription
                 )
-                
-                dump(detailImageDisplayData)
-                
+                                
                 self.displayDataIsReadyForViewPublisher.send(
                     detailImageDisplayData
                 )

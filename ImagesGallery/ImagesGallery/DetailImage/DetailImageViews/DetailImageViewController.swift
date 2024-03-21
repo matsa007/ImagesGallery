@@ -7,12 +7,14 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 final class DetailImageViewController: UIViewController {
     
     // MARK: - Parameters
     
     private let viewModel: DetailImageViewModelProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - GUI
     
@@ -50,12 +52,17 @@ final class DetailImageViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        self.cancellables.forEach { $0.cancel() }
+    }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.binding()
         self.viewModel.readyForDisplay()
     }
     
@@ -129,3 +136,28 @@ private extension DetailImageViewController {
     }
 }
 
+// MARK: - View Model binding
+
+private extension DetailImageViewController {
+    func binding() {
+        self.bindOutput()
+    }
+    
+    func bindOutput() {
+        self.viewModel.anyDetailImageDisplayDataIsReadyForViewPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                self.detailImageDisplayDataIsReadyHandler()
+            }
+            .store(in: &self.cancellables)
+    }
+}
+
+// MARK: - Actions and handlers
+
+private extension DetailImageViewController {
+    func detailImageDisplayDataIsReadyHandler() {
+        
+    }
+}

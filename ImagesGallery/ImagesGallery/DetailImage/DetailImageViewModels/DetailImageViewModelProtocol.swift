@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import Combine
 
 protocol DetailImageViewModelProtocol {    
+    var detailImageDisplayData: DetailImageDisplayModel { get }
+    var anyDetailImageDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> { get }
+
     init(
         detailImageInitialData: DetailImageInitialModel,
         detailImageLoader: DetailImageLoadable
