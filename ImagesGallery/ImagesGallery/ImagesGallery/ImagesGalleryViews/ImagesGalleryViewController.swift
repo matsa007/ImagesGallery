@@ -86,9 +86,9 @@ private extension ImagesGalleryViewController {
     }
     
     func setSubViews() {
-        self.view.addSubview(self.imagesGalleryCollection)
         self.setNavBar()
         self.setImagesGalleryCollection()
+        self.addSubViews()
     }
     
     func setConstraints() {
@@ -97,6 +97,14 @@ private extension ImagesGalleryViewController {
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.imagesGalleryCollectionWidthCoeff)
         }
+    }
+}
+
+// MARK: - Add subviews
+
+private extension ImagesGalleryViewController {
+    func addSubViews() {
+        self.view.addSubview(self.imagesGalleryCollection)
     }
 }
 
