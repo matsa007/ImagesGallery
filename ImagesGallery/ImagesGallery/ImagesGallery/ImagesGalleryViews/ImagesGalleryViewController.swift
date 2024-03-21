@@ -55,11 +55,20 @@ final class ImagesGalleryViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.setItemSizeParameters(
-            itemsSpacing: .standartItemsSpacing,
-            rowSpacing: .standartRowsSpacing,
-            columnsQuantity: .standartColumnsQuantity
-        )
+        if UIDevice.current.orientation == .portrait {
+            self.setItemSizeParameters(
+                itemsSpacing: .standartItemsSpacing,
+                rowSpacing: .standartRowsSpacing,
+                columnsQuantity: .threeColumnsQuantity
+            )
+        } else {
+            self.setItemSizeParameters(
+                itemsSpacing: .standartItemsSpacing,
+                rowSpacing: .standartRowsSpacing,
+                columnsQuantity: .fourColumnsQuantity
+            )
+        }
+        self.view.layoutIfNeeded()
     }
 }
 
@@ -86,7 +95,7 @@ private extension ImagesGalleryViewController {
         self.imagesGalleryCollection.snp.makeConstraints {
             $0.centerX.height.equalToSuperview()
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.width.equalTo(self.view.frame.width * Sizes.imagesGalleryCollectionWidthCoeff)
+            $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.imagesGalleryCollectionWidthCoeff)
         }
     }
 }
@@ -126,7 +135,7 @@ private extension ImagesGalleryViewController {
             
             let collectionWidth = self.imagesGalleryCollection.frame.width
             let totalSpacingWidth = CGFloat(columnsQuantity.rawValue - 1) * minimumInteritemSpacing
-            let itemWidth = (collectionWidth - totalSpacingWidth) / 3
+            let itemWidth = (collectionWidth - totalSpacingWidth) / CGFloat(columnsQuantity.rawValue)
             layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         }
     }
