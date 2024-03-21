@@ -19,6 +19,11 @@ final class DetailImageLoader: DetailImageLoadable {
         self.displayDataIsReadyForViewPublisher.eraseToAnyPublisher()
     }
     
+    private let networkErrorMessagePublisher = PassthroughSubject<Error, Never>()
+    var anyNetworkErrorMessagePublisher: AnyPublisher<Error, Never> {
+        self.networkErrorMessagePublisher.eraseToAnyPublisher()
+    }
+    
     // MARK: - Initialization
     
     deinit {
@@ -56,11 +61,11 @@ final class DetailImageLoader: DetailImageLoadable {
             catch let error {
                 switch error {
                 case NetworkError.invalidURL:
-                    print(error)
+                    self.networkErrorMessagePublisher.send(error)
                 case NetworkError.invalidResponse:
-                    print(error)
+                    self.networkErrorMessagePublisher.send(error)
                 case NetworkError.statusCode(Int.min...Int.max):
-                    print(error)
+                    self.networkErrorMessagePublisher.send(error)
                 default:
                     break
                 }
@@ -90,11 +95,11 @@ final class DetailImageLoader: DetailImageLoadable {
             catch let error {
                 switch error {
                 case NetworkError.invalidURL:
-                    print(error)
+                    self.networkErrorMessagePublisher.send(error)
                 case NetworkError.invalidResponse:
-                    print(error)
+                    self.networkErrorMessagePublisher.send(error)
                 case NetworkError.statusCode(Int.min...Int.max):
-                    print(error)
+                    self.networkErrorMessagePublisher.send(error)
                 default:
                     break
                 }

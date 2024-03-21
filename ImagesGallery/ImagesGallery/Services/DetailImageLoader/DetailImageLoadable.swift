@@ -10,7 +10,8 @@ import Combine
 
 protocol DetailImageLoadable {
     var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<DetailImageDisplayModel, Never> { get }
-    
+    var anyNetworkErrorMessagePublisher: AnyPublisher<Error, Never> { get }
+
     func requestDetailImageURLs(for currentImageId: String)
     func requestDetailImageData(from imageUrl: String, initialData: DetailImageDisplayModel) async
 }

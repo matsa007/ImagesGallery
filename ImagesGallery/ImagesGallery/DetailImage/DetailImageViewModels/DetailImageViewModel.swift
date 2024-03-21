@@ -22,6 +22,11 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
     var anyDetailImageDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> {
         self.detailImageDisplayDataIsReadyForViewPublisher.eraseToAnyPublisher()
     }
+    
+    private let networkErrorAlertPublisher = PassthroughSubject<Error, Never>()
+    var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> {
+        self.networkErrorAlertPublisher.eraseToAnyPublisher()
+    }
 
 
     // MARK: - Initialization
@@ -61,6 +66,13 @@ private extension DetailImageViewModel {
             }
             .store(in: &self.cancellables)
         
+        self.loader.anyNetworkErrorMessagePublisher
+            .sink { [weak self] error in
+                guard let self else { return }
+                self.handleAlertForNetworkError(for: error)
+            }
+            .store(in: &self.cancellables)
+        
         self.loader.requestDetailImageURLs(
             for: detailImageInitialData.imageIDs[currentIndex]
         )
@@ -73,5 +85,9 @@ private extension DetailImageViewModel {
     func handleDisplayData(for displayData: DetailImageDisplayModel) {
         self.detailImageDisplayData = displayData
         self.detailImageDisplayDataIsReadyForViewPublisher.send()
+    }
+    
+    func handleAlertForNetworkError(for error: Error) {
+        self.networkErrorAlertPublisher.send(error)
     }
 }

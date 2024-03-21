@@ -151,6 +151,14 @@ private extension DetailImageViewController {
                 self.detailImageDisplayDataIsReadyHandler()
             }
             .store(in: &self.cancellables)
+        
+        self.viewModel.anyNetworkErrorAlertPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let self else { return }
+                self.handleShowErrorWithAlert(for: error)
+            }
+            .store(in: &self.cancellables)
     }
 }
 
@@ -159,5 +167,13 @@ private extension DetailImageViewController {
 private extension DetailImageViewController {
     func detailImageDisplayDataIsReadyHandler() {
         
+    }
+    
+    func handleShowErrorWithAlert(for error: Error) {
+        self.alertForError(
+            for: error,
+            with: .alertTitle,
+            with: .alertButtonTitle
+        )
     }
 }
