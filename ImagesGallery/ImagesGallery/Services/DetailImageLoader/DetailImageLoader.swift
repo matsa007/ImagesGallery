@@ -46,16 +46,34 @@ final class DetailImageLoader: DetailImageLoadable {
                     httpMethod: .get
                 )
                 
-                let detailImageDisplayData = DetailImageDisplayModel(
-                    currentImageData: Data(),
-                    currentImageTitle: responseData.slug,
-                    currentImageDescription: responseData.altDescription
-                )
-                                
-                await self.requestDetailImageData(
-                    from: responseData.urls.regular,
-                    initialData: detailImageDisplayData
-                )
+                if let cachedData = self.checkChache(
+                    for: helper.createDetailCacheId(
+                        for: currentImageId,
+                        with: .detailCacheId
+                    )
+                ) {
+                    let detailImageDisplayData = DetailImageDisplayModel(
+                        currentImageData: cachedData,
+                        currentImageTitle: responseData.slug,
+                        currentImageDescription: responseData.altDescription
+                    )
+                    self.displayDataIsReadyForViewPublisher.send(detailImageDisplayData)
+                } else {
+                    let detailImageDisplayData = DetailImageDisplayModel(
+                        currentImageData: Data(),
+                        currentImageTitle: responseData.slug,
+                        currentImageDescription: responseData.altDescription
+                    )
+                                    
+                    await self.requestDetailImageData(
+                        from: responseData.urls.regular,
+                        initialData: detailImageDisplayData, 
+                        cacheId: helper.createDetailCacheId(
+                            for: currentImageId,
+                            with: .detailCacheId
+                        )
+                    )
+                }
             }
             
             catch let error {
@@ -73,7 +91,7 @@ final class DetailImageLoader: DetailImageLoadable {
         }
     }
     
-    func requestDetailImageData(from imageUrl: String, initialData: DetailImageDisplayModel) async {
+    func requestDetailImageData(from imageUrl: String, initialData: DetailImageDisplayModel, cacheId: String) async {
         Task {
             do {
                 let responseData = try await NetworkManager.shared.requestImageData(
@@ -90,6 +108,11 @@ final class DetailImageLoader: DetailImageLoadable {
                 self.displayDataIsReadyForViewPublisher.send(
                     detailImageDisplayData
                 )
+                
+                self.saveCache(
+                    responseData,
+                    for: cacheId
+                )
             }
             
             catch let error {
@@ -105,5 +128,21 @@ final class DetailImageLoader: DetailImageLoadable {
                 }
             }
         }
+    }
+}
+
+// MARK: - Cache service checker
+
+private extension DetailImageLoader {
+    func checkChache(for id: String) -> Data? {
+        if let data = CacheService.shared.readFromCache(forId: id) {
+            return data
+        } else {
+            return nil
+        }
+    }
+    
+    func saveCache(_ data: Data, for id: String) {
+        CacheService.shared.saveToCache(data, forId: id)
     }
 }

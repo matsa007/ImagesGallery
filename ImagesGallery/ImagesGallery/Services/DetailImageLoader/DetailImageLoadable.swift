@@ -13,5 +13,5 @@ protocol DetailImageLoadable {
     var anyNetworkErrorMessagePublisher: AnyPublisher<Error, Never> { get }
 
     func requestDetailImageURLs(for currentImageId: String)
-    func requestDetailImageData(from imageUrl: String, initialData: DetailImageDisplayModel) async
+    func requestDetailImageData(from imageUrl: String, initialData: DetailImageDisplayModel, cacheId: String) async
 }
