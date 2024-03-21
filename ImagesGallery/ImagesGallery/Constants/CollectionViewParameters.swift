@@ -16,5 +16,6 @@ enum CollectionViewRowsSpacing: CGFloat {
 }
 
 enum CollectionViewQuantity: Int {
-    case standartColumnsQuantity = 3
+    case threeColumnsQuantity = 3
+    case fourColumnsQuantity = 4
 }
