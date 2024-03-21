@@ -17,6 +17,11 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
     var detailImageDisplayData: DetailImageDisplayModel
     
     private var cancellables: Set<AnyCancellable> = []
+    
+    private let detailImageDisplayDataIsReadyForViewPublisher = PassthroughSubject<Void, Never>()
+    var anyDetailImageDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> {
+        self.detailImageDisplayDataIsReadyForViewPublisher.eraseToAnyPublisher()
+    }
 
 
     // MARK: - Initialization
@@ -33,6 +38,12 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
             currentImageDescription: nil
         )
     }
+    
+    deinit {
+        self.cancellables.forEach { $0.cancel() }
+    }
+    
+    // MARK: - Data loading
     
     func readyForDisplay() {
         self.fetchCurrentImageData()
@@ -61,5 +72,6 @@ private extension DetailImageViewModel {
 private extension DetailImageViewModel {
     func handleDisplayData(for displayData: DetailImageDisplayModel) {
         self.detailImageDisplayData = displayData
+        self.detailImageDisplayDataIsReadyForViewPublisher.send()
     }
 }
