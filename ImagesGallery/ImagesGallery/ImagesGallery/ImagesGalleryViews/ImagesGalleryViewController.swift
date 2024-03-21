@@ -209,10 +209,10 @@ extension ImagesGalleryViewController {
                 detailImageInitialData: DetailImageInitialModel(
                     imagesGalleryDisplayData: self.viewModel.imagesGalleryDisplayData,
                     selectedImageIndex: index
-                )
+                ),
+                detailImageLoader: DetailImageLoader()
             )
         )
-        
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

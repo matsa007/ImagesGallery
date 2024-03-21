@@ -7,8 +7,11 @@
 
 import Foundation
 
-protocol DetailImageViewModelProtocol {
-    var detailImageInitialData: DetailImageInitialModel { get set }
+protocol DetailImageViewModelProtocol {    
+    init(
+        detailImageInitialData: DetailImageInitialModel,
+        detailImageLoader: DetailImageLoadable
+    )
     
-    init(detailImageInitialData: DetailImageInitialModel)
+    func readyForDisplay()
 }

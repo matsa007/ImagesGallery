@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum ApiKeys: String {
-    case unsplashApiKey = "QqnfRCXK1W3DwCtc7bwh3dIf7CccvoTGTRMFtP-84gA"
+enum ApiKeys {
+    static let unsplashApiKey = "QqnfRCXK1W3DwCtc7bwh3dIf7CccvoTGTRMFtP-84gA"
 }
