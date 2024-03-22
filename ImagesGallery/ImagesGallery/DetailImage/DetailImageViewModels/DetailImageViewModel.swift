@@ -53,11 +53,21 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
     func readyForDisplay() {
         self.fetchCurrentImageData()
     }
+    
+    func swipedToLeftSide() {
+        self.handleLeftSwipe()
+    }
+    
+    func swipedToRightSide() {
+        self.handleRightSwipe()
+    }
 }
+
+// MARK: - Fetch detail image data
 
 private extension DetailImageViewModel {
     func fetchCurrentImageData() {
-        let currentIndex = detailImageInitialData.selectedImageIndex
+        let currentIndex = self.detailImageInitialData.selectedImageIndex
         
         self.loader.anyDisplayDataIsReadyForViewPublisher
             .sink { [weak self] data in
@@ -74,7 +84,7 @@ private extension DetailImageViewModel {
             .store(in: &self.cancellables)
         
         self.loader.requestDetailImageURLs(
-            for: detailImageInitialData.imageIDs[currentIndex]
+            for: self.detailImageInitialData.imageIDs[currentIndex]
         )
     }
 }
@@ -89,5 +99,15 @@ private extension DetailImageViewModel {
     
     func handleAlertForNetworkError(for error: Error) {
         self.networkErrorAlertPublisher.send(error)
+    }
+    
+    func handleLeftSwipe() {
+        self.detailImageInitialData.selectedImageIndex += 1
+        self.fetchCurrentImageData()
+    }
+    
+    func handleRightSwipe() {
+        self.detailImageInitialData.selectedImageIndex -= 1
+        self.fetchCurrentImageData()
     }
 }

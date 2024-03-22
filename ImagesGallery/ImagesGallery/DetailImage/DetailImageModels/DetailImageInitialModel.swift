@@ -9,7 +9,7 @@ import Foundation
 
 struct DetailImageInitialModel {
     let imageIDs: [String]
-    let selectedImageIndex: Int
+    var selectedImageIndex: Int
     
     init(imagesGalleryDisplayData: [ImagesGalleryDisplayModel], selectedImageIndex: Int) {
         self.imageIDs = imagesGalleryDisplayData.map { $0.id }
