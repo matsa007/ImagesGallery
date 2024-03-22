@@ -46,6 +46,22 @@ final class DetailImageLoader: DetailImageLoadable {
                     httpMethod: .get
                 )
                 
+                let initialImageTitle = responseData.slug ?? DefaultMessages.defaultImageTitle
+                
+                let initialImageDescription = responseData.description
+                ?? responseData.altDescription
+                ?? DefaultMessages.defaultImageDescription
+                
+                let updatedImageTitle = helper.updateDetailImageTitle(
+                    for: initialImageTitle,
+                    currentSeparator: .dash,
+                    newSeparator: .space
+                )
+                
+                let updatedImageDescription = helper.updateDetailImageDescription(
+                    for: initialImageDescription
+                )
+                
                 if let cachedData = self.checkChache(
                     for: helper.createDetailCacheId(
                         for: currentImageId,
@@ -54,15 +70,15 @@ final class DetailImageLoader: DetailImageLoadable {
                 ) {
                     let detailImageDisplayData = DetailImageDisplayModel(
                         currentImageData: cachedData,
-                        currentImageTitle: responseData.slug,
-                        currentImageDescription: responseData.altDescription
+                        currentImageTitle: updatedImageTitle,
+                        currentImageDescription: updatedImageDescription
                     )
                     self.displayDataIsReadyForViewPublisher.send(detailImageDisplayData)
                 } else {
                     let detailImageDisplayData = DetailImageDisplayModel(
                         currentImageData: Data(),
-                        currentImageTitle: responseData.slug,
-                        currentImageDescription: responseData.altDescription
+                        currentImageTitle: updatedImageTitle,
+                        currentImageDescription: updatedImageDescription
                     )
                                     
                     await self.requestDetailImageData(

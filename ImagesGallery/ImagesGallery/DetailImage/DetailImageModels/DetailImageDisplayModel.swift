@@ -9,6 +9,6 @@ import Foundation
 
 struct DetailImageDisplayModel {
     let currentImageData: Data
-    let currentImageTitle: String?
-    let currentImageDescription: String?
+    let currentImageTitle: String
+    let currentImageDescription: String
 }

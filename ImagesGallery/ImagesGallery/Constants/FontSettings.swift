@@ -9,4 +9,6 @@ import UIKit
 
 enum FontSettings {
     static let tabBarItemFont = UIFont(name: "HelveticaNeue-Bold", size: 12)
+    static let detailImageTitleFont = UIFont(name: "HelveticaNeue-Bold", size: 16)
+    static let detailImageDescriptionFont = UIFont(name: "HelveticaNeue", size: 12)
 }
