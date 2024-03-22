@@ -21,6 +21,7 @@ final class DetailImageViewController: UIViewController {
     private lazy var detailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -46,6 +47,18 @@ final class DetailImageViewController: UIViewController {
         label.textColor = .white
         label.font = FontSettings.detailImageDescriptionFont
         return label
+    }()
+    
+    private lazy var leftSwipeGestureRecognizer: UISwipeGestureRecognizer = {
+        let recognizer = UISwipeGestureRecognizer()
+        recognizer.direction = .left
+        return recognizer
+    }()
+    
+    private lazy var rightSwipeGestureRecognizer: UISwipeGestureRecognizer = {
+        let recognizer = UISwipeGestureRecognizer()
+        recognizer.direction = .right
+        return recognizer
     }()
     
     // MARK: - Initialization
@@ -95,6 +108,7 @@ private extension DetailImageViewController {
     
     func setSubViews() {
         self.setNavBar()
+        self.setSwipeGestureRecognizers()
         self.setFavoritesButton()
         self.addSubViews()
     }
@@ -141,6 +155,8 @@ private extension DetailImageViewController {
         self.view.addSubview(self.addToFavoritesButton)
         self.view.addSubview(self.imageTitleLabel)
         self.view.addSubview(self.imageDescriptionLabel)
+        self.detailImageView.addGestureRecognizer(self.leftSwipeGestureRecognizer)
+        self.detailImageView.addGestureRecognizer(self.rightSwipeGestureRecognizer)
     }
 }
 
@@ -153,6 +169,25 @@ private extension DetailImageViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
         ]
+    }
+    
+    func setSwipeGestureRecognizers() {
+        self.setLeftSwipeGestureRecognizer()
+        self.setRightSwipeGestureRecognizer()
+    }
+    
+    func setLeftSwipeGestureRecognizer() {
+        self.leftSwipeGestureRecognizer.addTarget(
+            self,
+            action: #selector(self.didLeftSwipe)
+        )
+    }
+    
+    func setRightSwipeGestureRecognizer() {
+        self.rightSwipeGestureRecognizer.addTarget(
+            self,
+            action: #selector(self.didRightSwipe)
+        )
     }
     
     func setFavoritesButton() {
@@ -213,5 +248,13 @@ private extension DetailImageViewController {
             with: .alertTitle,
             with: .alertButtonTitle
         )
+    }
+    
+    @objc private func didLeftSwipe() {
+        self.viewModel.swipedToLeftSide()
+    }
+    
+    @objc private func didRightSwipe() {
+        self.viewModel.swipedToRightSide()
     }
 }
