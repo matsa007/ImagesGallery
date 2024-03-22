@@ -20,6 +20,7 @@ final class DetailImageViewController: UIViewController {
     
     private lazy var detailImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -30,11 +31,19 @@ final class DetailImageViewController: UIViewController {
     
     private lazy var imageTitleLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = FontSettings.detailImageTitleFont
         return label
     }()
     
     private lazy var imageDescriptionLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = FontSettings.detailImageDescriptionFont
         return label
     }()
     
@@ -91,6 +100,8 @@ private extension DetailImageViewController {
     func setConstraints() {
         self.detailImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
+            $0.height.equalToSuperview().multipliedBy(Sizes.detailImageViewHeightCoeff)
             $0.top.equalTo(
                 self.navigationController?.navigationBar.snp.bottom
                 ?? self.view.safeAreaLayoutGuide.snp.bottom
@@ -99,12 +110,14 @@ private extension DetailImageViewController {
         
         self.imageTitleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
             $0.top.equalTo(self.detailImageView.snp.bottom)
                 .offset(Spacing.regulardSpacing)
         }
         
         self.imageDescriptionLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
             $0.top.equalTo(self.imageTitleLabel.snp.bottom)
                 .offset(Spacing.regulardSpacing)
         }
