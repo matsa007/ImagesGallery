@@ -9,6 +9,5 @@ import Foundation
 
 enum Titles: String {
     case imagesGaleryBarTitle = "Images gallery"
-    case favoriteImagesBarTitle = "Favorite images"
     case detailImageTitle = "Image details"
 }
