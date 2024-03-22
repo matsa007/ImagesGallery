@@ -48,7 +48,6 @@
 		494132AC2BA6FD9000CA97FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AB2BA6FD9000CA97FD /* SceneDelegate.swift */; };
 		494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AD2BA6FD9000CA97FD /* ImagesGalleryViewController.swift */; };
 		494132B32BA6FD9100CA97FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 494132B22BA6FD9100CA97FD /* Assets.xcassets */; };
-		494132BF2BA7016800CA97FD /* FavoriteImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132BE2BA7016800CA97FD /* FavoriteImagesViewController.swift */; };
 		4BC4391E9FCEAB5D48C5EF08 /* Pods_ImagesGallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A373C3878839DA9A37686A6 /* Pods_ImagesGallery.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,7 +97,6 @@
 		494132AD2BA6FD9000CA97FD /* ImagesGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryViewController.swift; sourceTree = "<group>"; };
 		494132B22BA6FD9100CA97FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		494132B72BA6FD9100CA97FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		494132BE2BA7016800CA97FD /* FavoriteImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImagesViewController.swift; sourceTree = "<group>"; };
 		9C6633C58472596A1C59E318 /* Pods-ImagesGallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImagesGallery.release.xcconfig"; path = "Target Support Files/Pods-ImagesGallery/Pods-ImagesGallery.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -281,7 +279,6 @@
 				493F788B2BA7A03700E3A04A /* Services */,
 				494132C12BA7034B00CA97FD /* ImagesGallery */,
 				493F78A82BAB907100E3A04A /* DetailImage */,
-				494132C02BA701AC00CA97FD /* FavoriteImages */,
 				494132B22BA6FD9100CA97FD /* Assets.xcassets */,
 				494132B72BA6FD9100CA97FD /* Info.plist */,
 			);
@@ -295,16 +292,6 @@
 				494132A92BA6FD9000CA97FD /* AppDelegate.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		494132C02BA701AC00CA97FD /* FavoriteImages */ = {
-			isa = PBXGroup;
-			children = (
-				494132C72BA703D500CA97FD /* FavoriteImagesViewModels */,
-				494132C62BA703C300CA97FD /* FavoriteImagesViews */,
-				494132C52BA703B300CA97FD /* FavoriteImagesModels */,
-			);
-			path = FavoriteImages;
 			sourceTree = "<group>";
 		};
 		494132C12BA7034B00CA97FD /* ImagesGallery */ = {
@@ -342,28 +329,6 @@
 				493F78872BA795A000E3A04A /* ImagesGalleryViewModel.swift */,
 			);
 			path = ImagesGalleryViewModels;
-			sourceTree = "<group>";
-		};
-		494132C52BA703B300CA97FD /* FavoriteImagesModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FavoriteImagesModels;
-			sourceTree = "<group>";
-		};
-		494132C62BA703C300CA97FD /* FavoriteImagesViews */ = {
-			isa = PBXGroup;
-			children = (
-				494132BE2BA7016800CA97FD /* FavoriteImagesViewController.swift */,
-			);
-			path = FavoriteImagesViews;
-			sourceTree = "<group>";
-		};
-		494132C72BA703D500CA97FD /* FavoriteImagesViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FavoriteImagesViewModels;
 			sourceTree = "<group>";
 		};
 		71397C1D3A3BA23A88C7B6DD /* Pods */ = {
@@ -516,7 +481,6 @@
 				493F78982BAB19D500E3A04A /* CollectionViewParameters.swift in Sources */,
 				493F78A52BAB5AE500E3A04A /* CacheLimits.swift in Sources */,
 				493F78AD2BAB90E800E3A04A /* DetailImageViewController.swift in Sources */,
-				494132BF2BA7016800CA97FD /* FavoriteImagesViewController.swift in Sources */,
 				493F78C32BACD30C00E3A04A /* DetailImageLoadable.swift in Sources */,
 				493F78B12BAB9AB900E3A04A /* DetailImageViewModel.swift in Sources */,
 				493F78862BA7908400E3A04A /* PhotosModel.swift in Sources */,

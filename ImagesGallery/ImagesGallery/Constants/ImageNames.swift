@@ -9,5 +9,4 @@ import Foundation
 
 enum ImageNames: String {
     case imagesGaleryImageName = "rectangle.grid.2x2.fill"
-    case favoriteImagesImageName = "heart.rectangle.fill"
 }

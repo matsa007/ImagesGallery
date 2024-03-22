@@ -55,13 +55,14 @@ final class ImagesGalleryViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if UIDevice.current.orientation == .portrait {
+        switch UIDevice.current.orientation {
+        case .portrait, .unknown:
             self.setItemSizeParameters(
                 itemsSpacing: .standartItemsSpacing,
                 rowSpacing: .standartRowsSpacing,
                 columnsQuantity: .threeColumnsQuantity
             )
-        } else {
+        default:
             self.setItemSizeParameters(
                 itemsSpacing: .standartItemsSpacing,
                 rowSpacing: .standartRowsSpacing,
