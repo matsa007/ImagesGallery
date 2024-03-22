@@ -146,6 +146,16 @@ private extension DetailImageViewController {
     }
 }
 
+// MARK: - Set display data
+
+private extension DetailImageViewController {
+    func setDisplayData(imageData: Data, imageTitle: String, imageDescription: String) {
+        self.detailImageView.image = UIImage(data: imageData)
+        self.imageTitleLabel.text = imageTitle
+        self.imageDescriptionLabel.text = imageDescription
+    }
+}
+
 // MARK: - View Model binding
 
 private extension DetailImageViewController {
@@ -176,7 +186,11 @@ private extension DetailImageViewController {
 
 private extension DetailImageViewController {
     func detailImageDisplayDataIsReadyHandler() {
-
+        self.setDisplayData(
+            imageData: self.viewModel.detailImageDisplayData.currentImageData,
+            imageTitle: self.viewModel.detailImageDisplayData.currentImageTitle,
+            imageDescription: self.viewModel.detailImageDisplayData.currentImageDescription
+        )
     }
     
     func handleShowErrorWithAlert(for error: Error) {
