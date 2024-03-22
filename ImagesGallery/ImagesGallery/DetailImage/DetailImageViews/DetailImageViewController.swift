@@ -26,6 +26,7 @@ final class DetailImageViewController: UIViewController {
     
     private lazy var addToFavoritesButton: UIButton = {
         let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         return button
     }()
     
@@ -94,6 +95,7 @@ private extension DetailImageViewController {
     
     func setSubViews() {
         self.setNavBar()
+        self.setFavoritesButton()
         self.addSubViews()
     }
     
@@ -108,11 +110,18 @@ private extension DetailImageViewController {
             ).offset(Spacing.regulardSpacing)
         }
         
+        self.addToFavoritesButton.snp.makeConstraints {
+            $0.height.equalToSuperview().dividedBy(15)
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.detailImageView.snp.bottom)
+                .offset(Spacing.minSpacing)
+        }
+        
         self.imageTitleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
-            $0.top.equalTo(self.detailImageView.snp.bottom)
-                .offset(Spacing.regulardSpacing)
+            $0.top.equalTo(self.addToFavoritesButton.snp.bottom)
+                .offset(Spacing.minSpacing)
         }
         
         self.imageDescriptionLabel.snp.makeConstraints {
@@ -129,6 +138,7 @@ private extension DetailImageViewController {
 private extension DetailImageViewController {
     func addSubViews() {
         self.view.addSubview(self.detailImageView)
+        self.view.addSubview(self.addToFavoritesButton)
         self.view.addSubview(self.imageTitleLabel)
         self.view.addSubview(self.imageDescriptionLabel)
     }
@@ -143,6 +153,10 @@ private extension DetailImageViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
         ]
+    }
+    
+    func setFavoritesButton() {
+        self.addToFavoritesButton.tintColor = .red
     }
 }
 
