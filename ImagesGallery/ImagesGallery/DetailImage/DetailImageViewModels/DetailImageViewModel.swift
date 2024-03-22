@@ -39,8 +39,8 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
         self.loader = detailImageLoader
         self.detailImageDisplayData = DetailImageDisplayModel(
             currentImageData: Data(),
-            currentImageTitle: nil,
-            currentImageDescription: nil
+            currentImageTitle: String(),
+            currentImageDescription: String()
         )
     }
     

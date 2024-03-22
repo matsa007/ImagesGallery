@@ -20,7 +20,6 @@ final class DetailImageViewController: UIViewController {
     
     private lazy var detailImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .green
         return imageView
     }()
     
@@ -31,13 +30,11 @@ final class DetailImageViewController: UIViewController {
     
     private lazy var imageTitleLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .red
         return label
     }()
     
     private lazy var imageDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .orange
         return label
     }()
     
@@ -166,7 +163,7 @@ private extension DetailImageViewController {
 
 private extension DetailImageViewController {
     func detailImageDisplayDataIsReadyHandler() {
-        
+
     }
     
     func handleShowErrorWithAlert(for error: Error) {

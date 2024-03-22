@@ -9,6 +9,8 @@ import Foundation
 
 enum Sizes {
     static let imagesGalleryCollectionWidthCoeff: CGFloat = 34 / 35
+    static let detailImageViewWidthCoeff: CGFloat = 34 / 35
+    static let detailImageViewHeightCoeff: CGFloat = 1 / 3
 }
 
 enum Spacing {

@@ -14,7 +14,7 @@ struct DetailImageModel: Codable {
     let slug: String?
     let urls: DetailImageURLs
     let description: String?
-    let altDescription: String
+    let altDescription: String?
     
     enum CodingKeys: String, CodingKey {
         case id, slug, urls, description
