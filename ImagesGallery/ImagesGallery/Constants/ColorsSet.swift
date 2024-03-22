@@ -15,4 +15,5 @@ enum ColorsSet {
     static let galleryBackgroundColor = UIColor(red: 43/255, green: 41/255, blue: 53/255, alpha: 1)
     static let detailBackgroundColor = UIColor(red: 43/255, green: 41/255, blue: 53/255, alpha: 1)
     static let favoritesBackgroundColor = UIColor(red: 43/255, green: 41/255, blue: 53/255, alpha: 1)
+    static let imageLablesColor: UIColor = .white
 }
