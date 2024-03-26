@@ -64,7 +64,6 @@ extension ImagesGalleryCollectionViewCell {
         let image = UIImage(
             data: imageInfo.imageData
         )
-        
         self.thumbImageView.image = image
     }
 }

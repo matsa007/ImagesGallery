@@ -13,6 +13,7 @@ final class DetailImageLoader: DetailImageLoadable {
     // MARK: - Parameters
     
     private var cancellables: Set<AnyCancellable> = []
+    private let cacheService: CacheServiceProtocol
     
     private let displayDataIsReadyForViewPublisher = PassthroughSubject<DetailImageDisplayModel, Never>()
     var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<DetailImageDisplayModel, Never> {
@@ -25,6 +26,10 @@ final class DetailImageLoader: DetailImageLoadable {
     }
     
     // MARK: - Initialization
+    
+    init(cacheService: CacheServiceProtocol) {
+        self.cacheService = cacheService
+    }
     
     deinit {
         self.cancellables.forEach { $0.cancel() }
@@ -151,7 +156,7 @@ final class DetailImageLoader: DetailImageLoadable {
 
 private extension DetailImageLoader {
     func checkChache(for id: String) -> Data? {
-        if let data = CacheService.shared.readFromCache(forId: id) {
+        if let data = self.cacheService.readFromCache(forId: id) {
             return data
         } else {
             return nil
@@ -159,6 +164,6 @@ private extension DetailImageLoader {
     }
     
     func saveCache(_ data: Data, for id: String) {
-        CacheService.shared.saveToCache(data, forId: id)
+        self.cacheService.saveToCache(data, forId: id)
     }
 }

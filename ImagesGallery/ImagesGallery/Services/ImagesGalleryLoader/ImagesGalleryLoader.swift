@@ -13,6 +13,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
     // MARK: - Parameters
     
     private var cancellables: Set<AnyCancellable> = []
+    private let cacheService: CacheServiceProtocol
     
     private let displayDataIsReadyForViewPublisher = PassthroughSubject<[ImagesGalleryDisplayModel], Never>()
     var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<[ImagesGalleryDisplayModel], Never> {
@@ -25,6 +26,10 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
     }
     
     // MARK: - Initialization
+    
+    init(cacheService: CacheServiceProtocol) {
+        self.cacheService = cacheService
+    }
     
     deinit {
         self.cancellables.forEach { $0.cancel() }
@@ -149,7 +154,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
 
 private extension ImagesGalleryLoader {
     func checkChache(for id: String) -> Data? {
-        if let data = CacheService.shared.readFromCache(forId: id) {
+        if let data = self.cacheService.readFromCache(forId: id) {
             return data
         } else {
             return nil
@@ -157,6 +162,6 @@ private extension ImagesGalleryLoader {
     }
     
     func saveCache(_ data: Data, for id: String) {
-        CacheService.shared.saveToCache(data, forId: id)
+        self.cacheService.saveToCache(data, forId: id)
     }
 }

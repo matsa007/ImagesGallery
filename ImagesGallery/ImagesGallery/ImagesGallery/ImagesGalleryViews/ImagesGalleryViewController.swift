@@ -211,7 +211,11 @@ extension ImagesGalleryViewController {
                     imagesGalleryDisplayData: self.viewModel.imagesGalleryDisplayData,
                     selectedImageIndex: index
                 ),
-                detailImageLoader: DetailImageLoader()
+                detailImageLoader: DetailImageLoader(
+                    cacheService: CacheService(
+                        cacheCountLimit: .twoHundred
+                    )
+                )
             )
         )
         self.navigationController?.pushViewController(vc, animated: true)

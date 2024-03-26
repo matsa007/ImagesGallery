@@ -14,8 +14,8 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     
     var currentPage: Int
     var imagesGalleryDisplayData = [ImagesGalleryDisplayModel]()
-    private let loader: ImagesGalleryLoadable
     
+    private let loader: ImagesGalleryLoadable
     private var cancellables: Set<AnyCancellable> = []
     
     private let imagesGalleryDisplayDataIsReadyForViewPublisher = PassthroughSubject<Void, Never>()
@@ -53,6 +53,13 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
         self.fetchImagesData(
             with: .maximum
         )
+    }
+    
+    func printData() {
+        self.imagesGalleryDisplayData.enumerated().forEach { index, data in
+            print("INDEX = \(index)")
+            print("ID = \(data.id)")
+        }
     }
     
     func scrolledToItemWithItemIndex(_ index: Int) {
