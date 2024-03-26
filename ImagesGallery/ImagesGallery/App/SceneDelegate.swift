@@ -19,7 +19,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 loader: ImagesGalleryLoader(
                     cacheService: CacheService(
                         cacheCountLimit: .twoHundred
-                    )
+                    ), 
+                    networkService: NetworkService()
                 ),
                 startPage: .fromZero
             )

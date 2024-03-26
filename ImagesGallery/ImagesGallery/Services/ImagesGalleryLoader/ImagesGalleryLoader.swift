@@ -14,6 +14,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
     
     private var cancellables: Set<AnyCancellable> = []
     private let cacheService: CacheServiceProtocol
+    private let networkService: NetworkServiceProtocol
     
     private let displayDataIsReadyForViewPublisher = PassthroughSubject<[ImagesGalleryDisplayModel], Never>()
     var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<[ImagesGalleryDisplayModel], Never> {
@@ -27,8 +28,9 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
     
     // MARK: - Initialization
     
-    init(cacheService: CacheServiceProtocol) {
+    init(cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol) {
         self.cacheService = cacheService
+        self.networkService = networkService
     }
     
     deinit {
@@ -44,7 +46,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
             do {
                 var initialImagesData = [InitialImagesGalleryDataModel]()
                 
-                let responseData: [PhotosModel] = try await NetworkManager.shared.requestData(
+                let responseData: [PhotosModel] = try await self.networkService.requestData(
                     toEndPoint: helper.createPhotosApiURLForPage(
                         for: .imagesApiURL,
                         page: page,
@@ -108,7 +110,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                                 imageData: cachedData
                             )
                         } else {
-                            let responseData = try await NetworkManager.shared.requestImageData(
+                            let responseData = try await self.networkService.requestImageData(
                                 from: initialImageInfo.thumbImgURL,
                                 httpMethod: .get
                             )
