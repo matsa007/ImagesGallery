@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class DetailImageHelper {
+final class DetailImageHelper: DetailImageHelpeable {
     func createDetailImageApiURL(for url: ApiURL, with id: String) -> String {
         url.rawValue + id
     }
