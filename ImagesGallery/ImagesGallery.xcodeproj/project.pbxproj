@@ -49,6 +49,8 @@
 		494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494132AD2BA6FD9000CA97FD /* ImagesGalleryViewController.swift */; };
 		494132B32BA6FD9100CA97FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 494132B22BA6FD9100CA97FD /* Assets.xcassets */; };
 		4957D7622BB3486D0020F329 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4957D7612BB3486D0020F329 /* NetworkServiceProtocol.swift */; };
+		4957D76A2BB34E6E0020F329 /* ImagesGalleryHelpeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4957D7692BB34E6E0020F329 /* ImagesGalleryHelpeable.swift */; };
+		4957D76C2BB34EA90020F329 /* DetailImageHelpeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4957D76B2BB34EA90020F329 /* DetailImageHelpeable.swift */; };
 		4BC4391E9FCEAB5D48C5EF08 /* Pods_ImagesGallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A373C3878839DA9A37686A6 /* Pods_ImagesGallery.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +101,8 @@
 		494132B22BA6FD9100CA97FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		494132B72BA6FD9100CA97FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4957D7612BB3486D0020F329 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
+		4957D7692BB34E6E0020F329 /* ImagesGalleryHelpeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryHelpeable.swift; sourceTree = "<group>"; };
+		4957D76B2BB34EA90020F329 /* DetailImageHelpeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageHelpeable.swift; sourceTree = "<group>"; };
 		9C6633C58472596A1C59E318 /* Pods-ImagesGallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImagesGallery.release.xcconfig"; path = "Target Support Files/Pods-ImagesGallery/Pods-ImagesGallery.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -337,6 +341,7 @@
 		4957D7632BB34AA70020F329 /* ImagesGalleryHelper */ = {
 			isa = PBXGroup;
 			children = (
+				4957D7692BB34E6E0020F329 /* ImagesGalleryHelpeable.swift */,
 				493F78912BA7A1CA00E3A04A /* ImagesGalleryHelper.swift */,
 			);
 			path = ImagesGalleryHelper;
@@ -345,6 +350,7 @@
 		4957D7642BB34ABE0020F329 /* DetailImageHelper */ = {
 			isa = PBXGroup;
 			children = (
+				4957D76B2BB34EA90020F329 /* DetailImageHelpeable.swift */,
 				493F78B92BABA99400E3A04A /* DetailImageHelper.swift */,
 			);
 			path = DetailImageHelper;
@@ -476,9 +482,11 @@
 				493F787C2BA789A000E3A04A /* NetworkService.swift in Sources */,
 				493F786D2BA74E2A00E3A04A /* ImageNames.swift in Sources */,
 				493F78962BA8DC5600E3A04A /* ImagesGalleryDisplayModel.swift in Sources */,
+				4957D76C2BB34EA90020F329 /* DetailImageHelpeable.swift in Sources */,
 				493F78A72BAB68A700E3A04A /* CacheServiceProtocol.swift in Sources */,
 				493F78942BA8DC3E00E3A04A /* InitialImagesGalleryDataModel.swift in Sources */,
 				493F786F2BA754F600E3A04A /* ColorsSet.swift in Sources */,
+				4957D76A2BB34E6E0020F329 /* ImagesGalleryHelpeable.swift in Sources */,
 				493F78C12BACD2F300E3A04A /* DetailImageLoader.swift in Sources */,
 				493F78752BA76D3600E3A04A /* ImagesGalleryCollectionViewCell.swift in Sources */,
 				493F78CD2BAD0C0F00E3A04A /* DefaultMessages.swift in Sources */,

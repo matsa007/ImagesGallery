@@ -20,7 +20,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     cacheService: CacheService(
                         cacheCountLimit: .twoHundred
                     ), 
-                    networkService: NetworkService()
+                    networkService: NetworkService(), 
+                    helper: ImagesGalleryHelper()
                 ),
                 startPage: .fromZero
             )

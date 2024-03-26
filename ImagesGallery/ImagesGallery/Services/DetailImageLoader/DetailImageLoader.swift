@@ -15,6 +15,7 @@ final class DetailImageLoader: DetailImageLoadable {
     private var cancellables: Set<AnyCancellable> = []
     private let cacheService: CacheServiceProtocol
     private let networkService: NetworkServiceProtocol
+    private let helper: DetailImageHelpeable
 
     private let displayDataIsReadyForViewPublisher = PassthroughSubject<DetailImageDisplayModel, Never>()
     var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<DetailImageDisplayModel, Never> {
@@ -28,9 +29,14 @@ final class DetailImageLoader: DetailImageLoadable {
     
     // MARK: - Initialization
     
-    init(cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol) {
+    init(
+        cacheService: CacheServiceProtocol,
+        networkService: NetworkServiceProtocol,
+        helper: DetailImageHelpeable
+    ) {
         self.cacheService = cacheService
         self.networkService = networkService
+        self.helper = helper
     }
     
     deinit {
@@ -40,12 +46,10 @@ final class DetailImageLoader: DetailImageLoadable {
     // MARK: - Request data
 
     func requestDetailImageURLs(for currentImageId: String) {
-        let helper = DetailImageHelper()
-        
         Task {
             do {
                 let responseData: DetailImageModel = try await self.networkService.requestData(
-                    toEndPoint: helper.createDetailImageApiURL(
+                    toEndPoint: self.helper.createDetailImageApiURL(
                         for: ApiURL.imagesApiURL,
                         with: currentImageId
                     ),
@@ -59,18 +63,18 @@ final class DetailImageLoader: DetailImageLoadable {
                 ?? responseData.altDescription
                 ?? DefaultMessages.defaultImageDescription
                 
-                let updatedImageTitle = helper.updateDetailImageTitle(
+                let updatedImageTitle = self.helper.updateDetailImageTitle(
                     for: initialImageTitle,
                     currentSeparator: .dash,
                     newSeparator: .space
                 )
                 
-                let updatedImageDescription = helper.updateDetailImageDescription(
+                let updatedImageDescription = self.helper.updateDetailImageDescription(
                     for: initialImageDescription
                 )
                 
                 if let cachedData = self.checkChache(
-                    for: helper.createDetailCacheId(
+                    for: self.helper.createDetailCacheId(
                         for: currentImageId,
                         with: .detailCacheId
                     )
@@ -91,7 +95,7 @@ final class DetailImageLoader: DetailImageLoadable {
                     await self.requestDetailImageData(
                         from: responseData.urls.regular,
                         initialData: detailImageDisplayData, 
-                        cacheId: helper.createDetailCacheId(
+                        cacheId: self.helper.createDetailCacheId(
                             for: currentImageId,
                             with: .detailCacheId
                         )

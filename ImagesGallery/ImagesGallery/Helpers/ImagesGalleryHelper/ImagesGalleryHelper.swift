@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ImagesGalleryHelper {
+final class ImagesGalleryHelper: ImagesGalleryHelpeable {
     func createPhotosApiURLForPage(for url: ApiURL, page: Int, pageQuantity: Int) -> String {
         url.rawValue + ApiURLExtensions.page + String(page) + ApiURLExtensions.itemsPerPage + String(pageQuantity)
     }
