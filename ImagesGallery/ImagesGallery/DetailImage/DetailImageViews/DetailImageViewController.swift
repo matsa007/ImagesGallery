@@ -191,7 +191,7 @@ private extension DetailImageViewController {
     }
     
     func setFavoritesButton() {
-        self.addToFavoritesButton.tintColor = .red
+        self.addToFavoritesButton.tintColor = ColorsSet.heartButtonNotFavorite
     }
 }
 

@@ -16,12 +16,23 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
         return imView
     }()
     
+    private lazy var likedImageIndicatorView: UIImageView = {
+        let imView = UIImageView()
+        imView.image = UIImage(
+            systemName: ImageNames.heart.rawValue
+        )
+        imView.tintColor = ColorsSet.heartIndicatorColor
+        imView.isHidden = false
+        return imView
+    }()
+    
     // MARK: - Lifecycle
 
     override func prepareForReuse() {
         super.prepareForReuse()
         
         self.thumbImageView.image = nil
+        self.likedImageIndicatorView.image = nil
     }
     
     override func layoutSubviews() {
@@ -36,6 +47,7 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
 
     private func addSubViews() {
         self.contentView.addSubview(self.thumbImageView)
+        self.contentView.addSubview(self.likedImageIndicatorView)
     }
     
     // MARK: - Layout
@@ -53,6 +65,11 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
     private func setConstraints() {
         self.thumbImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        self.likedImageIndicatorView.snp.makeConstraints {
+            $0.width.height.equalToSuperview().multipliedBy(Sizes.heartHeightCoeff)
+            $0.right.bottom.equalToSuperview().inset(Spacing.heartIndicatorSpacing)
         }
     }
 }
