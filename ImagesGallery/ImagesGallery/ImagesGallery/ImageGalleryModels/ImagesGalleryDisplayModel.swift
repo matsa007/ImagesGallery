@@ -10,4 +10,5 @@ import Foundation
 struct ImagesGalleryDisplayModel {
     let id: String
     let imageData: Data
+    var isFavorite: Bool
 }

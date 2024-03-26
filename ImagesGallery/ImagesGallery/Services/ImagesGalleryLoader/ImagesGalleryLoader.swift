@@ -101,7 +101,8 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                 taskGroup.addTask {
                     var displayData = ImagesGalleryDisplayModel(
                         id: String(),
-                        imageData: Data()
+                        imageData: Data(), 
+                        isFavorite: Bool()
                     )
                     
                     do {
@@ -111,7 +112,8 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                         ) {
                             displayData = ImagesGalleryDisplayModel(
                                 id: initialImageInfo.id,
-                                imageData: cachedData
+                                imageData: cachedData, 
+                                isFavorite: false
                             )
                         } else {
                             let responseData = try await self.networkService.requestImageData(
@@ -121,7 +123,8 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                             
                             displayData = ImagesGalleryDisplayModel(
                                 id: initialImageInfo.id,
-                                imageData: responseData
+                                imageData: responseData, 
+                                isFavorite: false
                             )
                             
                             self.saveCache(
