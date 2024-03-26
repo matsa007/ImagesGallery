@@ -12,3 +12,4 @@ final class ImagesGalleryHelper {
         url.rawValue + ApiURLExtensions.page + String(page) + ApiURLExtensions.itemsPerPage + String(pageQuantity)
     }
 }
+

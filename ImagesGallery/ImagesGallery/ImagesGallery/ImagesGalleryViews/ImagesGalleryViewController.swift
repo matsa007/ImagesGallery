@@ -214,7 +214,8 @@ extension ImagesGalleryViewController {
                 detailImageLoader: DetailImageLoader(
                     cacheService: CacheService(
                         cacheCountLimit: .twoHundred
-                    )
+                    ), 
+                    networkService: NetworkService()
                 )
             )
         )

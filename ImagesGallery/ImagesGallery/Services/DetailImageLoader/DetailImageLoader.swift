@@ -14,7 +14,8 @@ final class DetailImageLoader: DetailImageLoadable {
     
     private var cancellables: Set<AnyCancellable> = []
     private let cacheService: CacheServiceProtocol
-    
+    private let networkService: NetworkServiceProtocol
+
     private let displayDataIsReadyForViewPublisher = PassthroughSubject<DetailImageDisplayModel, Never>()
     var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<DetailImageDisplayModel, Never> {
         self.displayDataIsReadyForViewPublisher.eraseToAnyPublisher()
@@ -27,8 +28,9 @@ final class DetailImageLoader: DetailImageLoadable {
     
     // MARK: - Initialization
     
-    init(cacheService: CacheServiceProtocol) {
+    init(cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol) {
         self.cacheService = cacheService
+        self.networkService = networkService
     }
     
     deinit {
@@ -42,7 +44,7 @@ final class DetailImageLoader: DetailImageLoadable {
         
         Task {
             do {
-                let responseData: DetailImageModel = try await NetworkManager.shared.requestData(
+                let responseData: DetailImageModel = try await self.networkService.requestData(
                     toEndPoint: helper.createDetailImageApiURL(
                         for: ApiURL.imagesApiURL,
                         with: currentImageId
@@ -115,7 +117,7 @@ final class DetailImageLoader: DetailImageLoadable {
     func requestDetailImageData(from imageUrl: String, initialData: DetailImageDisplayModel, cacheId: String) async {
         Task {
             do {
-                let responseData = try await NetworkManager.shared.requestImageData(
+                let responseData = try await self.networkService.requestImageData(
                     from: imageUrl,
                     httpMethod: .get
                 )
