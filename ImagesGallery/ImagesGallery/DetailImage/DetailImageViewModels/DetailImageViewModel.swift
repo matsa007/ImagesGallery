@@ -61,6 +61,10 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
     func swipedToRightSide() {
         self.handleRightSwipe()
     }
+    
+    func addToFavoritesButtonTapped() {
+        self.favoritesButtonTappedHandler()
+    }
 }
 
 // MARK: - Fetch detail image data
@@ -109,5 +113,9 @@ private extension DetailImageViewModel {
     func handleRightSwipe() {
         self.detailImageInitialData.selectedImageIndex -= 1
         self.fetchCurrentImageData()
+    }
+    
+    func favoritesButtonTappedHandler() {
+        print("self button tapped")
     }
 }

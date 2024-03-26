@@ -21,4 +21,5 @@ protocol DetailImageViewModelProtocol {
     func readyForDisplay()
     func swipedToLeftSide()
     func swipedToRightSide()
+    func addToFavoritesButtonTapped()
 }

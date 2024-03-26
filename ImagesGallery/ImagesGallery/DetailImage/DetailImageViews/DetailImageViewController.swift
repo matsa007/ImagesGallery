@@ -27,7 +27,10 @@ final class DetailImageViewController: UIViewController {
     
     private lazy var addToFavoritesButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.setImage(
+            UIImage(systemName: ImageNames.heart.rawValue),
+            for: .normal
+        )
         return button
     }()
     
@@ -192,6 +195,11 @@ private extension DetailImageViewController {
     
     func setFavoritesButton() {
         self.addToFavoritesButton.tintColor = ColorsSet.heartButtonNotFavorite
+        self.addToFavoritesButton.addTarget(
+            self,
+            action: #selector(self.addToFavoritesButtonTapped),
+            for: .touchUpInside
+        )
     }
 }
 
@@ -250,11 +258,15 @@ private extension DetailImageViewController {
         )
     }
     
-    @objc private func didLeftSwipe() {
+    @objc func didLeftSwipe() {
         self.viewModel.swipedToLeftSide()
     }
     
-    @objc private func didRightSwipe() {
+    @objc func didRightSwipe() {
         self.viewModel.swipedToRightSide()
+    }
+    
+    @objc func addToFavoritesButtonTapped() {
+        self.viewModel.addToFavoritesButtonTapped()
     }
 }
