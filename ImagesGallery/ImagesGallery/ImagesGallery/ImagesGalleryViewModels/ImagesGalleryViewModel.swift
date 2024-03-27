@@ -14,6 +14,7 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     
     var currentPage: Int
     var imagesGalleryDisplayData = [ImagesGalleryDisplayModel]()
+    var favoriteImagesData = [DetailImageFavoriteModel]()
     
     private let loader: ImagesGalleryLoadable
     private var cancellables: Set<AnyCancellable> = []
@@ -55,19 +56,16 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
         )
     }
     
-    func printData() {
-        self.imagesGalleryDisplayData.enumerated().forEach { index, data in
-            print("INDEX = \(index)")
-            print("ID = \(data.id)")
-        }
-    }
-    
     func scrolledToItemWithItemIndex(_ index: Int) {
         self.handleScrolledToItemWithItemIndex(index)
     }
     
     func collectionViewItemSelected(with index: Int) {
         self.handleCollectionViewItemSelected(for: index)
+    }
+    
+    func stateOfImageIsFavoriteChanged(for imageDetails: DetailImageFavoriteModel) {
+        self.handleStateOfImageIsFavoriteChanged(for: imageDetails)
     }
 }
 
@@ -122,5 +120,10 @@ extension ImagesGalleryViewModel {
     
     func handleCollectionViewItemSelected(for index: Int) {
         self.selectedItemDataIsReadyPublisher.send(index)
+    }
+    
+    func handleStateOfImageIsFavoriteChanged(for imageDetails: DetailImageFavoriteModel) {
+        self.favoriteImagesData.append(imageDetails)
+        dump(self.favoriteImagesData)
     }
 }

@@ -205,22 +205,40 @@ extension ImagesGalleryViewController {
     }
     
     func handleCollectionViewItemSelectedIndex(index: Int) {
-        let vc = DetailImageViewController(
-            viewModel: DetailImageViewModel(
-                detailImageInitialData: DetailImageInitialModel(
-                    imagesGalleryDisplayData: self.viewModel.imagesGalleryDisplayData,
-                    selectedImageIndex: index
+        let vm = DetailImageViewModel(
+            detailImageInitialData: DetailImageInitialModel(
+                imagesGalleryDisplayData: self.viewModel.imagesGalleryDisplayData,
+                selectedImageIndex: index
+            ),
+            detailImageLoader: DetailImageLoader(
+                cacheService: CacheService(
+                    cacheCountLimit: .twoHundred
                 ),
-                detailImageLoader: DetailImageLoader(
-                    cacheService: CacheService(
-                        cacheCountLimit: .twoHundred
-                    ), 
-                    networkService: NetworkService(), 
-                    helper: DetailImageHelper()
-                )
+                networkService: NetworkService(),
+                helper: DetailImageHelper()
             )
         )
+        
+        let vc = DetailImageViewController(
+            viewModel: vm
+        )
+        
+        vm.anyImageFavoriteButtonTappedPublisher
+            .sink { [weak self] favoritesData in
+                guard let self else { return }
+                self.handleFavoritesButtonTappedData(
+                    favoritesData: favoritesData
+                )
+            }
+            .store(in: &self.cancellables)
+        
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func handleFavoritesButtonTappedData(favoritesData: DetailImageFavoriteModel) {
+        self.viewModel.stateOfImageIsFavoriteChanged(
+            for: favoritesData
+        )
     }
 }
 

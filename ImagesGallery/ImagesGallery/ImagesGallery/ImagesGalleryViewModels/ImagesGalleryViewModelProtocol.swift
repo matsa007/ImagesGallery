@@ -24,4 +24,5 @@ protocol ImagesGalleryViewModelProtocol {
     func readyForDisplay()
     func scrolledToItemWithItemIndex(_ index: Int)
     func collectionViewItemSelected(with index: Int)
+    func stateOfImageIsFavoriteChanged(for imageDetails: DetailImageFavoriteModel)
 }
