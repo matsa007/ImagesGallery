@@ -24,7 +24,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     networkService: NetworkService(), 
                     helper: ImagesGalleryHelper()
                 ),
-                startPage: .fromZero
+                startPage: .fromFirstPage
             )
         )
     )

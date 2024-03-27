@@ -103,7 +103,7 @@ private extension ImagesGalleryViewModel {
 
 extension ImagesGalleryViewModel {
     func handleDisplayData(for data: [ImagesGalleryDisplayModel]) {
-        self.imagesGalleryDisplayData += data
+        self.imagesGalleryDisplayData.append(contentsOf: data)
         self.updateImagesGalleryWithStoredState()
         self.imagesGalleryDisplayDataIsReadyForViewPublisher.send()
     }
@@ -114,10 +114,10 @@ extension ImagesGalleryViewModel {
     
     func handleScrolledToItemWithItemIndex(_ index: Int) {
         let lastItemIndex = self.imagesGalleryDisplayData.count - 1
-        
+                
         if index == lastItemIndex {
             self.currentPage += 1
-            
+            self.cancellables.forEach { $0.cancel() }
             self.fetchImagesData(
                 with: .maximum
             )
