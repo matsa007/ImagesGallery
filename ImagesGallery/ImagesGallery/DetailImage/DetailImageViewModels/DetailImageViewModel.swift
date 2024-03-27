@@ -99,8 +99,8 @@ private extension DetailImageViewModel {
             .store(in: &self.cancellables)
         
         self.loader.requestDetailImageURLs(
-            for: self.detailImageInitialData.imageIDs[currentIndex], 
-            with: self.detailImageInitialData.isFavorites[currentIndex]
+            for: self.detailImageInitialData.initialImagesInfo[currentIndex].imageId,
+            with: self.detailImageInitialData.initialImagesInfo[currentIndex].isFavorite
         )
     }
 }
@@ -138,7 +138,7 @@ private extension DetailImageViewModel {
         self.imageFavoriteButtonTappedPublisher.send(
             FavoriteImageModel(
                 index: index,
-                id: self.detailImageInitialData.imageIDs[index],
+                id: self.detailImageInitialData.initialImagesInfo[index].imageId,
                 regularImageData: self.detailImageDisplayData.currentImageData, 
                 isFavorite: self.detailImageDisplayData.isFavorite
             )
