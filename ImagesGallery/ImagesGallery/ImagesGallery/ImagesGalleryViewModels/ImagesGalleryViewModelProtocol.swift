@@ -17,6 +17,7 @@ protocol ImagesGalleryViewModelProtocol {
     
     
     init(
+        userDefaultsService: UserDefaultsServiceProtocol,
         loader: ImagesGalleryLoadable,
         startPage: StartPageIndex
     )

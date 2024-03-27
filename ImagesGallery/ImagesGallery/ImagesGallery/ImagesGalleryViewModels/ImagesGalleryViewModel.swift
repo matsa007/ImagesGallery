@@ -16,6 +16,7 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     var imagesGalleryDisplayData = [ImagesGalleryDisplayModel]()
     var favoriteImagesData = [FavoriteImageModel]()
     
+    private let userDefaultsService: UserDefaultsServiceProtocol
     private let loader: ImagesGalleryLoadable
     private var cancellables: Set<AnyCancellable> = []
     
@@ -37,9 +38,11 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     // MARK: - Initialization
     
     init(
+        userDefaultsService: UserDefaultsServiceProtocol,
         loader: ImagesGalleryLoadable,
         startPage: StartPageIndex
     ) {
+        self.userDefaultsService = userDefaultsService
         self.loader = loader
         self.currentPage = startPage.rawValue
     }
@@ -101,6 +104,7 @@ private extension ImagesGalleryViewModel {
 extension ImagesGalleryViewModel {
     func handleDisplayData(for data: [ImagesGalleryDisplayModel]) {
         self.imagesGalleryDisplayData += data
+        self.updateImagesGalleryWithStoredState()
         self.imagesGalleryDisplayDataIsReadyForViewPublisher.send()
     }
     
@@ -140,12 +144,22 @@ extension ImagesGalleryViewModel {
             
             self.updateImagesGalleryWithNewState(for: imageDetails.id)
             
+            self.userDefaultsService.saveToUserDefaults(
+                self.favoriteImagesData,
+                key: .favoriteImages
+            )
+            
         case false:
             self.favoriteImagesData.removeAll { imageData in
                 imageData.id == imageDetails.id
             }
             
             self.updateImagesGalleryWithNewState(for: imageDetails.id)
+            
+            self.userDefaultsService.saveToUserDefaults(
+                self.favoriteImagesData,
+                key: .favoriteImages
+            )
         }
     }
     
@@ -157,5 +171,22 @@ extension ImagesGalleryViewModel {
         guard let index = statusWillChangedForIndex else { return }
         self.imagesGalleryDisplayData[index].isFavorite = !self.imagesGalleryDisplayData[index].isFavorite
         self.imagesGalleryDisplayDataIsReadyForViewPublisher.send()
+    }
+    
+    func updateImagesGalleryWithStoredState() {
+        self.loadStoredFavoriteImagesData()
+        self.favoriteImagesData.forEach {
+            self.updateImagesGalleryWithNewState(
+                for: $0.id
+            )
+        }
+    }
+    
+    func loadStoredFavoriteImagesData() {
+        let storedData = self.userDefaultsService.readFromUserDefaults(
+            key: .favoriteImages
+        )
+        
+        self.favoriteImagesData = storedData
     }
 }

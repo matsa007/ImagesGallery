@@ -16,6 +16,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private let imagesGalleryVC = UINavigationController(
         rootViewController: ImagesGalleryViewController(
             viewModel: ImagesGalleryViewModel(
+                userDefaultsService: UserDefaultsService(), 
                 loader: ImagesGalleryLoader(
                     cacheService: CacheService(
                         cacheCountLimit: .twoHundred
