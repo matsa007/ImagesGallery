@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FavoriteImageModel {
+struct FavoriteImageModel: Codable {
     let index: Int
     let id: String
     let regularImageData: Data
