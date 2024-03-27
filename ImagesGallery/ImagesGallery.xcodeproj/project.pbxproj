@@ -51,6 +51,7 @@
 		4957D7622BB3486D0020F329 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4957D7612BB3486D0020F329 /* NetworkServiceProtocol.swift */; };
 		4957D76A2BB34E6E0020F329 /* ImagesGalleryHelpeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4957D7692BB34E6E0020F329 /* ImagesGalleryHelpeable.swift */; };
 		4957D76C2BB34EA90020F329 /* DetailImageHelpeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4957D76B2BB34EA90020F329 /* DetailImageHelpeable.swift */; };
+		4957D76E2BB37A530020F329 /* DetailImageFavoriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4957D76D2BB37A530020F329 /* DetailImageFavoriteModel.swift */; };
 		4BC4391E9FCEAB5D48C5EF08 /* Pods_ImagesGallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A373C3878839DA9A37686A6 /* Pods_ImagesGallery.framework */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,7 @@
 		4957D7612BB3486D0020F329 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		4957D7692BB34E6E0020F329 /* ImagesGalleryHelpeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryHelpeable.swift; sourceTree = "<group>"; };
 		4957D76B2BB34EA90020F329 /* DetailImageHelpeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageHelpeable.swift; sourceTree = "<group>"; };
+		4957D76D2BB37A530020F329 /* DetailImageFavoriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageFavoriteModel.swift; sourceTree = "<group>"; };
 		9C6633C58472596A1C59E318 /* Pods-ImagesGallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImagesGallery.release.xcconfig"; path = "Target Support Files/Pods-ImagesGallery/Pods-ImagesGallery.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,6 +220,7 @@
 			children = (
 				493F78B42BABA0DB00E3A04A /* DetailImageInitialModel.swift */,
 				493F78BD2BACCB2200E3A04A /* DetailImageDisplayModel.swift */,
+				4957D76D2BB37A530020F329 /* DetailImageFavoriteModel.swift */,
 			);
 			path = DetailImageModels;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				493F78752BA76D3600E3A04A /* ImagesGalleryCollectionViewCell.swift in Sources */,
 				493F78CD2BAD0C0F00E3A04A /* DefaultMessages.swift in Sources */,
 				494132AE2BA6FD9000CA97FD /* ImagesGalleryViewController.swift in Sources */,
+				4957D76E2BB37A530020F329 /* DetailImageFavoriteModel.swift in Sources */,
 				493F78B52BABA0DB00E3A04A /* DetailImageInitialModel.swift in Sources */,
 				493F78C92BACF46700E3A04A /* CacheIdPrefix.swift in Sources */,
 				493F78B32BAB9AC700E3A04A /* DetailImageViewModelProtocol.swift in Sources */,

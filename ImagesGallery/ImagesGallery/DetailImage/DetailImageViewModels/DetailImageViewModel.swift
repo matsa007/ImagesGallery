@@ -27,6 +27,11 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
     var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> {
         self.networkErrorAlertPublisher.eraseToAnyPublisher()
     }
+    
+    private let imageFavoriteButtonTappedPublisher = PassthroughSubject<DetailImageFavoriteModel, Never>()
+    var anyImageFavoriteButtonTappedPublisher: AnyPublisher<DetailImageFavoriteModel, Never> {
+        self.imageFavoriteButtonTappedPublisher.eraseToAnyPublisher()
+    }
 
 
     // MARK: - Initialization
@@ -116,6 +121,13 @@ private extension DetailImageViewModel {
     }
     
     func favoritesButtonTappedHandler() {
-        print("self button tapped")
+        let index = self.detailImageInitialData.selectedImageIndex
+        self.imageFavoriteButtonTappedPublisher.send(
+            DetailImageFavoriteModel(
+                index: index,
+                id: self.detailImageInitialData.imageIDs[index],
+                regularImageData: self.detailImageDisplayData.currentImageData
+            )
+        )
     }
 }
