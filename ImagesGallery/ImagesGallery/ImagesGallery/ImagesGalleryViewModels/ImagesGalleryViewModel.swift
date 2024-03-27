@@ -14,7 +14,7 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     
     var currentPage: Int
     var imagesGalleryDisplayData = [ImagesGalleryDisplayModel]()
-    var favoriteImagesData = [DetailImageFavoriteModel]()
+    var favoriteImagesData = [FavoriteImageModel]()
     
     private let loader: ImagesGalleryLoadable
     private var cancellables: Set<AnyCancellable> = []
@@ -64,8 +64,10 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
         self.handleCollectionViewItemSelected(for: index)
     }
     
-    func stateOfImageIsFavoriteChanged(for imageDetails: DetailImageFavoriteModel) {
-        self.handleStateOfImageIsFavoriteChanged(for: imageDetails)
+    func stateOfImageIsFavoriteChanged(for imageDetails: FavoriteImageModel) {
+        self.handleStateOfImageIsFavoriteChanged(
+            for: imageDetails
+        )
     }
 }
 
@@ -122,8 +124,38 @@ extension ImagesGalleryViewModel {
         self.selectedItemDataIsReadyPublisher.send(index)
     }
     
-    func handleStateOfImageIsFavoriteChanged(for imageDetails: DetailImageFavoriteModel) {
-        self.favoriteImagesData.append(imageDetails)
-        dump(self.favoriteImagesData)
+    func handleStateOfImageIsFavoriteChanged(for imageDetails: FavoriteImageModel) {
+        let isFavorite = imageDetails.isFavorite
+        
+        switch isFavorite {
+        case true:
+            self.favoriteImagesData.append(
+                FavoriteImageModel(
+                    index: imageDetails.index,
+                    id: imageDetails.id,
+                    regularImageData: imageDetails.regularImageData,
+                    isFavorite: imageDetails.isFavorite
+                )
+            )
+            
+            self.updateImagesGalleryWithNewState(for: imageDetails.id)
+            
+        case false:
+            self.favoriteImagesData.removeAll { imageData in
+                imageData.id == imageDetails.id
+            }
+            
+            self.updateImagesGalleryWithNewState(for: imageDetails.id)
+        }
+    }
+    
+    func updateImagesGalleryWithNewState(for id: String) {
+        let statusWillChangedForIndex = self.imagesGalleryDisplayData.firstIndex { imageData in
+            imageData.id == id
+        }
+        
+        guard let index = statusWillChangedForIndex else { return }
+        self.imagesGalleryDisplayData[index].isFavorite = !self.imagesGalleryDisplayData[index].isFavorite
+        self.imagesGalleryDisplayDataIsReadyForViewPublisher.send()
     }
 }

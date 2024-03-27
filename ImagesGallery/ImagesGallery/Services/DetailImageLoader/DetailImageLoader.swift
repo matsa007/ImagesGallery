@@ -45,7 +45,7 @@ final class DetailImageLoader: DetailImageLoadable {
     
     // MARK: - Request data
 
-    func requestDetailImageURLs(for currentImageId: String) {
+    func requestDetailImageURLs(for currentImageId: String, with isFavorite: Bool) {
         Task {
             do {
                 let responseData: DetailImageModel = try await self.networkService.requestData(
@@ -62,7 +62,7 @@ final class DetailImageLoader: DetailImageLoadable {
                 let initialImageDescription = responseData.description
                 ?? responseData.altDescription
                 ?? DefaultMessages.defaultImageDescription
-                
+                                
                 let updatedImageTitle = self.helper.updateDetailImageTitle(
                     for: initialImageTitle,
                     currentSeparator: .dash,
@@ -82,14 +82,16 @@ final class DetailImageLoader: DetailImageLoadable {
                     let detailImageDisplayData = DetailImageDisplayModel(
                         currentImageData: cachedData,
                         currentImageTitle: updatedImageTitle,
-                        currentImageDescription: updatedImageDescription
+                        currentImageDescription: updatedImageDescription, 
+                        isFavorite: isFavorite
                     )
                     self.displayDataIsReadyForViewPublisher.send(detailImageDisplayData)
                 } else {
                     let detailImageDisplayData = DetailImageDisplayModel(
                         currentImageData: Data(),
                         currentImageTitle: updatedImageTitle,
-                        currentImageDescription: updatedImageDescription
+                        currentImageDescription: updatedImageDescription, 
+                        isFavorite: isFavorite
                     )
                                     
                     await self.requestDetailImageData(
@@ -129,7 +131,8 @@ final class DetailImageLoader: DetailImageLoadable {
                 let detailImageDisplayData = DetailImageDisplayModel(
                     currentImageData: responseData,
                     currentImageTitle: initialData.currentImageTitle,
-                    currentImageDescription: initialData.currentImageDescription
+                    currentImageDescription: initialData.currentImageDescription, 
+                    isFavorite: initialData.isFavorite
                 )
                                 
                 self.displayDataIsReadyForViewPublisher.send(

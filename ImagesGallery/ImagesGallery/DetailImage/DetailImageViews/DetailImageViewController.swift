@@ -194,12 +194,21 @@ private extension DetailImageViewController {
     }
     
     func setFavoritesButton() {
-        self.addToFavoritesButton.tintColor = ColorsSet.heartButtonNotFavorite
+        self.setHeartButtonColor(
+            for: self.viewModel.detailImageDisplayData.isFavorite
+        )
+        
         self.addToFavoritesButton.addTarget(
             self,
             action: #selector(self.addToFavoritesButtonTapped),
             for: .touchUpInside
         )
+    }
+    
+    func setHeartButtonColor(for isFavorite: Bool) {
+        self.addToFavoritesButton.tintColor = isFavorite
+        ? ColorsSet.heartButtonFavorite
+        : ColorsSet.heartButtonNotFavorite
     }
 }
 
@@ -236,6 +245,16 @@ private extension DetailImageViewController {
                 self.handleShowErrorWithAlert(for: error)
             }
             .store(in: &self.cancellables)
+        
+        self.viewModel.anyImageFavoriteStateIsChangedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isFavorite in
+                guard let self else { return }
+                self.handleImageIsFavoriteStateIsChanged(
+                    on: isFavorite
+                )
+            }
+            .store(in: &self.cancellables)
     }
 }
 
@@ -255,6 +274,12 @@ private extension DetailImageViewController {
             for: error,
             with: .alertTitle,
             with: .alertButtonTitle
+        )
+    }
+    
+    func handleImageIsFavoriteStateIsChanged(on isFavorite: Bool) {
+        self.setHeartButtonColor(
+            for: isFavorite
         )
     }
     
