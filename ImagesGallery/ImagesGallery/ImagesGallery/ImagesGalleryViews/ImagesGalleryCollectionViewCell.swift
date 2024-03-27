@@ -22,7 +22,6 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
             systemName: ImageNames.heart.rawValue
         )
         imView.tintColor = ColorsSet.heartIndicatorColor
-        imView.isHidden = false
         return imView
     }()
     
@@ -32,14 +31,12 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         
         self.thumbImageView.image = nil
-        self.likedImageIndicatorView.image = nil
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
         self.addSubViews()
-        self.setCellViews()
         self.setConstraints()
     }
     
@@ -52,12 +49,10 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Layout
     
-    private func setCellViews() {
-        self.setCell()
-    }
-    
-    private func setCell() {
-        self.contentView.backgroundColor = .blue
+    private func setLikedImageIndicatorView(for isFavorite: Bool) {
+        self.likedImageIndicatorView.isHidden = isFavorite
+        ? false
+        : true
     }
     
     // MARK: - Constraints
@@ -82,5 +77,8 @@ extension ImagesGalleryCollectionViewCell {
             data: imageInfo.imageData
         )
         self.thumbImageView.image = image
+        self.setLikedImageIndicatorView(
+            for: imageInfo.isFavorite
+        )
     }
 }

@@ -14,7 +14,7 @@ protocol ImagesGalleryViewModelProtocol {
     var anyImagesGalleryDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> { get }
     var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> { get }
     var anySelectedItemDataIsReadyPublisher: AnyPublisher<Int, Never> { get }
-
+    
     
     init(
         loader: ImagesGalleryLoadable,
@@ -24,5 +24,5 @@ protocol ImagesGalleryViewModelProtocol {
     func readyForDisplay()
     func scrolledToItemWithItemIndex(_ index: Int)
     func collectionViewItemSelected(with index: Int)
-    func stateOfImageIsFavoriteChanged(for imageDetails: DetailImageFavoriteModel)
+    func stateOfImageIsFavoriteChanged(for imageDetails: FavoriteImageModel)
 }

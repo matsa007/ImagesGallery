@@ -28,9 +28,14 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
         self.networkErrorAlertPublisher.eraseToAnyPublisher()
     }
     
-    private let imageFavoriteButtonTappedPublisher = PassthroughSubject<DetailImageFavoriteModel, Never>()
-    var anyImageFavoriteButtonTappedPublisher: AnyPublisher<DetailImageFavoriteModel, Never> {
+    private let imageFavoriteButtonTappedPublisher = PassthroughSubject<FavoriteImageModel, Never>()
+    var anyImageFavoriteButtonTappedPublisher: AnyPublisher<FavoriteImageModel, Never> {
         self.imageFavoriteButtonTappedPublisher.eraseToAnyPublisher()
+    }
+    
+    private let imageFavoriteStateIsChangedPublisher = PassthroughSubject<Bool, Never>()
+    var anyImageFavoriteStateIsChangedPublisher: AnyPublisher<Bool, Never> {
+        self.imageFavoriteStateIsChangedPublisher.eraseToAnyPublisher()
     }
 
 
@@ -45,7 +50,8 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
         self.detailImageDisplayData = DetailImageDisplayModel(
             currentImageData: Data(),
             currentImageTitle: String(),
-            currentImageDescription: String()
+            currentImageDescription: String(), 
+            isFavorite: Bool()
         )
     }
     
@@ -93,7 +99,8 @@ private extension DetailImageViewModel {
             .store(in: &self.cancellables)
         
         self.loader.requestDetailImageURLs(
-            for: self.detailImageInitialData.imageIDs[currentIndex]
+            for: self.detailImageInitialData.imageIDs[currentIndex], 
+            with: self.detailImageInitialData.isFavorites[currentIndex]
         )
     }
 }
@@ -122,11 +129,18 @@ private extension DetailImageViewModel {
     
     func favoritesButtonTappedHandler() {
         let index = self.detailImageInitialData.selectedImageIndex
+        self.detailImageDisplayData.isFavorite = !self.detailImageDisplayData.isFavorite
+        
+        self.imageFavoriteStateIsChangedPublisher.send(
+            self.detailImageDisplayData.isFavorite
+        )
+        
         self.imageFavoriteButtonTappedPublisher.send(
-            DetailImageFavoriteModel(
+            FavoriteImageModel(
                 index: index,
                 id: self.detailImageInitialData.imageIDs[index],
-                regularImageData: self.detailImageDisplayData.currentImageData
+                regularImageData: self.detailImageDisplayData.currentImageData, 
+                isFavorite: self.detailImageDisplayData.isFavorite
             )
         )
     }

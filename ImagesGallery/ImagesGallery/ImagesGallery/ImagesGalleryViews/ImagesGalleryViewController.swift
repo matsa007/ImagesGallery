@@ -62,6 +62,7 @@ final class ImagesGalleryViewController: UIViewController {
                 rowSpacing: .standartRowsSpacing,
                 columnsQuantity: .threeColumnsQuantity
             )
+            
         default:
             self.setItemSizeParameters(
                 itemsSpacing: .standartItemsSpacing,
@@ -235,7 +236,7 @@ extension ImagesGalleryViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func handleFavoritesButtonTappedData(favoritesData: DetailImageFavoriteModel) {
+    func handleFavoritesButtonTappedData(favoritesData: FavoriteImageModel) {
         self.viewModel.stateOfImageIsFavoriteChanged(
             for: favoritesData
         )
