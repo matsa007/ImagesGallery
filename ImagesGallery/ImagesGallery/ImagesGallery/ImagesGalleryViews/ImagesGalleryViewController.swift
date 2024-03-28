@@ -120,7 +120,20 @@ private extension ImagesGalleryViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
         ]
+        
+        self.navigationItem.setRightBarButton(
+            UIBarButtonItem(
+                image: UIImage(systemName: ImageNames.heart.rawValue), 
+                style: .plain,
+                target: self,
+                action: #selector(self.favoritesButtonTapped)
+            ),
+            animated: true
+        )
+        
+        self.navigationItem.rightBarButtonItem?.tintColor = ColorsSet.heartButtonFavorite
     }
+
     
     func setImagesGalleryCollection() {
         self.imagesGalleryCollection.backgroundColor = ColorsSet.galleryBackgroundColor
@@ -240,6 +253,11 @@ extension ImagesGalleryViewController {
         self.viewModel.stateOfImageIsFavoriteChanged(
             for: favoritesData
         )
+    }
+    
+    
+    @objc func favoritesButtonTapped() {
+        print("favoritesButtonTapped")
     }
 }
 
