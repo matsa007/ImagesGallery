@@ -100,53 +100,19 @@ final class DetailImageViewController: UIViewController {
 
 private extension DetailImageViewController {
     func setupLayout() {
-        self.setView()
+        self.setView(backgroundColor: ColorsSet.detailBackgroundColor)
         self.setSubViews()
+        self.addSubViews()
         self.setConstraints()
     }
     
-    func setView() {
-        self.view.backgroundColor = ColorsSet.detailBackgroundColor
-    }
-    
     func setSubViews() {
-        self.setNavBar()
+        self.setNavBar(
+            title: .detailImageTitle,
+            titleColor: ColorsSet.navBarTitleColor
+        )
         self.setSwipeGestureRecognizers()
         self.setFavoritesButton()
-        self.addSubViews()
-    }
-    
-    func setConstraints() {
-        self.detailImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
-            $0.height.equalToSuperview().multipliedBy(Sizes.detailImageViewHeightCoeff)
-            $0.top.equalTo(
-                self.navigationController?.navigationBar.snp.bottom
-                ?? self.view.safeAreaLayoutGuide.snp.bottom
-            ).offset(Spacing.regulardSpacing)
-        }
-        
-        self.addToFavoritesButton.snp.makeConstraints {
-            $0.height.equalToSuperview().dividedBy(15)
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.detailImageView.snp.bottom)
-                .offset(Spacing.minSpacing)
-        }
-        
-        self.imageTitleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
-            $0.top.equalTo(self.addToFavoritesButton.snp.bottom)
-                .offset(Spacing.minSpacing)
-        }
-        
-        self.imageDescriptionLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
-            $0.top.equalTo(self.imageTitleLabel.snp.bottom)
-                .offset(Spacing.regulardSpacing)
-        }
     }
 }
 
@@ -166,11 +132,15 @@ private extension DetailImageViewController {
 // MARK: - Setters
 
 private extension DetailImageViewController {
-    func setNavBar() {
-        self.navigationItem.title = Titles.detailImageTitle.rawValue
+    func setView(backgroundColor: UIColor) {
+        self.view.backgroundColor = ColorsSet.detailBackgroundColor
+    }
+    
+    func setNavBar(title: Titles, titleColor: UIColor) {
+        self.navigationItem.title = title.rawValue
         
         self.navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
+            NSAttributedString.Key.foregroundColor: titleColor
         ]
     }
     
@@ -209,6 +179,43 @@ private extension DetailImageViewController {
         self.addToFavoritesButton.tintColor = isFavorite
         ? ColorsSet.heartButtonFavorite
         : ColorsSet.heartButtonNotFavorite
+    }
+}
+
+// MARK: - Constraints
+
+private extension DetailImageViewController {
+    func setConstraints() {
+        self.detailImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
+            $0.height.equalToSuperview().multipliedBy(Sizes.detailImageViewHeightCoeff)
+            $0.top.equalTo(
+                self.navigationController?.navigationBar.snp.bottom
+                ?? self.view.safeAreaLayoutGuide.snp.bottom
+            ).offset(Spacing.regulardSpacing)
+        }
+        
+        self.addToFavoritesButton.snp.makeConstraints {
+            $0.height.equalToSuperview().dividedBy(15)
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.detailImageView.snp.bottom)
+                .offset(Spacing.minSpacing)
+        }
+        
+        self.imageTitleLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
+            $0.top.equalTo(self.addToFavoritesButton.snp.bottom)
+                .offset(Spacing.minSpacing)
+        }
+        
+        self.imageDescriptionLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(Sizes.detailImageWidthCoeff)
+            $0.top.equalTo(self.imageTitleLabel.snp.bottom)
+                .offset(Spacing.regulardSpacing)
+        }
     }
 }
 
