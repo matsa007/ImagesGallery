@@ -275,7 +275,11 @@ extension ImagesGalleryViewController {
     }
     
     func handleFavoritesListButtonTapped() {
-        let vc = FavoritesGalleryViewController()
+        let vm = FavoritesGalleryViewModel(
+            favoritesDisplayData: self.viewModel.favoriteImagesData
+        )
+        
+        let vc = FavoritesGalleryViewController(viewModel: vm)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

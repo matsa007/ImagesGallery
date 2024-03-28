@@ -9,6 +9,10 @@ import UIKit
 
 final class FavoritesGalleryViewController: UIViewController {
     
+    // MARK: - Parameters
+    
+    private let viewModel: FavoritesGalleryViewModelProtocol
+    
     // MARK: - GUI
     
     private lazy var favoritesCollectionView: UICollectionView = {
@@ -16,6 +20,18 @@ final class FavoritesGalleryViewController: UIViewController {
         let colView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return colView
     }()
+    
+    // MARK: - Initialization
+    
+    init(viewModel: FavoritesGalleryViewModelProtocol) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
 
