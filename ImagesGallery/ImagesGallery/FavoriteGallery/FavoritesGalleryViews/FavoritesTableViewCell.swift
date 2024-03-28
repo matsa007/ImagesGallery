@@ -7,4 +7,4 @@
 
 import UIKit
 
-final class FavoritesTableViewCell: UITableViewCell {}
+final class FavoritesTableViewCell: UICollectionViewCell {}

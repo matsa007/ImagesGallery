@@ -10,6 +10,7 @@ import Foundation
 enum Sizes {
     static let imagesGalleryCollectionWidthCoeff: CGFloat = 34 / 35
     static let detailImageWidthCoeff: CGFloat = 34 / 35
+    static let favoritesGalleryCollectionWidthCoeff: CGFloat = 34 / 35
     static let detailImageViewHeightCoeff: CGFloat = 1 / 3
     static let heartHeightCoeff: CGFloat = 1 / 10
     static let heartSpaceCoeff: CGFloat = 1 / 10

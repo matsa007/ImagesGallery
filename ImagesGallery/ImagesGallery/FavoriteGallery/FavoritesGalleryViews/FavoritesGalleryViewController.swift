@@ -11,9 +11,10 @@ final class FavoritesGalleryViewController: UIViewController {
     
     // MARK: - GUI
     
-    private lazy var favoritesTableView: UITableView = {
-        let tableView = UITableView()
-        return tableView
+    private lazy var favoritesCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let colView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return colView
     }()
     
     // MARK: - Lifecycle
@@ -45,7 +46,7 @@ private extension FavoritesGalleryViewController {
 
 private extension FavoritesGalleryViewController {
     func addSubViews() {
-        self.view.addSubview(self.favoritesTableView)
+        self.view.addSubview(self.favoritesCollectionView)
     }
 }
 
@@ -78,10 +79,10 @@ private extension FavoritesGalleryViewController {
     }
     
     func setFavoritesTableView(backgroundColor: UIColor, cellId: CellIdentificators) {
-        self.favoritesTableView.backgroundColor = backgroundColor
-        self.favoritesTableView.register(
+        self.favoritesCollectionView.backgroundColor = backgroundColor
+        self.favoritesCollectionView.register(
             FavoritesTableViewCell.self,
-            forCellReuseIdentifier: cellId.rawValue
+            forCellWithReuseIdentifier: cellId.rawValue
         )
     }
 }
@@ -90,10 +91,10 @@ private extension FavoritesGalleryViewController {
 
 private extension FavoritesGalleryViewController {
     func setConstraints() {
-        self.favoritesTableView.snp.makeConstraints {
+        self.favoritesCollectionView.snp.makeConstraints {
             $0.centerX.height.equalToSuperview()
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.imagesGalleryCollectionWidthCoeff)
+            $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.favoritesGalleryCollectionWidthCoeff)
         }
     }
 }
