@@ -108,7 +108,7 @@ private extension DetailImageViewController {
     
     func setSubViews() {
         self.setNavBar(
-            title: .detailImageTitle,
+            title: .detailImageBarTitle,
             titleColor: ColorsSet.navBarTitleColor
         )
         self.setSwipeGestureRecognizers()
@@ -133,12 +133,11 @@ private extension DetailImageViewController {
 
 private extension DetailImageViewController {
     func setView(backgroundColor: UIColor) {
-        self.view.backgroundColor = ColorsSet.detailBackgroundColor
+        self.view.backgroundColor = backgroundColor
     }
     
     func setNavBar(title: Titles, titleColor: UIColor) {
         self.navigationItem.title = title.rawValue
-        
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: titleColor
         ]

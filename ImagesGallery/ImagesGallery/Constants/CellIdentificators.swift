@@ -8,5 +8,6 @@
 import Foundation
 
 enum CellIdentificators: String {
-    case imagesGalleryCellIdentificator = "images_gallery_cell"
+    case imagesGalleryCellId = "images_gallery_cell"
+    case favoritesGalleryCellId = "favorites_gallery_cell"
 }
