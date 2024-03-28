@@ -126,7 +126,7 @@ private extension ImagesGalleryViewController {
                 image: UIImage(systemName: ImageNames.heart.rawValue), 
                 style: .plain,
                 target: self,
-                action: #selector(self.favoritesButtonTapped)
+                action: #selector(self.favoritesListButtonTapped)
             ),
             animated: true
         )
@@ -180,6 +180,14 @@ extension ImagesGalleryViewController {
                 self.handleCollectionViewItemSelectedIndex(
                     index: index
                 )
+            }
+            .store(in: &self.cancellables)
+        
+        self.viewModel.anyFavoritesListButtonTappedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                self.handleFavoritesListButtonTapped()
             }
             .store(in: &self.cancellables)
     }
@@ -255,9 +263,13 @@ extension ImagesGalleryViewController {
         )
     }
     
+    func handleFavoritesListButtonTapped() {
+        print("handleFavoritesListButtonTapped")
+    }
     
-    @objc func favoritesButtonTapped() {
-        print("favoritesButtonTapped")
+    
+    @objc func favoritesListButtonTapped() {
+        self.viewModel.favoritesListButtonTapped()
     }
 }
 

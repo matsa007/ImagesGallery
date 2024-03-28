@@ -12,7 +12,7 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     
     // MARK: - Parameters
     
-    var currentPage: Int
+    private var currentPage: Int
     var imagesGalleryDisplayData = [ImagesGalleryDisplayModel]()
     
     private let userDefaultsService: UserDefaultsServiceProtocol
@@ -34,6 +34,11 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     private let selectedItemDataIsReadyPublisher = PassthroughSubject<Int, Never>()
     var anySelectedItemDataIsReadyPublisher: AnyPublisher<Int, Never> {
         self.selectedItemDataIsReadyPublisher.eraseToAnyPublisher()
+    }
+    
+    private let favoritesListButtonTappedPublisher = PassthroughSubject<Void, Never>()
+    var anyFavoritesListButtonTappedPublisher: AnyPublisher<Void, Never> {
+        self.favoritesListButtonTappedPublisher.eraseToAnyPublisher()
     }
 
     // MARK: - Initialization
@@ -73,6 +78,10 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
         self.handleStateOfImageIsFavoriteChanged(
             for: imageDetails
         )
+    }
+    
+    func favoritesListButtonTapped() {
+        self.handleFavoritesListButtonTapped()
     }
 }
 
@@ -162,6 +171,14 @@ extension ImagesGalleryViewModel {
         }
     }
     
+    func handleFavoritesListButtonTapped() {
+        self.favoritesListButtonTappedPublisher.send()
+    }
+}
+
+// MARK: - Updating display data state
+
+private extension ImagesGalleryViewModel {
     func updateImagesGalleryWithNewState(for id: String) {
         let statusWillChangedForIndex = self.imagesGalleryDisplayData.firstIndex { imageData in
             imageData.id == id
@@ -183,7 +200,11 @@ extension ImagesGalleryViewModel {
         }
         self.imagesGalleryDisplayData.append(contentsOf: updatedData)
     }
-    
+}
+
+// MARK: - Load favorites data
+
+private extension ImagesGalleryViewModel {
     func loadStoredFavoriteImagesData() {
         let storedData = self.userDefaultsService.readFromUserDefaults(
             key: .favoriteImages
