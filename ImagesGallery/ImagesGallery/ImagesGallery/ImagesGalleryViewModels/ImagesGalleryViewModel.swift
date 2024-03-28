@@ -14,9 +14,10 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     
     var currentPage: Int
     var imagesGalleryDisplayData = [ImagesGalleryDisplayModel]()
-    var favoriteImagesData = [FavoriteImageModel]()
     
     private let userDefaultsService: UserDefaultsServiceProtocol
+    var favoriteImagesData = [FavoriteImageModel]()
+
     private let loader: ImagesGalleryLoadable
     private var cancellables: Set<AnyCancellable> = []
     
@@ -45,6 +46,7 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
         self.userDefaultsService = userDefaultsService
         self.loader = loader
         self.currentPage = startPage.rawValue
+        self.loadStoredFavoriteImagesData()
     }
     
     deinit {
@@ -103,8 +105,7 @@ private extension ImagesGalleryViewModel {
 
 extension ImagesGalleryViewModel {
     func handleDisplayData(for data: [ImagesGalleryDisplayModel]) {
-        self.imagesGalleryDisplayData.append(contentsOf: data)
-        self.updateImagesGalleryWithStoredState()
+        self.updateImagesGalleryWithStoredState(data: data)
         self.imagesGalleryDisplayDataIsReadyForViewPublisher.send()
     }
     
@@ -129,9 +130,9 @@ extension ImagesGalleryViewModel {
     }
     
     func handleStateOfImageIsFavoriteChanged(for imageDetails: FavoriteImageModel) {
-        let isFavorite = imageDetails.isFavorite
+        let isFavoriteCurrentState = imageDetails.isFavorite
         
-        switch isFavorite {
+        switch isFavoriteCurrentState {
         case true:
             self.favoriteImagesData.append(
                 FavoriteImageModel(
@@ -143,7 +144,6 @@ extension ImagesGalleryViewModel {
             )
             
             self.updateImagesGalleryWithNewState(for: imageDetails.id)
-            
             self.userDefaultsService.saveToUserDefaults(
                 self.favoriteImagesData,
                 key: .favoriteImages
@@ -155,7 +155,6 @@ extension ImagesGalleryViewModel {
             }
             
             self.updateImagesGalleryWithNewState(for: imageDetails.id)
-            
             self.userDefaultsService.saveToUserDefaults(
                 self.favoriteImagesData,
                 key: .favoriteImages
@@ -167,26 +166,28 @@ extension ImagesGalleryViewModel {
         let statusWillChangedForIndex = self.imagesGalleryDisplayData.firstIndex { imageData in
             imageData.id == id
         }
-        
+                
         guard let index = statusWillChangedForIndex else { return }
         self.imagesGalleryDisplayData[index].isFavorite = !self.imagesGalleryDisplayData[index].isFavorite
         self.imagesGalleryDisplayDataIsReadyForViewPublisher.send()
     }
     
-    func updateImagesGalleryWithStoredState() {
-        self.loadStoredFavoriteImagesData()
-        self.favoriteImagesData.forEach {
-            self.updateImagesGalleryWithNewState(
-                for: $0.id
-            )
+    func updateImagesGalleryWithStoredState(data: [ImagesGalleryDisplayModel]) {
+        var updatedData = data
+        updatedData.enumerated().forEach { index, imageData in
+            if (self.favoriteImagesData.contains(where: {
+                $0.id == imageData.id
+            })) {
+                updatedData[index].isFavorite = true
+            }
         }
+        self.imagesGalleryDisplayData.append(contentsOf: updatedData)
     }
     
     func loadStoredFavoriteImagesData() {
         let storedData = self.userDefaultsService.readFromUserDefaults(
             key: .favoriteImages
         )
-        
         self.favoriteImagesData = storedData
     }
 }
