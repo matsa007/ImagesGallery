@@ -102,7 +102,7 @@ private extension ImagesGalleryViewController {
     
     func setSubViews() {
         self.setNavBar(
-            title: .imagesGaleryBarTitle,
+            title: .imagesGalleryBarTitle,
             tintColor: ColorsSet.galleryBackgroundColor,
             titleColor: ColorsSet.navBarTitleColor,
             buttonImageName: .heart
@@ -110,14 +110,13 @@ private extension ImagesGalleryViewController {
         
         self.setImagesGalleryCollection(
             backgroundColor: ColorsSet.galleryBackgroundColor,
-            cellId: .imagesGalleryCellIdentificator
+            cellId: .imagesGalleryCellId
         )
     }
     
     func setNavBar(title: Titles, tintColor: UIColor, titleColor: UIColor, buttonImageName: ImageNames) {
         self.navigationItem.title = title.rawValue
         self.navigationController?.navigationBar.barTintColor = tintColor
-        
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: titleColor
         ]
@@ -295,7 +294,7 @@ extension ImagesGalleryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator.rawValue,
+            withReuseIdentifier: CellIdentificators.imagesGalleryCellId.rawValue,
             for: indexPath
         ) as? ImagesGalleryCollectionViewCell else { return UICollectionViewCell() }
         
