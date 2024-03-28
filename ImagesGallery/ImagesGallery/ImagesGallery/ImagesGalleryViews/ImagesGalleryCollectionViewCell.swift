@@ -18,9 +18,7 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
     
     private lazy var likedImageIndicatorView: UIImageView = {
         let imView = UIImageView()
-        imView.image = UIImage(
-            systemName: ImageNames.heart.rawValue
-        )
+        imView.image = UIImage(systemName: ImageNames.heart.rawValue)
         imView.tintColor = ColorsSet.heartIndicatorColor
         return imView
     }()
@@ -36,27 +34,41 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        self.setupLayout()
+    }
+}
+
+// MARK: - Layout
+
+private extension ImagesGalleryCollectionViewCell {
+    func setupLayout() {
         self.addSubViews()
         self.setConstraints()
     }
-    
-    // MARK: - Add subviews
+}
 
-    private func addSubViews() {
+// MARK: - Add subviews
+
+private extension ImagesGalleryCollectionViewCell {
+    func addSubViews() {
         self.contentView.addSubview(self.thumbImageView)
         self.contentView.addSubview(self.likedImageIndicatorView)
     }
-    
-    // MARK: - Layout
-    
-    private func setLikedImageIndicatorView(for isFavorite: Bool) {
+}
+
+// MARK: - Setters
+
+private extension ImagesGalleryCollectionViewCell {
+    func setLikedImageIndicatorView(for isFavorite: Bool) {
         self.likedImageIndicatorView.isHidden = isFavorite
         ? false
         : true
     }
-    
-    // MARK: - Constraints
-    
+}
+
+// MARK: - Constraints
+
+private extension ImagesGalleryCollectionViewCell {
     private func setConstraints() {
         self.thumbImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()

@@ -78,27 +78,10 @@ final class ImagesGalleryViewController: UIViewController {
 
 private extension ImagesGalleryViewController {
     func setupLayout() {
-        self.setView()
+        self.setView(backgroundColor: ColorsSet.galleryBackgroundColor)
         self.setSubViews()
-        self.setConstraints()
-    }
-    
-    func setView() {
-        self.view.backgroundColor = ColorsSet.galleryBackgroundColor
-    }
-    
-    func setSubViews() {
-        self.setNavBar()
-        self.setImagesGalleryCollection()
         self.addSubViews()
-    }
-    
-    func setConstraints() {
-        self.imagesGalleryCollection.snp.makeConstraints {
-            $0.centerX.height.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.imagesGalleryCollectionWidthCoeff)
-        }
+        self.setConstraints()
     }
 }
 
@@ -113,17 +96,35 @@ private extension ImagesGalleryViewController {
 // MARK: - Setters
 
 private extension ImagesGalleryViewController {
-    func setNavBar() {
-        self.navigationItem.title = Titles.imagesGaleryBarTitle.rawValue
-        self.navigationController?.navigationBar.barTintColor = ColorsSet.galleryBackgroundColor
+    func setView(backgroundColor: UIColor) {
+        self.view.backgroundColor = backgroundColor
+    }
+    
+    func setSubViews() {
+        self.setNavBar(
+            title: .imagesGaleryBarTitle,
+            tintColor: ColorsSet.galleryBackgroundColor,
+            titleColor: ColorsSet.navBarTitleColor,
+            buttonImageName: .heart
+        )
+        
+        self.setImagesGalleryCollection(
+            backgroundColor: ColorsSet.galleryBackgroundColor,
+            cellId: .imagesGalleryCellIdentificator
+        )
+    }
+    
+    func setNavBar(title: Titles, tintColor: UIColor, titleColor: UIColor, buttonImageName: ImageNames) {
+        self.navigationItem.title = title.rawValue
+        self.navigationController?.navigationBar.barTintColor = tintColor
         
         self.navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
+            NSAttributedString.Key.foregroundColor: titleColor
         ]
         
         self.navigationItem.setRightBarButton(
             UIBarButtonItem(
-                image: UIImage(systemName: ImageNames.heart.rawValue), 
+                image: UIImage(systemName: buttonImageName.rawValue),
                 style: .plain,
                 target: self,
                 action: #selector(self.favoritesListButtonTapped)
@@ -133,14 +134,13 @@ private extension ImagesGalleryViewController {
         
         self.navigationItem.rightBarButtonItem?.tintColor = ColorsSet.heartButtonFavorite
     }
-
     
-    func setImagesGalleryCollection() {
-        self.imagesGalleryCollection.backgroundColor = ColorsSet.galleryBackgroundColor
+    func setImagesGalleryCollection(backgroundColor: UIColor, cellId: CellIdentificators) {
+        self.imagesGalleryCollection.backgroundColor = backgroundColor
         
         self.imagesGalleryCollection.register(
             ImagesGalleryCollectionViewCell.self,
-            forCellWithReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator
+            forCellWithReuseIdentifier: cellId.rawValue
         )
     }
     
@@ -164,9 +164,21 @@ private extension ImagesGalleryViewController {
     }
 }
 
+// MARK: - Constraints
+
+private extension ImagesGalleryViewController {
+    func setConstraints() {
+        self.imagesGalleryCollection.snp.makeConstraints {
+            $0.centerX.height.equalToSuperview()
+            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.imagesGalleryCollectionWidthCoeff)
+        }
+    }
+}
+
 // MARK: - View Model binding
 
-extension ImagesGalleryViewController {
+private extension ImagesGalleryViewController {
     func binding() {
         self.bindInput()
         self.bindOutput()
@@ -283,7 +295,7 @@ extension ImagesGalleryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator,
+            withReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator.rawValue,
             for: indexPath
         ) as? ImagesGalleryCollectionViewCell else { return UICollectionViewCell() }
         
