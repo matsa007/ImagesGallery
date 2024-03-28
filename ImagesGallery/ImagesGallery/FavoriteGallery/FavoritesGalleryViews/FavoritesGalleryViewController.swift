@@ -97,7 +97,7 @@ private extension FavoritesGalleryViewController {
     func setFavoritesTableView(backgroundColor: UIColor, cellId: CellIdentificators) {
         self.favoritesCollectionView.backgroundColor = backgroundColor
         self.favoritesCollectionView.register(
-            FavoritesTableViewCell.self,
+            FavoritesCollectionViewCell.self,
             forCellWithReuseIdentifier: cellId.rawValue
         )
     }
