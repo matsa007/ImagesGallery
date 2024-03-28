@@ -55,6 +55,7 @@
 		49C1F08C2BB45BB100D677EE /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1F08B2BB45BB100D677EE /* UserDefaultsService.swift */; };
 		49C1F08E2BB45C7900D677EE /* UserDefaultsServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1F08D2BB45C7900D677EE /* UserDefaultsServiceProtocol.swift */; };
 		49C1F0902BB45DC700D677EE /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1F08F2BB45DC700D677EE /* UserDefaultsKeys.swift */; };
+		49C1F0992BB5F49100D677EE /* FavoritesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1F0982BB5F49100D677EE /* FavoritesGalleryViewController.swift */; };
 		4BC4391E9FCEAB5D48C5EF08 /* Pods_ImagesGallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A373C3878839DA9A37686A6 /* Pods_ImagesGallery.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		49C1F08B2BB45BB100D677EE /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		49C1F08D2BB45C7900D677EE /* UserDefaultsServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsServiceProtocol.swift; sourceTree = "<group>"; };
 		49C1F08F2BB45DC700D677EE /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		49C1F0982BB5F49100D677EE /* FavoritesGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesGalleryViewController.swift; sourceTree = "<group>"; };
 		9C6633C58472596A1C59E318 /* Pods-ImagesGallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImagesGallery.release.xcconfig"; path = "Target Support Files/Pods-ImagesGallery/Pods-ImagesGallery.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -287,6 +289,7 @@
 				493F788B2BA7A03700E3A04A /* Services */,
 				494132C12BA7034B00CA97FD /* ImagesGallery */,
 				493F78A82BAB907100E3A04A /* DetailImage */,
+				49C1F0942BB5F37C00D677EE /* FavoriteGallery */,
 				494132B22BA6FD9100CA97FD /* Assets.xcassets */,
 				494132B72BA6FD9100CA97FD /* Info.plist */,
 			);
@@ -374,6 +377,38 @@
 				49C1F08B2BB45BB100D677EE /* UserDefaultsService.swift */,
 			);
 			path = UserDefaultsService;
+			sourceTree = "<group>";
+		};
+		49C1F0942BB5F37C00D677EE /* FavoriteGallery */ = {
+			isa = PBXGroup;
+			children = (
+				49C1F0972BB5F3CC00D677EE /* FavoritesGalleryViewModels */,
+				49C1F0952BB5F3B400D677EE /* FavoritesGalleryViews */,
+				49C1F0962BB5F3C100D677EE /* FavoritesGalleryModels */,
+			);
+			path = FavoriteGallery;
+			sourceTree = "<group>";
+		};
+		49C1F0952BB5F3B400D677EE /* FavoritesGalleryViews */ = {
+			isa = PBXGroup;
+			children = (
+				49C1F0982BB5F49100D677EE /* FavoritesGalleryViewController.swift */,
+			);
+			path = FavoritesGalleryViews;
+			sourceTree = "<group>";
+		};
+		49C1F0962BB5F3C100D677EE /* FavoritesGalleryModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FavoritesGalleryModels;
+			sourceTree = "<group>";
+		};
+		49C1F0972BB5F3CC00D677EE /* FavoritesGalleryViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FavoritesGalleryViewModels;
 			sourceTree = "<group>";
 		};
 		71397C1D3A3BA23A88C7B6DD /* Pods */ = {
@@ -531,6 +566,7 @@
 				493F78882BA795A000E3A04A /* ImagesGalleryViewModel.swift in Sources */,
 				493F78982BAB19D500E3A04A /* CollectionViewParameters.swift in Sources */,
 				493F78A52BAB5AE500E3A04A /* CacheLimits.swift in Sources */,
+				49C1F0992BB5F49100D677EE /* FavoritesGalleryViewController.swift in Sources */,
 				493F78AD2BAB90E800E3A04A /* DetailImageViewController.swift in Sources */,
 				493F78C32BACD30C00E3A04A /* DetailImageLoadable.swift in Sources */,
 				493F78B12BAB9AB900E3A04A /* DetailImageViewModel.swift in Sources */,
