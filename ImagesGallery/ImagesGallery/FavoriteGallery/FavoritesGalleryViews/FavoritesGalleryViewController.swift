@@ -18,6 +18,7 @@ final class FavoritesGalleryViewController: UIViewController {
     private lazy var favoritesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let colView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        colView.dataSource = self
         return colView
     }()
     
@@ -112,5 +113,26 @@ private extension FavoritesGalleryViewController {
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.favoritesGalleryCollectionWidthCoeff)
         }
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension FavoritesGalleryViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.viewModel.favoritesDisplayData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CellIdentificators.favoritesGalleryCellId.rawValue,
+            for: indexPath
+        ) as? FavoritesCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.setCellDisplayData(
+            for: self.viewModel.favoritesDisplayData[indexPath.item]
+        )
+        
+        return cell
     }
 }
