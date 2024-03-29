@@ -38,13 +38,14 @@ final class FavoritesGalleryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.setupLayout()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.setupLayout()
+        self.setItemSizeParameters(rowSpacing: .standartRowsSpacing, imageHeightCoeff: Sizes.imageHeightCoeff)
     }
 }
 
@@ -102,6 +103,17 @@ private extension FavoritesGalleryViewController {
             forCellWithReuseIdentifier: cellId.rawValue
         )
     }
+    
+    func setItemSizeParameters(rowSpacing: CollectionViewRowsSpacing, imageHeightCoeff: CGFloat) {
+        if let layout = self.favoritesCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            let minimumLineSpacing = rowSpacing.rawValue
+            layout.minimumLineSpacing = minimumLineSpacing
+            
+            let itemWidth = self.favoritesCollectionView.frame.width
+            let itemHeight = itemWidth * imageHeightCoeff
+            layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+        }
+    }
 }
 
 // MARK: - Constraints
@@ -132,7 +144,6 @@ extension FavoritesGalleryViewController: UICollectionViewDataSource {
         cell.setCellDisplayData(
             for: self.viewModel.favoritesDisplayData[indexPath.item]
         )
-        
         return cell
     }
 }

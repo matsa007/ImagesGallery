@@ -13,6 +13,7 @@ final class FavoritesCollectionViewCell: UICollectionViewCell {
 
     private lazy var favoriteImageView: UIImageView = {
         let imView = UIImageView()
+        imView.contentMode = .scaleAspectFit
         return imView
     }()
     
