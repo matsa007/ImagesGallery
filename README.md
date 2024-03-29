@@ -60,9 +60,9 @@ Then, run the following command:
 ```
 $ pod install
 ```
-4. Open `ToDoList_DocuSketch_Test.xcworkspace` file in Xcode:
+4. Open `ImagesGallery.xcworkspace` file in Xcode:
 ```
-$ open ToDoList_DocuSketch_Test.xcworkspace
+$ open ImagesGallery.xcworkspace
 ```
 5. Select the target device or simulator from the top-left dropdown menu.
 
