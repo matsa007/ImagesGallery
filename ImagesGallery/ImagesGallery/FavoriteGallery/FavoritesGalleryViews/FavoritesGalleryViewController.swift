@@ -141,6 +141,7 @@ private extension FavoritesGalleryViewController {
 private extension FavoritesGalleryViewController {
     func binding() {
         self.bindInput()
+        self.bindOutput()
     }
     
     func bindInput() {
@@ -152,21 +153,47 @@ private extension FavoritesGalleryViewController {
             }
             .store(in: &self.cancellables)
     }
+    
+    func bindOutput() {
+        self.viewModel.anyFavoritesDisplayDataUpdated
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] index in
+                guard let self else { return }
+                self.handleFavoritesDisplayDataUpdated()
+            }
+            .store(in: &self.cancellables)
+    }
 }
 
 // MARK: - Actions and handlers
 
 extension FavoritesGalleryViewController {
     func handleCollectionViewItemSelectedIndex(_ index: Int) {
-        let vc = FullScreenFavoriteViewController(
-            viewModel: FullScreenFavoriteViewModel(
-                favoriteImageData: FullScreenFavoriteDisplayModel(
-                    imageData: self.viewModel.favoritesDisplayData[index].imageData,
-                    favoritesIndex: index
-                )
+        let vm = FullScreenFavoriteViewModel(
+            favoriteImageData: FullScreenFavoriteDisplayModel(
+                imageData: self.viewModel.favoritesDisplayData[index].imageData,
+                favoritesIndex: index
             )
         )
+        
+        vm.anyFavoriteImageDeletedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] index in
+                guard let self else { return }
+                self.handleFavoriteImageDeleted(with: index)
+            }
+            .store(in: &self.cancellables)
+        
+        let vc = FullScreenFavoriteViewController(viewModel: vm)
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func handleFavoriteImageDeleted(with index: Int) {
+        self.viewModel.favoriteImageDeleted(with: index)
+    }
+    
+    func handleFavoritesDisplayDataUpdated() {
+        self.favoritesCollectionView.reloadData()
     }
 }
 
