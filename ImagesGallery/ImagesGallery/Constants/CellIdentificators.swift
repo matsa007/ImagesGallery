@@ -7,6 +7,7 @@
 
 import Foundation
 
-enum CellIdentificators {
-    static let imagesGalleryCellIdentificator = "images_gallery_cell"
+enum CellIdentificators: String {
+    case imagesGalleryCellId = "images_gallery_cell"
+    case favoritesGalleryCellId = "favorites_gallery_cell"
 }

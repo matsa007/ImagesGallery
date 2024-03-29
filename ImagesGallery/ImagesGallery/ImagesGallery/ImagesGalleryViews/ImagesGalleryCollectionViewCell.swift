@@ -16,6 +16,13 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
         return imView
     }()
     
+    private lazy var likedImageIndicatorView: UIImageView = {
+        let imView = UIImageView()
+        imView.image = UIImage(systemName: ImageNames.heart.rawValue)
+        imView.tintColor = ColorsSet.heartIndicatorColor
+        return imView
+    }()
+    
     // MARK: - Lifecycle
 
     override func prepareForReuse() {
@@ -27,32 +34,49 @@ final class ImagesGalleryCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        self.setupLayout()
+    }
+}
+
+// MARK: - Layout
+
+private extension ImagesGalleryCollectionViewCell {
+    func setupLayout() {
         self.addSubViews()
-        self.setCellViews()
         self.setConstraints()
     }
-    
-    // MARK: - Add subviews
+}
 
-    private func addSubViews() {
+// MARK: - Add subviews
+
+private extension ImagesGalleryCollectionViewCell {
+    func addSubViews() {
         self.contentView.addSubview(self.thumbImageView)
+        self.contentView.addSubview(self.likedImageIndicatorView)
     }
-    
-    // MARK: - Layout
-    
-    private func setCellViews() {
-        self.setCell()
+}
+
+// MARK: - Setters
+
+private extension ImagesGalleryCollectionViewCell {
+    func setLikedImageIndicatorView(for isFavorite: Bool) {
+        self.likedImageIndicatorView.isHidden = isFavorite
+        ? false
+        : true
     }
-    
-    private func setCell() {
-        self.contentView.backgroundColor = .blue
-    }
-    
-    // MARK: - Constraints
-    
+}
+
+// MARK: - Constraints
+
+private extension ImagesGalleryCollectionViewCell {
     private func setConstraints() {
         self.thumbImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        self.likedImageIndicatorView.snp.makeConstraints {
+            $0.width.height.equalToSuperview().multipliedBy(Sizes.heartHeightCoeff)
+            $0.right.bottom.equalToSuperview().inset(Spacing.heartIndicatorSpacing)
         }
     }
 }
@@ -64,7 +88,9 @@ extension ImagesGalleryCollectionViewCell {
         let image = UIImage(
             data: imageInfo.imageData
         )
-        
         self.thumbImageView.image = image
+        self.setLikedImageIndicatorView(
+            for: imageInfo.isFavorite
+        )
     }
 }

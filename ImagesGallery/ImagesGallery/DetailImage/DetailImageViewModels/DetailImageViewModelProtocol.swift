@@ -12,6 +12,8 @@ protocol DetailImageViewModelProtocol {
     var detailImageDisplayData: DetailImageDisplayModel { get }
     var anyDetailImageDisplayDataIsReadyForViewPublisher: AnyPublisher<Void, Never> { get }
     var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> { get }
+    var anyImageFavoriteButtonTappedPublisher: AnyPublisher<FavoriteImageModel, Never> { get }
+    var anyImageFavoriteStateIsChangedPublisher: AnyPublisher<Bool, Never> { get }
 
     init(
         detailImageInitialData: DetailImageInitialModel,
@@ -21,4 +23,5 @@ protocol DetailImageViewModelProtocol {
     func readyForDisplay()
     func swipedToLeftSide()
     func swipedToRightSide()
+    func addToFavoritesButtonTapped()
 }

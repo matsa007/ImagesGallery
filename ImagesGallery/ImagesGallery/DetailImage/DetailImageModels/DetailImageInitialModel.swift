@@ -8,11 +8,21 @@
 import Foundation
 
 struct DetailImageInitialModel {
-    let imageIDs: [String]
+    var initialImagesInfo: [InitialImageInfo]
     var selectedImageIndex: Int
     
     init(imagesGalleryDisplayData: [ImagesGalleryDisplayModel], selectedImageIndex: Int) {
-        self.imageIDs = imagesGalleryDisplayData.map { $0.id }
+        self.initialImagesInfo = imagesGalleryDisplayData.map {
+            InitialImageInfo(
+                imageId: $0.id,
+                isFavorite: $0.isFavorite
+            )
+        }
         self.selectedImageIndex = selectedImageIndex
+    }
+    
+    struct InitialImageInfo {
+        let imageId: String
+        var isFavorite: Bool
     }
 }

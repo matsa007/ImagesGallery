@@ -27,6 +27,16 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
     var anyNetworkErrorAlertPublisher: AnyPublisher<Error, Never> {
         self.networkErrorAlertPublisher.eraseToAnyPublisher()
     }
+    
+    private let imageFavoriteButtonTappedPublisher = PassthroughSubject<FavoriteImageModel, Never>()
+    var anyImageFavoriteButtonTappedPublisher: AnyPublisher<FavoriteImageModel, Never> {
+        self.imageFavoriteButtonTappedPublisher.eraseToAnyPublisher()
+    }
+    
+    private let imageFavoriteStateIsChangedPublisher = PassthroughSubject<Bool, Never>()
+    var anyImageFavoriteStateIsChangedPublisher: AnyPublisher<Bool, Never> {
+        self.imageFavoriteStateIsChangedPublisher.eraseToAnyPublisher()
+    }
 
 
     // MARK: - Initialization
@@ -40,7 +50,8 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
         self.detailImageDisplayData = DetailImageDisplayModel(
             currentImageData: Data(),
             currentImageTitle: String(),
-            currentImageDescription: String()
+            currentImageDescription: String(), 
+            isFavorite: Bool()
         )
     }
     
@@ -60,6 +71,10 @@ final class DetailImageViewModel: DetailImageViewModelProtocol {
     
     func swipedToRightSide() {
         self.handleRightSwipe()
+    }
+    
+    func addToFavoritesButtonTapped() {
+        self.favoritesButtonTappedHandler()
     }
 }
 
@@ -84,7 +99,8 @@ private extension DetailImageViewModel {
             .store(in: &self.cancellables)
         
         self.loader.requestDetailImageURLs(
-            for: self.detailImageInitialData.imageIDs[currentIndex]
+            for: self.detailImageInitialData.initialImagesInfo[currentIndex].imageId,
+            with: self.detailImageInitialData.initialImagesInfo[currentIndex].isFavorite
         )
     }
 }
@@ -109,5 +125,24 @@ private extension DetailImageViewModel {
     func handleRightSwipe() {
         self.detailImageInitialData.selectedImageIndex -= 1
         self.fetchCurrentImageData()
+    }
+    
+    func favoritesButtonTappedHandler() {
+        let index = self.detailImageInitialData.selectedImageIndex
+        self.detailImageDisplayData.isFavorite = !self.detailImageDisplayData.isFavorite
+        self.detailImageInitialData.initialImagesInfo[index].isFavorite = !self.detailImageInitialData.initialImagesInfo[index].isFavorite
+        
+        self.imageFavoriteStateIsChangedPublisher.send(
+            self.detailImageDisplayData.isFavorite
+        )
+        
+        self.imageFavoriteButtonTappedPublisher.send(
+            FavoriteImageModel(
+                index: index,
+                id: self.detailImageInitialData.initialImagesInfo[index].imageId,
+                regularImageData: self.detailImageDisplayData.currentImageData, 
+                isFavorite: self.detailImageDisplayData.isFavorite
+            )
+        )
     }
 }

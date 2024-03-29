@@ -13,7 +13,10 @@ final class DetailImageLoader: DetailImageLoadable {
     // MARK: - Parameters
     
     private var cancellables: Set<AnyCancellable> = []
-    
+    private let cacheService: CacheServiceProtocol
+    private let networkService: NetworkServiceProtocol
+    private let helper: DetailImageHelpeable
+
     private let displayDataIsReadyForViewPublisher = PassthroughSubject<DetailImageDisplayModel, Never>()
     var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<DetailImageDisplayModel, Never> {
         self.displayDataIsReadyForViewPublisher.eraseToAnyPublisher()
@@ -26,19 +29,27 @@ final class DetailImageLoader: DetailImageLoadable {
     
     // MARK: - Initialization
     
+    init(
+        cacheService: CacheServiceProtocol,
+        networkService: NetworkServiceProtocol,
+        helper: DetailImageHelpeable
+    ) {
+        self.cacheService = cacheService
+        self.networkService = networkService
+        self.helper = helper
+    }
+    
     deinit {
         self.cancellables.forEach { $0.cancel() }
     }
     
     // MARK: - Request data
 
-    func requestDetailImageURLs(for currentImageId: String) {
-        let helper = DetailImageHelper()
-        
+    func requestDetailImageURLs(for currentImageId: String, with isFavorite: Bool) {
         Task {
             do {
-                let responseData: DetailImageModel = try await NetworkManager.shared.requestData(
-                    toEndPoint: helper.createDetailImageApiURL(
+                let responseData: DetailImageModel = try await self.networkService.requestData(
+                    toEndPoint: self.helper.createDetailImageApiURL(
                         for: ApiURL.imagesApiURL,
                         with: currentImageId
                     ),
@@ -51,19 +62,19 @@ final class DetailImageLoader: DetailImageLoadable {
                 let initialImageDescription = responseData.description
                 ?? responseData.altDescription
                 ?? DefaultMessages.defaultImageDescription
-                
-                let updatedImageTitle = helper.updateDetailImageTitle(
+                                
+                let updatedImageTitle = self.helper.updateDetailImageTitle(
                     for: initialImageTitle,
                     currentSeparator: .dash,
                     newSeparator: .space
                 )
                 
-                let updatedImageDescription = helper.updateDetailImageDescription(
+                let updatedImageDescription = self.helper.updateDetailImageDescription(
                     for: initialImageDescription
                 )
                 
                 if let cachedData = self.checkChache(
-                    for: helper.createDetailCacheId(
+                    for: self.helper.createDetailCacheId(
                         for: currentImageId,
                         with: .detailCacheId
                     )
@@ -71,20 +82,22 @@ final class DetailImageLoader: DetailImageLoadable {
                     let detailImageDisplayData = DetailImageDisplayModel(
                         currentImageData: cachedData,
                         currentImageTitle: updatedImageTitle,
-                        currentImageDescription: updatedImageDescription
+                        currentImageDescription: updatedImageDescription, 
+                        isFavorite: isFavorite
                     )
                     self.displayDataIsReadyForViewPublisher.send(detailImageDisplayData)
                 } else {
                     let detailImageDisplayData = DetailImageDisplayModel(
                         currentImageData: Data(),
                         currentImageTitle: updatedImageTitle,
-                        currentImageDescription: updatedImageDescription
+                        currentImageDescription: updatedImageDescription, 
+                        isFavorite: isFavorite
                     )
                                     
                     await self.requestDetailImageData(
                         from: responseData.urls.regular,
                         initialData: detailImageDisplayData, 
-                        cacheId: helper.createDetailCacheId(
+                        cacheId: self.helper.createDetailCacheId(
                             for: currentImageId,
                             with: .detailCacheId
                         )
@@ -110,7 +123,7 @@ final class DetailImageLoader: DetailImageLoadable {
     func requestDetailImageData(from imageUrl: String, initialData: DetailImageDisplayModel, cacheId: String) async {
         Task {
             do {
-                let responseData = try await NetworkManager.shared.requestImageData(
+                let responseData = try await self.networkService.requestImageData(
                     from: imageUrl,
                     httpMethod: .get
                 )
@@ -118,7 +131,8 @@ final class DetailImageLoader: DetailImageLoadable {
                 let detailImageDisplayData = DetailImageDisplayModel(
                     currentImageData: responseData,
                     currentImageTitle: initialData.currentImageTitle,
-                    currentImageDescription: initialData.currentImageDescription
+                    currentImageDescription: initialData.currentImageDescription, 
+                    isFavorite: initialData.isFavorite
                 )
                                 
                 self.displayDataIsReadyForViewPublisher.send(
@@ -151,7 +165,7 @@ final class DetailImageLoader: DetailImageLoadable {
 
 private extension DetailImageLoader {
     func checkChache(for id: String) -> Data? {
-        if let data = CacheService.shared.readFromCache(forId: id) {
+        if let data = self.cacheService.readFromCache(forId: id) {
             return data
         } else {
             return nil
@@ -159,6 +173,6 @@ private extension DetailImageLoader {
     }
     
     func saveCache(_ data: Data, for id: String) {
-        CacheService.shared.saveToCache(data, forId: id)
+        self.cacheService.saveToCache(data, forId: id)
     }
 }

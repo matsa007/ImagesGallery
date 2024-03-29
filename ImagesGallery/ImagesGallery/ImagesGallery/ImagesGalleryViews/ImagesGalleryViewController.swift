@@ -62,6 +62,7 @@ final class ImagesGalleryViewController: UIViewController {
                 rowSpacing: .standartRowsSpacing,
                 columnsQuantity: .threeColumnsQuantity
             )
+            
         default:
             self.setItemSizeParameters(
                 itemsSpacing: .standartItemsSpacing,
@@ -77,27 +78,10 @@ final class ImagesGalleryViewController: UIViewController {
 
 private extension ImagesGalleryViewController {
     func setupLayout() {
-        self.setView()
+        self.setView(backgroundColor: ColorsSet.galleryBackgroundColor)
         self.setSubViews()
-        self.setConstraints()
-    }
-    
-    func setView() {
-        self.view.backgroundColor = ColorsSet.galleryBackgroundColor
-    }
-    
-    func setSubViews() {
-        self.setNavBar()
-        self.setImagesGalleryCollection()
         self.addSubViews()
-    }
-    
-    func setConstraints() {
-        self.imagesGalleryCollection.snp.makeConstraints {
-            $0.centerX.height.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.imagesGalleryCollectionWidthCoeff)
-        }
+        self.setConstraints()
     }
 }
 
@@ -112,21 +96,50 @@ private extension ImagesGalleryViewController {
 // MARK: - Setters
 
 private extension ImagesGalleryViewController {
-    func setNavBar() {
-        self.navigationItem.title = Titles.imagesGaleryBarTitle.rawValue
-        self.navigationController?.navigationBar.barTintColor = ColorsSet.galleryBackgroundColor
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
-        ]
+    func setView(backgroundColor: UIColor) {
+        self.view.backgroundColor = backgroundColor
     }
     
-    func setImagesGalleryCollection() {
-        self.imagesGalleryCollection.backgroundColor = ColorsSet.galleryBackgroundColor
+    func setSubViews() {
+        self.setNavBar(
+            title: .imagesGalleryBarTitle,
+            tintColor: ColorsSet.galleryBackgroundColor,
+            titleColor: ColorsSet.navBarTitleColor,
+            buttonImageName: .heart
+        )
+        
+        self.setImagesGalleryCollection(
+            backgroundColor: ColorsSet.galleryBackgroundColor,
+            cellId: .imagesGalleryCellId
+        )
+    }
+    
+    func setNavBar(title: Titles, tintColor: UIColor, titleColor: UIColor, buttonImageName: ImageNames) {
+        self.navigationItem.title = title.rawValue
+        self.navigationController?.navigationBar.barTintColor = tintColor
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: titleColor
+        ]
+        
+        self.navigationItem.setRightBarButton(
+            UIBarButtonItem(
+                image: UIImage(systemName: buttonImageName.rawValue),
+                style: .plain,
+                target: self,
+                action: #selector(self.favoritesListButtonTapped)
+            ),
+            animated: true
+        )
+        
+        self.navigationItem.rightBarButtonItem?.tintColor = ColorsSet.heartButtonFavorite
+    }
+    
+    func setImagesGalleryCollection(backgroundColor: UIColor, cellId: CellIdentificators) {
+        self.imagesGalleryCollection.backgroundColor = backgroundColor
         
         self.imagesGalleryCollection.register(
             ImagesGalleryCollectionViewCell.self,
-            forCellWithReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator
+            forCellWithReuseIdentifier: cellId.rawValue
         )
     }
     
@@ -150,9 +163,21 @@ private extension ImagesGalleryViewController {
     }
 }
 
+// MARK: - Constraints
+
+private extension ImagesGalleryViewController {
+    func setConstraints() {
+        self.imagesGalleryCollection.snp.makeConstraints {
+            $0.centerX.height.equalToSuperview()
+            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            $0.width.equalTo(self.view.snp.width).multipliedBy(Sizes.imagesGalleryCollectionWidthCoeff)
+        }
+    }
+}
+
 // MARK: - View Model binding
 
-extension ImagesGalleryViewController {
+private extension ImagesGalleryViewController {
     func binding() {
         self.bindInput()
         self.bindOutput()
@@ -166,6 +191,14 @@ extension ImagesGalleryViewController {
                 self.handleCollectionViewItemSelectedIndex(
                     index: index
                 )
+            }
+            .store(in: &self.cancellables)
+        
+        self.viewModel.anyFavoritesListButtonTappedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                self.handleFavoritesListButtonTapped()
             }
             .store(in: &self.cancellables)
     }
@@ -205,16 +238,67 @@ extension ImagesGalleryViewController {
     }
     
     func handleCollectionViewItemSelectedIndex(index: Int) {
-        let vc = DetailImageViewController(
-            viewModel: DetailImageViewModel(
-                detailImageInitialData: DetailImageInitialModel(
-                    imagesGalleryDisplayData: self.viewModel.imagesGalleryDisplayData,
-                    selectedImageIndex: index
+        let vm = DetailImageViewModel(
+            detailImageInitialData: DetailImageInitialModel(
+                imagesGalleryDisplayData: self.viewModel.imagesGalleryDisplayData,
+                selectedImageIndex: index
+            ),
+            detailImageLoader: DetailImageLoader(
+                cacheService: CacheService(
+                    cacheCountLimit: .twoHundred
                 ),
-                detailImageLoader: DetailImageLoader()
+                networkService: NetworkService(),
+                helper: DetailImageHelper()
             )
         )
+        
+        let vc = DetailImageViewController(
+            viewModel: vm
+        )
+        
+        vm.anyImageFavoriteButtonTappedPublisher
+            .sink { [weak self] favoritesData in
+                guard let self else { return }
+                self.handleFavoritesButtonTappedData(
+                    favoritesData: favoritesData
+                )
+            }
+            .store(in: &self.cancellables)
+        
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func handleFavoritesButtonTappedData(favoritesData: FavoriteImageModel) {
+        self.viewModel.stateOfImageIsFavoriteChanged(
+            for: favoritesData
+        )
+    }
+    
+    func handleFavoritesListButtonTapped() {
+        let vm = FavoritesGalleryViewModel(
+            favoritesDisplayData: self.viewModel.favoriteImagesData
+        )
+        
+        let vc = FavoritesGalleryViewController(viewModel: vm)
+        
+        vm.anyFavoriteImageDeletedPublisher
+            .sink { [weak self] index in
+                guard let self else { return }
+                self.handleFavoriteImageDeleted(
+                    with: index
+                )
+            }
+            .store(in: &self.cancellables)
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func handleFavoriteImageDeleted(with index: Int) {
+        self.viewModel.favoriteImageDeleted(with: index)
+    }
+    
+    @objc func favoritesListButtonTapped() {
+        self.viewModel.favoritesListButtonTapped()
     }
 }
 
@@ -227,7 +311,7 @@ extension ImagesGalleryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CellIdentificators.imagesGalleryCellIdentificator,
+            withReuseIdentifier: CellIdentificators.imagesGalleryCellId.rawValue,
             for: indexPath
         ) as? ImagesGalleryCollectionViewCell else { return UICollectionViewCell() }
         

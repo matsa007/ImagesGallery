@@ -13,6 +13,9 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
     // MARK: - Parameters
     
     private var cancellables: Set<AnyCancellable> = []
+    private let cacheService: CacheServiceProtocol
+    private let networkService: NetworkServiceProtocol
+    private let helper: ImagesGalleryHelpeable
     
     private let displayDataIsReadyForViewPublisher = PassthroughSubject<[ImagesGalleryDisplayModel], Never>()
     var anyDisplayDataIsReadyForViewPublisher: AnyPublisher<[ImagesGalleryDisplayModel], Never> {
@@ -26,6 +29,16 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
     
     // MARK: - Initialization
     
+    init(
+        cacheService: CacheServiceProtocol,
+        networkService: NetworkServiceProtocol,
+        helper: ImagesGalleryHelpeable
+    ) {
+        self.cacheService = cacheService
+        self.networkService = networkService
+        self.helper = helper
+    }
+    
     deinit {
         self.cancellables.forEach { $0.cancel() }
     }
@@ -33,14 +46,12 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
     // MARK: - Request data
     
     func requestImagesURLs(page: Int, pageQuantity: Int) {
-        let helper = ImagesGalleryHelper()
-        
         Task {
             do {
                 var initialImagesData = [InitialImagesGalleryDataModel]()
                 
-                let responseData: [PhotosModel] = try await NetworkManager.shared.requestData(
-                    toEndPoint: helper.createPhotosApiURLForPage(
+                let responseData: [PhotosModel] = try await self.networkService.requestData(
+                    toEndPoint: self.helper.createPhotosApiURLForPage(
                         for: .imagesApiURL,
                         page: page,
                         pageQuantity: pageQuantity
@@ -90,7 +101,8 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                 taskGroup.addTask {
                     var displayData = ImagesGalleryDisplayModel(
                         id: String(),
-                        imageData: Data()
+                        imageData: Data(), 
+                        isFavorite: Bool()
                     )
                     
                     do {
@@ -100,17 +112,19 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
                         ) {
                             displayData = ImagesGalleryDisplayModel(
                                 id: initialImageInfo.id,
-                                imageData: cachedData
+                                imageData: cachedData, 
+                                isFavorite: false
                             )
                         } else {
-                            let responseData = try await NetworkManager.shared.requestImageData(
+                            let responseData = try await self.networkService.requestImageData(
                                 from: initialImageInfo.thumbImgURL,
                                 httpMethod: .get
                             )
                             
                             displayData = ImagesGalleryDisplayModel(
                                 id: initialImageInfo.id,
-                                imageData: responseData
+                                imageData: responseData, 
+                                isFavorite: false
                             )
                             
                             self.saveCache(
@@ -149,7 +163,7 @@ final class ImagesGalleryLoader: ImagesGalleryLoadable {
 
 private extension ImagesGalleryLoader {
     func checkChache(for id: String) -> Data? {
-        if let data = CacheService.shared.readFromCache(forId: id) {
+        if let data = self.cacheService.readFromCache(forId: id) {
             return data
         } else {
             return nil
@@ -157,6 +171,6 @@ private extension ImagesGalleryLoader {
     }
     
     func saveCache(_ data: Data, for id: String) {
-        CacheService.shared.saveToCache(data, forId: id)
+        self.cacheService.saveToCache(data, forId: id)
     }
 }

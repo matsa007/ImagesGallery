@@ -7,9 +7,7 @@
 
 import Foundation
 
-final class NetworkManager {
-    static var shared = NetworkManager()
-    
+final class NetworkService: NetworkServiceProtocol {    
     func requestData<T: Codable>(toEndPoint: String, clientID: String, httpMethod: HttpMethod) async throws -> T {
         guard let requestUrl = URL(string: toEndPoint) else {
             throw NetworkError.invalidURL

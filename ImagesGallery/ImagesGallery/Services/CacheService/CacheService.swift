@@ -11,16 +11,12 @@ final class CacheService {
     
     // MARK: - Parameters
     
-    static var shared = CacheService(
-        cacheCountLimit: .twoHundred
-    )
-    
     private let cache = NSCache<NSString, NSData>()
     private let cacheCountLimit: Int
     
     // MARK: - Initialization
     
-    private init(cacheCountLimit: CasheLimits) {
+    init(cacheCountLimit: CasheLimits) {
         self.cacheCountLimit = cacheCountLimit.rawValue
         self.setCacheService()
     }

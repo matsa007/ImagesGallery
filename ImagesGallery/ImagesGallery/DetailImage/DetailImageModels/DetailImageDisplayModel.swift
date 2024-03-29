@@ -11,4 +11,5 @@ struct DetailImageDisplayModel {
     let currentImageData: Data
     let currentImageTitle: String
     let currentImageDescription: String
+    var isFavorite: Bool
 }

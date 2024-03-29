@@ -27,7 +27,10 @@ final class DetailImageViewController: UIViewController {
     
     private lazy var addToFavoritesButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.setImage(
+            UIImage(systemName: ImageNames.heart.rawValue),
+            for: .normal
+        )
         return button
     }()
     
@@ -97,22 +100,90 @@ final class DetailImageViewController: UIViewController {
 
 private extension DetailImageViewController {
     func setupLayout() {
-        self.setView()
+        self.setView(backgroundColor: ColorsSet.detailBackgroundColor)
         self.setSubViews()
+        self.addSubViews()
         self.setConstraints()
     }
     
-    func setView() {
-        self.view.backgroundColor = ColorsSet.detailBackgroundColor
-    }
-    
     func setSubViews() {
-        self.setNavBar()
+        self.setNavBar(
+            title: .detailImageBarTitle,
+            titleColor: ColorsSet.navBarTitleColor
+        )
         self.setSwipeGestureRecognizers()
         self.setFavoritesButton()
-        self.addSubViews()
+    }
+}
+
+// MARK: - Add subviews
+
+private extension DetailImageViewController {
+    func addSubViews() {
+        self.view.addSubview(self.detailImageView)
+        self.view.addSubview(self.addToFavoritesButton)
+        self.view.addSubview(self.imageTitleLabel)
+        self.view.addSubview(self.imageDescriptionLabel)
+        self.detailImageView.addGestureRecognizer(self.leftSwipeGestureRecognizer)
+        self.detailImageView.addGestureRecognizer(self.rightSwipeGestureRecognizer)
+    }
+}
+
+// MARK: - Setters
+
+private extension DetailImageViewController {
+    func setView(backgroundColor: UIColor) {
+        self.view.backgroundColor = backgroundColor
     }
     
+    func setNavBar(title: Titles, titleColor: UIColor) {
+        self.navigationItem.title = title.rawValue
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: titleColor
+        ]
+    }
+    
+    func setSwipeGestureRecognizers() {
+        self.setLeftSwipeGestureRecognizer()
+        self.setRightSwipeGestureRecognizer()
+    }
+    
+    func setLeftSwipeGestureRecognizer() {
+        self.leftSwipeGestureRecognizer.addTarget(
+            self,
+            action: #selector(self.didLeftSwipe)
+        )
+    }
+    
+    func setRightSwipeGestureRecognizer() {
+        self.rightSwipeGestureRecognizer.addTarget(
+            self,
+            action: #selector(self.didRightSwipe)
+        )
+    }
+    
+    func setFavoritesButton() {
+        self.setHeartButtonColor(
+            for: self.viewModel.detailImageDisplayData.isFavorite
+        )
+        
+        self.addToFavoritesButton.addTarget(
+            self,
+            action: #selector(self.addToFavoritesButtonTapped),
+            for: .touchUpInside
+        )
+    }
+    
+    func setHeartButtonColor(for isFavorite: Bool) {
+        self.addToFavoritesButton.tintColor = isFavorite
+        ? ColorsSet.heartButtonFavorite
+        : ColorsSet.heartButtonNotFavorite
+    }
+}
+
+// MARK: - Constraints
+
+private extension DetailImageViewController {
     func setConstraints() {
         self.detailImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -144,54 +215,6 @@ private extension DetailImageViewController {
             $0.top.equalTo(self.imageTitleLabel.snp.bottom)
                 .offset(Spacing.regulardSpacing)
         }
-    }
-}
-
-// MARK: - Add subviews
-
-private extension DetailImageViewController {
-    func addSubViews() {
-        self.view.addSubview(self.detailImageView)
-        self.view.addSubview(self.addToFavoritesButton)
-        self.view.addSubview(self.imageTitleLabel)
-        self.view.addSubview(self.imageDescriptionLabel)
-        self.detailImageView.addGestureRecognizer(self.leftSwipeGestureRecognizer)
-        self.detailImageView.addGestureRecognizer(self.rightSwipeGestureRecognizer)
-    }
-}
-
-// MARK: - Setters
-
-private extension DetailImageViewController {
-    func setNavBar() {
-        self.navigationItem.title = Titles.detailImageTitle.rawValue
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: ColorsSet.navBarTitleColor
-        ]
-    }
-    
-    func setSwipeGestureRecognizers() {
-        self.setLeftSwipeGestureRecognizer()
-        self.setRightSwipeGestureRecognizer()
-    }
-    
-    func setLeftSwipeGestureRecognizer() {
-        self.leftSwipeGestureRecognizer.addTarget(
-            self,
-            action: #selector(self.didLeftSwipe)
-        )
-    }
-    
-    func setRightSwipeGestureRecognizer() {
-        self.rightSwipeGestureRecognizer.addTarget(
-            self,
-            action: #selector(self.didRightSwipe)
-        )
-    }
-    
-    func setFavoritesButton() {
-        self.addToFavoritesButton.tintColor = .red
     }
 }
 
@@ -228,6 +251,16 @@ private extension DetailImageViewController {
                 self.handleShowErrorWithAlert(for: error)
             }
             .store(in: &self.cancellables)
+        
+        self.viewModel.anyImageFavoriteStateIsChangedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isFavorite in
+                guard let self else { return }
+                self.handleImageIsFavoriteStateIsChanged(
+                    on: isFavorite
+                )
+            }
+            .store(in: &self.cancellables)
     }
 }
 
@@ -250,11 +283,21 @@ private extension DetailImageViewController {
         )
     }
     
-    @objc private func didLeftSwipe() {
+    func handleImageIsFavoriteStateIsChanged(on isFavorite: Bool) {
+        self.setHeartButtonColor(
+            for: isFavorite
+        )
+    }
+    
+    @objc func didLeftSwipe() {
         self.viewModel.swipedToLeftSide()
     }
     
-    @objc private func didRightSwipe() {
+    @objc func didRightSwipe() {
         self.viewModel.swipedToRightSide()
+    }
+    
+    @objc func addToFavoritesButtonTapped() {
+        self.viewModel.addToFavoritesButtonTapped()
     }
 }
