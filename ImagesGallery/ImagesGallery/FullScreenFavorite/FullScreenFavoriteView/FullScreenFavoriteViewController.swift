@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import Combine
 
 final class FullScreenFavoriteViewController: UIViewController {
     
     // MARK: - Parameters
+    
+    private let viewModel: FullScreenFavoriteViewModelProtocol
+    private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - GUI
     
     private lazy var favoriteImageView: UIImageView = {
         let imView = UIImageView()
@@ -17,12 +23,28 @@ final class FullScreenFavoriteViewController: UIViewController {
         return imView
     }()
     
+    // MARK: - Initialization
+    
+    init(viewModel: FullScreenFavoriteViewModelProtocol) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        self.cancellables.forEach { $0.cancel() }
+    }
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .yellow
+        self.binding()
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,7 +107,11 @@ private extension FullScreenFavoriteViewController {
         self.navigationItem.rightBarButtonItem?.tintColor = buttonColor
     }
     
-    func setFavoriteImageView() {}
+    func setFavoriteImageView() {
+        self.favoriteImageView.image = UIImage(
+            data: self.viewModel.favoriteImageData.imageData
+        )
+    }
 }
 
 // MARK: - Constraints
@@ -100,10 +126,32 @@ private extension FullScreenFavoriteViewController {
     }
 }
 
+// MARK: - View Model binding
+
+private extension FullScreenFavoriteViewController {
+    func binding() {
+        self.bindInput()
+    }
+    
+    func bindInput() {
+        self.viewModel.anyDeleteButtonTappedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                self.handleDeleteButtonTapped()
+            }
+            .store(in: &self.cancellables)
+    }
+}
+
 // MARK: - Actions and handlers
 
 private extension FullScreenFavoriteViewController {
     @objc func deleteButtonTapped() {
-        print("deleteButtonTapped")
+        self.viewModel.deleteButtonTapped()
+    }
+    
+    func handleDeleteButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
