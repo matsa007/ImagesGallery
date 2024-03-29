@@ -158,7 +158,8 @@ private extension FavoritesGalleryViewController {
 
 extension FavoritesGalleryViewController {
     func handleCollectionViewItemSelectedIndex(_ index: Int) {
-        print("INDEX = \(index)")
+        let vc = FullScreenFavoriteViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
