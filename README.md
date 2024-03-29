@@ -11,7 +11,7 @@
 
 ## Project Overview
 
-My telegram: @serhio_honzales
+## My telegram: @serhio_honzales
 
 A simple image gallery app that allows users to browse and favourite images fetched from an API. You can add and delete favourite images.
 
