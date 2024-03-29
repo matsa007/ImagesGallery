@@ -14,6 +14,7 @@ enum Sizes {
     static let detailImageViewHeightCoeff: CGFloat = 1 / 3
     static let heartHeightCoeff: CGFloat = 1 / 10
     static let heartSpaceCoeff: CGFloat = 1 / 10
+    static let imageHeightCoeff: CGFloat = 1.5
 }
 
 enum Spacing {
