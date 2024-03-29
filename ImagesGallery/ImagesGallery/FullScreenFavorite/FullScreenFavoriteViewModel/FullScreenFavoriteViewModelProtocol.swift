@@ -11,6 +11,7 @@ import Combine
 protocol FullScreenFavoriteViewModelProtocol {
     var favoriteImageData: FullScreenFavoriteDisplayModel { get }
     var anyDeleteButtonTappedPublisher: AnyPublisher<Void, Never> { get }
+    var anyFavoriteImageDeletedPublisher: AnyPublisher<Int, Never> { get }
     
     func deleteButtonTapped()
 }

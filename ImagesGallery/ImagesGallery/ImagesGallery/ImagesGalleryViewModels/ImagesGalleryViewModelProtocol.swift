@@ -27,4 +27,5 @@ protocol ImagesGalleryViewModelProtocol {
     func collectionViewItemSelected(with index: Int)
     func stateOfImageIsFavoriteChanged(for imageDetails: FavoriteImageModel)
     func favoritesListButtonTapped()
+    func favoriteImageDeleted(with index: Int)
 }

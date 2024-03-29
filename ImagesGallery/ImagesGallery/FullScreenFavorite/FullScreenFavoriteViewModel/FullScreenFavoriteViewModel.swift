@@ -19,6 +19,11 @@ final class FullScreenFavoriteViewModel: FullScreenFavoriteViewModelProtocol {
         self.deleteButtonTappedPublisher.eraseToAnyPublisher()
     }
     
+    private let favoriteImageDeletedPublisher = PassthroughSubject<Int, Never>()
+    var anyFavoriteImageDeletedPublisher: AnyPublisher<Int, Never> {
+        self.favoriteImageDeletedPublisher.eraseToAnyPublisher()
+    }
+    
     // MARK: - Initialization
     
     init(favoriteImageData: FullScreenFavoriteDisplayModel) {
@@ -38,6 +43,7 @@ final class FullScreenFavoriteViewModel: FullScreenFavoriteViewModelProtocol {
 
 private extension FullScreenFavoriteViewModel {
     func handleDeleteButtonTapped(for index: Int) {
+        self.favoriteImageDeletedPublisher.send(index)
         self.deleteButtonTappedPublisher.send()
     }
 }
