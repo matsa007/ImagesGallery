@@ -11,4 +11,5 @@ enum Titles: String {
     case imagesGalleryBarTitle = "Images gallery"
     case detailImageBarTitle = "Image details"
     case favoritesGalleryBarTitle = "Favorite images"
+    case favoriteImageBarTitle = "Favorite image"
 }
