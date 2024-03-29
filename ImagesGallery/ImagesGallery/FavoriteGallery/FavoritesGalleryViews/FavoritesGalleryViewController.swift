@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 final class FavoritesGalleryViewController: UIViewController {
     
     // MARK: - Parameters
     
     private let viewModel: FavoritesGalleryViewModelProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - GUI
     
@@ -19,6 +21,7 @@ final class FavoritesGalleryViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let colView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         colView.dataSource = self
+        colView.delegate = self
         return colView
     }()
     
@@ -34,11 +37,16 @@ final class FavoritesGalleryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        self.cancellables.forEach { $0.cancel() }
+    }
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.binding()
         self.setupLayout()
     }
     
@@ -128,6 +136,32 @@ private extension FavoritesGalleryViewController {
     }
 }
 
+// MARK: - View Model binding
+
+private extension FavoritesGalleryViewController {
+    func binding() {
+        self.bindInput()
+    }
+    
+    func bindInput() {
+        self.viewModel.anySelectedItemPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] index in
+                guard let self else { return }
+                self.handleCollectionViewItemSelectedIndex(index)
+            }
+            .store(in: &self.cancellables)
+    }
+}
+
+// MARK: - Actions and handlers
+
+extension FavoritesGalleryViewController {
+    func handleCollectionViewItemSelectedIndex(_ index: Int) {
+        print("INDEX = \(index)")
+    }
+}
+
 // MARK: - UICollectionViewDataSource
 
 extension FavoritesGalleryViewController: UICollectionViewDataSource {
@@ -145,5 +179,13 @@ extension FavoritesGalleryViewController: UICollectionViewDataSource {
             for: self.viewModel.favoritesDisplayData[indexPath.item]
         )
         return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension FavoritesGalleryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.viewModel.collectionViewItemSelected(with: indexPath.item)
     }
 }

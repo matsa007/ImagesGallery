@@ -66,6 +66,8 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
         )
     }
     
+    // MARK: - Events
+    
     func scrolledToItemWithItemIndex(_ index: Int) {
         self.handleScrolledToItemWithItemIndex(index)
     }

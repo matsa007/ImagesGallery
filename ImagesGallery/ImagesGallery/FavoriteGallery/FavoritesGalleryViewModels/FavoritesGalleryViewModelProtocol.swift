@@ -6,7 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 protocol FavoritesGalleryViewModelProtocol {
     var favoritesDisplayData: [FavoritesGallerDisplayModel] { get set }
+    var anySelectedItemPublisher: AnyPublisher<Int, Never> { get }
+    
+    func collectionViewItemSelected(with index: Int)
 }
