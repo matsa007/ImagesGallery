@@ -130,6 +130,7 @@ private extension DetailImageViewModel {
     func favoritesButtonTappedHandler() {
         let index = self.detailImageInitialData.selectedImageIndex
         self.detailImageDisplayData.isFavorite = !self.detailImageDisplayData.isFavorite
+        self.detailImageInitialData.initialImagesInfo[index].isFavorite = !self.detailImageInitialData.initialImagesInfo[index].isFavorite
         
         self.imageFavoriteStateIsChangedPublisher.send(
             self.detailImageDisplayData.isFavorite
