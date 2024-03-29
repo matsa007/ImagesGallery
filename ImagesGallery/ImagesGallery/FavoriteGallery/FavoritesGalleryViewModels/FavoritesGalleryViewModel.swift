@@ -19,9 +19,14 @@ final class FavoritesGalleryViewModel: FavoritesGalleryViewModelProtocol {
         self.selectedItemPublisher.eraseToAnyPublisher()
     }
     
-    private let favoritesDisplayDataUpdated = PassthroughSubject<Void, Never>()
-    var anyFavoritesDisplayDataUpdated: AnyPublisher<Void, Never> {
-        self.favoritesDisplayDataUpdated.eraseToAnyPublisher()
+    private let favoritesDisplayDataUpdatedPublisher = PassthroughSubject<Void, Never>()
+    var anyFavoritesDisplayDataUpdatedPublisher: AnyPublisher<Void, Never> {
+        self.favoritesDisplayDataUpdatedPublisher.eraseToAnyPublisher()
+    }
+    
+    private let favoriteImageDeletedPublisher = PassthroughSubject<Int, Never>()
+    var anyFavoriteImageDeletedPublisher: AnyPublisher<Int, Never> {
+        self.favoriteImageDeletedPublisher.eraseToAnyPublisher()
     }
     
     // MARK: - Initialization
@@ -54,10 +59,8 @@ private extension FavoritesGalleryViewModel {
     }
     
     func handleFavoriteImageDeleted(with index: Int) {
-        print("COUNT BEFORE = \(self.favoritesDisplayData.count)")
         self.favoritesDisplayData.remove(at: index)
-        print("COUNT AFTER = \(self.favoritesDisplayData.count)")
-
-        self.favoritesDisplayDataUpdated.send()
+        self.favoriteImageDeletedPublisher.send(index)
+        self.favoritesDisplayDataUpdatedPublisher.send()
     }
 }

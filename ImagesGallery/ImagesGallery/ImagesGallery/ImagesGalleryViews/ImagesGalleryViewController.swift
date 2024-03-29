@@ -280,9 +280,22 @@ extension ImagesGalleryViewController {
         )
         
         let vc = FavoritesGalleryViewController(viewModel: vm)
+        
+        vm.anyFavoriteImageDeletedPublisher
+            .sink { [weak self] index in
+                guard let self else { return }
+                self.handleFavoriteImageDeleted(
+                    with: index
+                )
+            }
+            .store(in: &self.cancellables)
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func handleFavoriteImageDeleted(with index: Int) {
+        self.viewModel.favoriteImageDeleted(with: index)
+    }
     
     @objc func favoritesListButtonTapped() {
         self.viewModel.favoritesListButtonTapped()

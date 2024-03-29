@@ -85,6 +85,10 @@ final class ImagesGalleryViewModel: ImagesGalleryViewModelProtocol {
     func favoritesListButtonTapped() {
         self.handleFavoritesListButtonTapped()
     }
+    
+    func favoriteImageDeleted(with index: Int) {
+        self.handleFavoriteImageDeleted(for: index)
+    }
 }
 
 // MARK: - Fetch images data
@@ -175,6 +179,17 @@ extension ImagesGalleryViewModel {
     
     func handleFavoritesListButtonTapped() {
         self.favoritesListButtonTappedPublisher.send()
+    }
+    
+    func handleFavoriteImageDeleted(for index: Int) {
+        let removedId = self.favoriteImagesData[index].id
+        self.updateImagesGalleryWithNewState(for: removedId)
+        self.favoriteImagesData.remove(at: index)
+        
+        self.userDefaultsService.saveToUserDefaults(
+            self.favoriteImagesData,
+            key: .favoriteImages
+        )
     }
 }
 
