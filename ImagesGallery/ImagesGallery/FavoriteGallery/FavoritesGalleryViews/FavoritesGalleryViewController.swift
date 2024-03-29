@@ -155,7 +155,7 @@ private extension FavoritesGalleryViewController {
     }
     
     func bindOutput() {
-        self.viewModel.anyFavoritesDisplayDataUpdated
+        self.viewModel.anyFavoritesDisplayDataUpdatedPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] index in
                 guard let self else { return }

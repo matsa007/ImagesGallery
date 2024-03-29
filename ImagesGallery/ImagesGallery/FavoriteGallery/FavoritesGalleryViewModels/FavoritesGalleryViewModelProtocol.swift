@@ -11,7 +11,8 @@ import Combine
 protocol FavoritesGalleryViewModelProtocol {
     var favoritesDisplayData: [FavoritesGallerDisplayModel] { get set }
     var anySelectedItemPublisher: AnyPublisher<Int, Never> { get }
-    var anyFavoritesDisplayDataUpdated: AnyPublisher<Void, Never> { get }
+    var anyFavoritesDisplayDataUpdatedPublisher: AnyPublisher<Void, Never> { get }
+    var anyFavoriteImageDeletedPublisher: AnyPublisher<Int, Never> { get }
     
     init(favoritesDisplayData: [FavoriteImageModel])
     
