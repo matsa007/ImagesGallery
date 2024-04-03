@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NetworkService: NetworkServiceProtocol {    
+actor NetworkService: NetworkServiceProtocol {
     func requestData<T: Codable>(toEndPoint: String, clientID: String, httpMethod: HttpMethod) async throws -> T {
         guard let requestUrl = URL(string: toEndPoint) else {
             throw NetworkError.invalidURL
